@@ -12,7 +12,10 @@
     "react": "^16.2.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.2.0",
+    "react-mounter": "^1.2.0",
     "react-router": "^4.2.0",
+    "semantic-ui-css": "^2.2.14",
+    "semantic-ui-react": "^0.78.2",
     "simpl-schema": "^1.4.2"
   }
 }
