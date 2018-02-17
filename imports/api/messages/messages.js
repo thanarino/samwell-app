@@ -1,31 +1,32 @@
 import { Mongo } from 'meteor/mongo';
 import { Factory } from 'meteor/dburles:factory';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import faker from 'faker';
 
-class ConsultationsCollection extends Mongo.Collection {
+class MessagesCollection extends Mongo.Collection {
     insert(doc, callback) {
         const ourDoc = doc;
         ourDoc.createdAt = ourDoc.createdAt || new Date();
         ourDoc.isDeleted = false;
         let nextNumber = 1;
-        while (this.findOne({ consultationID: nextNumber })) {
-            nextnumber = nextNumber++;
+        while (this.findOne({ messageID: nextNumber })) {
+            nextNumber = nextNumber++;
         }
-        ourDoc.consultationID = nextNumber.toString();
+        ourDoc.messageID = nextNumber.toString();
         return super.insert(ourDoc, callback);
     }
 }
 
-export const Consultations = new ConsultationsCollection('Consultations');
+export const Messages = new MessagesCollection('Messages');
 
-Consultations.deny({
+Messages.deny({
     insert() { return true; },
     update() { return true; },
     remove() { return true; },
 });
 
-Consultations.schema = new SimpleSchema({
-    consultationID: {
+Messages.schema = new SimpleSchema({
+    messageID: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
         denyUpdate: true,
@@ -34,64 +35,57 @@ Consultations.schema = new SimpleSchema({
         type: Date,
         denyUpdate: true,
     },
-    userID: {
-        //the person who set the consultation
+    messageBody: {
         type: String,
-        regEx: SimpleSchema.RegEx.Id,
+        max: 5000,
+        denyUpdate: true,
     },
-    studentID: {
+    senderID: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
+        denyUpdate: true,
     },
-    teacherID: {
+    receiverID: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
+        denyUpdate: true,
     },
     sectionID: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-    },
-    startTime: {
-        type: Date,
-    },
-    endTime: {
-        type: Date,
+        denyUpdate: true,
     },
     isDeleted: {
         type: Boolean,
-    },
+    }
 });
 
-Consultations.attachSchema(Consultations.schema);
+Messages.attachSchema(Messages.schema);
 
-Consultations.publicFields = {
-    consultationID: 1,
+Messages.publicFields = {
+    messageID: 1,
     createdAt: 1,
-    userID: 1,
-    studentID: 1,
-    teacherID: 1,
+    messageBody: 1,
+    senderID: 1,
+    receiverID: 1,
     sectionID: 1,
-    startTime: 1,
-    endTime: 1,
     isDeleted: 1,
 };
 
 // figure out user schema first
-// Factory.define('consultation', Consultations, {
-//     consultationID: () => 1,
+// Factory.define('message', Messages, {
+//     messageID: () => 1,
 //     createdAt: () => new Date(),
-//     userID: () => Factory.get('student'),
-//     studentID: () => Factory.get('student'),
-//     teacherID: () => Factory.get('teacher'),
+//     messageBody: () => faker.lorem.sentence(),
+//     senderID: () => Factory.get('user'),
+//     receiverID: () => Factory.get('user'),
 //     sectionID: () => Factory.get('section'),
-//     startTime: () => new Date("February 17, 2018 10:00:00"),
-//     endTime: () => new Date("February 11, 2018 01:00:00"),
 //     isDeleted: () => false,
 // });
 
-Consultations.helpers({
+Messages.helpers({
     list() {
-        return Consultations.findOne(this.consultationID);
+        return Messages.findOne(this.messageID);
     },
     editableBy(userID) {
         return this.list().editableBy(userID);
