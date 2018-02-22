@@ -3,8 +3,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { mount } from 'react-mounter';
 import { Session } from 'meteor/session';
 
-import App from '../imports/ui/layouts/App';
-import AuthPage from '../imports/ui/pages/AuthPage';
+import App from '../imports/ui/layouts/App.jsx';
+import AuthPage from '../imports/ui/pages/AuthPage.jsx';
 
 let publicRoutes = FlowRouter.group({});
 
@@ -52,6 +52,15 @@ userRoutes.route('/consultations', {
     }
 });
 
+userRoutes.route('/logout', {
+    name: 'logout',
+    action() {
+        Meteor.logout(() => {
+            FlowRouter.go(FlowRouter.path('login'));
+        })
+    }
+})
+
 let adminRoutes = userRoutes.group({
     prefix: '/admin',
     triggersEnter: [() => {
@@ -60,3 +69,39 @@ let adminRoutes = userRoutes.group({
         }
     }]
 });
+
+adminRoutes.route('/teachers', {
+    name: 'teachers',
+    action() {
+        mount(App, {
+            content: <p> this is teachers for admin </p>
+        });
+    }
+});
+
+adminRoutes.route('/students', {
+    name: 'students',
+    action() {
+        mount(App, {
+            content: <p> this is students for admin </p>
+        });
+    }
+});
+
+adminRoutes.route('/classes', {
+    name: 'classes',
+    action() {
+        mount(App, {
+            content: <p> this is classes for admin </p>
+        });
+    }
+})
+
+adminRoutes.route('/consultations', {
+    name: 'consultations',
+    action() {
+        mount(App, {
+            content: <p> this is consultations for admin </p>
+        })
+    }
+})

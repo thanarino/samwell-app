@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const App = props => {
-    return props.content;
+export default class App extends Component {
+    render() {
+        return (
+            <div className="container">
+                {this.props.content}
+            </div>  
+        );
+    }
 }
 
-export default App;
+// const App = (props) => {
+//     return {props.content}
+// }
+
+// export default App;

@@ -1,1 +1,33 @@
 /* CSS declarations go here */
+
+#title {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 4em;
+    color: whitesmoke;
+}
+
+.ui .button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#title div.sub.header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .4em;
+    color: ghostwhite;
+}
+
+#mainLogin {
+    background: linear-gradient(to bottom right, #2c3e50, #2980b9);
+}
+
+.positionAbsolute {
+    position: absolute;
+    background-color: transparent;
+    top: 42%;
+    left: 30%;
+}
+
+.absolute {
+    position: absolute;
+    right: 0;
+}

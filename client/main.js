@@ -8,7 +8,7 @@ import { Roles } from 'meteor/alanning:roles';
 import App from '../imports/ui/layouts/App'
 
 Meteor.startup(() => {
-    render( <App/> , document.getElementById('app'));
+    render( <App /> , document.getElementById('app') );
 });
 
 FlowRouter.wait();
