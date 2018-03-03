@@ -8,7 +8,9 @@ export default class LoginButton extends Component {
     }
 
     handleClick = () => {
-        Meteor.loginWithGoogle({}, (err) => {
+        Meteor.loginWithGoogle({
+            requestPermissions: ['email']
+        }, (err) => {
             if (err) {
                 throw new Meteor.Error('Google Login Failed');
             }

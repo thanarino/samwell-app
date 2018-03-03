@@ -16,9 +16,8 @@ export default class AdminLoginModal extends Component {
         let pw = $('[name=password]').val();
         Meteor.loginWithPassword(un, pw, function (error) {
             if (error) {
-                this.setState({ error: err.reason });
+                console.log(error);
             } else {
-                this.props.changedSignedIn(true);
                 FlowRouter.go('/admin/teachers');
             }
         });
