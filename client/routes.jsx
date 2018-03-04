@@ -5,11 +5,19 @@ import { Session } from 'meteor/session';
 
 import App from '../imports/ui/layouts/App.jsx';
 import AuthPage from '../imports/ui/pages/AuthPage.jsx';
+import AdminTeachers from '../imports/ui/pages/AdminTeachers.jsx';
+import AdminClasses from '../imports/ui/pages/AdminClasses.jsx';
+import AdminLogs from '../imports/ui/pages/AdminLogs.jsx';
 
 let publicRoutes = FlowRouter.group({});
 
 publicRoutes.route('/', {
     name: 'login',
+    triggersEnter: [function (context, redirect) {
+        if (Meteor.userId()) {
+            redirect('/user/admin/teachers');
+        }
+    }],
     action() {
         mount(App, {
             content: <AuthPage />
@@ -30,10 +38,11 @@ let userRoutes = FlowRouter.group({
             }
 
             FlowRouter.go('login');
-        }
+        } 
     }]
 });
 
+// user/messages
 userRoutes.route('/messages', {
     name: 'messages',
     action() {
@@ -43,6 +52,7 @@ userRoutes.route('/messages', {
     }
 });
 
+// user/consultations
 userRoutes.route('/consultations', {
     name: 'consultations',
     action() {
@@ -52,6 +62,7 @@ userRoutes.route('/consultations', {
     }
 });
 
+// user/logout
 userRoutes.route('/logout', {
     name: 'logout',
     action() {
@@ -65,38 +76,46 @@ let adminRoutes = userRoutes.group({
     prefix: '/admin',
     triggersEnter: [() => {
         if (!(Roles.userIsInRole(Meteor.user(), ['admin']))) {
-            FlowRouter.go(FlowRouter.path('messages'));
+            if (Meteor.user()) {
+                FlowRouter.go(FlowRouter.path('messages'));
+            } else {
+                FlowRouter.go(FlowRouter.path('login'));
+            }
         }
     }]
 });
 
+// user/admin/teachers
 adminRoutes.route('/teachers', {
     name: 'teachers',
     action() {
         mount(App, {
-            content: <p> this is teachers for admin </p>
+            content: <AdminTeachers/>
         });
     }
 });
 
-adminRoutes.route('/students', {
-    name: 'students',
+// user/admin/logs
+adminRoutes.route('/logs', {
+    name: 'logs',
     action() {
         mount(App, {
-            content: <p> this is students for admin </p>
+            content: <AdminLogs />
         });
     }
 });
 
+// user/admin/classes
 adminRoutes.route('/classes', {
     name: 'classes',
     action() {
         mount(App, {
-            content: <p> this is classes for admin </p>
+            content: <AdminClasses />
         });
     }
-})
+});
 
+// user/admin/consultations
 adminRoutes.route('/consultations', {
     name: 'consultations',
     action() {
@@ -104,4 +123,4 @@ adminRoutes.route('/consultations', {
             content: <p> this is consultations for admin </p>
         })
     }
-})
+});

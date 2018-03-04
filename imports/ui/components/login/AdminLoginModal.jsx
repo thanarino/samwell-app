@@ -18,7 +18,7 @@ export default class AdminLoginModal extends Component {
             if (error) {
                 console.log(error);
             } else {
-                FlowRouter.go('/admin/teachers');
+                FlowRouter.go('/user/admin/teachers');
             }
         });
     }

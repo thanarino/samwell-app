@@ -9,8 +9,6 @@ Accounts.onCreateUser((options, user) => {
 
     user.profile = options.profile || {};
 
-    //do stuff
-
     const googleInfo = user.services.google;
 
     if (googleInfo) {
@@ -33,8 +31,11 @@ Accounts.onCreateUser((options, user) => {
             picture
             gender
         */
-        user.roles = ["Teacher"];
-        user.profile.organization = ["Teachers"];
+        user.roles = ["teacher"];
+        user.profile.organization = ["teachers"];
+    } else {
+        user.roles = ["admin"];
+        user.profile.organization = ["admins"];
     }
 
     return user;

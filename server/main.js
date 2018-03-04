@@ -11,9 +11,7 @@ Meteor.startup(() => {
             profile: {
                 first_name: 'Admin',
                 last_name: 'Admin'
-            },
-            roles: ['admin']
+            }
         });
-        Meteor.loginWithPassword('admin', 'admin');
-  }  
+    }  
 });
