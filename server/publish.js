@@ -1,3 +1,5 @@
+import { Sections } from '../imports/api/sections/sections';
+
 Meteor.publish('teacherData', function () {
     var currentUser;
     currentUser = this.userId;

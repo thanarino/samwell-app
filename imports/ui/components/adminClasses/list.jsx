@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { List, Grid, Button, Input } from 'semantic-ui-react';
+import { List, Grid, Button, Input, Header, Icon } from 'semantic-ui-react';
 import AddClassButton from '../adminClasses/addClassButton.jsx';
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 
-export default class ClassList extends Component {
+import { Sections } from '../../../api/sections/sections';
+
+class ClassList extends Component {
     constructor(props) {
         super(props);
+    }
+
+    sendToParent = (section) => {
+        this.props.callback(section);
     }
 
     render() {
@@ -21,22 +29,21 @@ export default class ClassList extends Component {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column width={16} size='big'>
+                        <Header as='h2'>
+                            <Icon name='university' />
+                            <Header.Content>
+                                Classes
+                            </Header.Content>
+                        </Header>    
                         <List animated selection verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>CMSCXXX</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>MGTXXX</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>SPCMXXX</List.Header>
-                                </List.Content>
-                            </List.Item>
+                            {this.props.sections.map((section, index) => 
+                                <List.Item onClick={this.sendToParent.bind(this, section)} key={index}>
+                                    <List.Content>
+                                        <List.Header>{section.subject} - {section.sectionName}</List.Header>
+                                        <List.Description>{section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester} - {section.classType}</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                            )}
                         </List>
                     </Grid.Column>
                 </Grid.Row>
@@ -44,3 +51,15 @@ export default class ClassList extends Component {
         )
     }
 }
+
+ClassList.protoTypes = {
+    callback: PropTypes.func,
+}
+
+export default withTracker(() => {
+    Meteor.subscribe('sections');
+
+    return {
+        sections: Sections.find({isDeleted: false}, { sort: { createdAt: -1 } }).fetch()
+    }
+})(ClassList);
