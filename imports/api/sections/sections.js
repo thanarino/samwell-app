@@ -11,7 +11,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'sections.insert'(userID, sectionName, studentList, teacherList, subject, year, semester, classType, startTime, endTime, daysList, description) {
+    'sections.insert'(userID, sectionName, studentList, teacherList, subject, year, semester, classType, startTime, endTime, daysList, description, room) {
         check(userID, String);
         check(sectionName, String);
         check(studentList, [String]);
@@ -24,6 +24,7 @@ Meteor.methods({
         check(endTime, String);
         check(daysList, [String]);
         check(description, String);
+        check(room, String);
 
         if (!this.userId) throw new Meteor.Error('not-authorized');
         
@@ -40,6 +41,7 @@ Meteor.methods({
             endTime,
             daysList,
             description,
+            room,
             createdAt: new Date(),
             isDeleted: false,
         });

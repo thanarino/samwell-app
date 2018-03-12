@@ -24,7 +24,7 @@ export default class AddClassForm extends Component {
 
     clearForm = () => {
         this.setState({
-            subject: '', section: '', classType: '', semester: '', start: '', end: '', description: '', days: [
+            subject: '', section: '', classType: '', semester: '', start: '', end: '', description: '', room:'', days: [
                 { name: "Sun", active: false },
                 { name: "Mon", active: false },
                 { name: "Tue", active: false },
@@ -56,7 +56,7 @@ export default class AddClassForm extends Component {
     handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
     render() {
-        const { subject, section, classType, semester, start, end, value, days, description } = this.state;
+        const { subject, section, classType, semester, start, end, value, days, description, room } = this.state;
         return (
             <Form>
                 <Form.Group>
@@ -66,6 +66,10 @@ export default class AddClassForm extends Component {
                 <Form.Input name='description' label='Course Title' placeholder='Course Title' value={description} width={16} onChange={this.handleChange} />
                 <ClassTypeForm ref={(ref) => this._classTypeForm = ref}/>
                 <SemesterForm ref={(ref) => this._semesterForm = ref} />
+                <Form.Field inline>
+                    <label>Room</label>
+                    <Input name='room' placeholder='Room' value={room} width={10} onChange={this.handleChange}  />
+                </Form.Field>
                 <Divider />
                 <Button.Group widths='7'>
                     {days.map((day, index) => 

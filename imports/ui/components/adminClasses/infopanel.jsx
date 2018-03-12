@@ -1,17 +1,67 @@
 import React, { Component } from 'react';
-import { Header, Sticky, Label } from 'semantic-ui-react';
+import { Header, Sticky, Label, Button, Grid, Icon, Table } from 'semantic-ui-react';
+import DeleteClassModal from './deleteClassModal';
 
 NoneSelected = (props) => {
     return <Sticky>
-        < Header as='h1' >Select a section in the list on the left.</Header >
+        < Header as='h1' textAlign='center' icon>
+            <Icon name='pointing left' />
+            First select a section in the list on the left.
+        </Header >
     </Sticky>;
 } 
 
 SectionSelected = (props) => {
     const section = props.section;
     return <Sticky>
-        <Header as='h1'>{section.subject} - {section.sectionName}</Header>
-        <Label>{section.description}</Label>
+        <Header as='h1' textAlign='center'>
+            <Header.Content>{section.subject} - {section.sectionName}</Header.Content>
+            <Header.Subheader>{section.description}</Header.Subheader>
+        </Header>
+        <Grid centered columns={2} >
+            <Grid.Column>
+                <Button.Group widths={2}>
+                    <Button icon='write' content='Update' size='large'/>
+                    <DeleteClassModal section={props.section}/>
+                </Button.Group>
+            </Grid.Column>
+        </Grid>
+        <Table definition>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell>Class Type</Table.Cell>
+                    <Table.Cell>{section.classType}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Year and Semester</Table.Cell>
+                    <Table.Cell>{section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Room</Table.Cell>
+                    <Table.Cell>{section.room}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Days</Table.Cell>
+                    <Table.Cell>{section.daysList}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Start Time</Table.Cell>
+                    <Table.Cell>{section.startTime}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>End Time</Table.Cell>
+                    <Table.Cell>{section.endTime}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Teachers</Table.Cell>
+                    <Table.Cell>{section.teacherList}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Students</Table.Cell>
+                    <Table.Cell>{section.studentList}</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table>
     </Sticky>;
 }
 
@@ -32,7 +82,6 @@ export default class InfoPanel extends Component {
 
     render() {
         const section = this.props.section;
-        console.log(section);
         return (
             <PanelBuilder section={section}/>
         )

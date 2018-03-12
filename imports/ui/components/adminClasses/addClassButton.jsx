@@ -52,7 +52,7 @@ export default class AddClassButton extends Component {
         // };
         console.log(Meteor.userId());
 
-        Meteor.call('sections.insert', Meteor.userId(), data.section, [], [], data.subject, new Date().getFullYear(), data.semester, data.classType, data.start, data.end, days, data.description,  (error) => {
+        Meteor.call('sections.insert', Meteor.userId(), data.section, [], [], data.subject, new Date().getFullYear(), data.semester, data.classType, data.start, data.end, days, data.description, data.room,  (error) => {
             console.log('error');
         });
 
