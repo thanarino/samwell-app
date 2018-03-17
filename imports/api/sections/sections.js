@@ -45,5 +45,14 @@ Meteor.methods({
             createdAt: new Date(),
             isDeleted: false,
         });
-    } 
+    }, 
+    'sections.delete'(sectionID) {
+        check(sectionID, String);
+
+        Sections.update(sectionID, { $set: { isDeleted: true } });
+    },
+    'sections.update'(sectionID, section) {
+        check(sectionID, String);
+        Sections.update(sectionID, {})
+    }
 })

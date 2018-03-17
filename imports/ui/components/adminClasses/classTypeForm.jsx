@@ -4,6 +4,12 @@ import { Form } from 'semantic-ui-react';
 export default class ClassTypeForm extends Component {
     state = {};
 
+    componentDidMount() {
+        if (this.props.option) {
+            this.setState({ value: this.props.option });
+        }
+    }
+
     handleChange = (e, { value }) => this.setState({ value });
     getData = () => { return this.state };
     clearForm = () => { this.setState({}) };

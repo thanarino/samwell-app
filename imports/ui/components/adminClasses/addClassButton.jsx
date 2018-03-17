@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, Input } from 'semantic-ui-react';
-import AddClassForm from '../adminClasses/addClassForm';
+import ClassForm from '../adminClasses/classForm';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -53,7 +53,7 @@ export default class AddClassButton extends Component {
         console.log(Meteor.userId());
 
         Meteor.call('sections.insert', Meteor.userId(), data.section, [], [], data.subject, new Date().getFullYear(), data.semester, data.classType, data.start, data.end, days, data.description, data.room,  (error) => {
-            console.log('error');
+            console.log(error);
         });
 
         this._addClassForm.clearForm();
@@ -73,7 +73,7 @@ export default class AddClassButton extends Component {
                         Add new Class
                     </Modal.Header>
                     <Modal.Content scrolling>
-                        <AddClassForm ref={(ref) => this._addClassForm = ref} />
+                        <ClassForm ref={(ref) => this._addClassForm = ref} section={null} />
                     </Modal.Content>
                     <Modal.Actions>
                         <Button negative onClick={this.close}>Cancel</Button>
