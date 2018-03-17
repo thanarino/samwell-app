@@ -51,8 +51,32 @@ Meteor.methods({
 
         Sections.update(sectionID, { $set: { isDeleted: true } });
     },
-    'sections.update'(sectionID, section) {
+    'sections.update'(sectionID, sectionName, studentList, teacherList, subject, semester, classType, startTime, endTime, daysList, description, room) {
         check(sectionID, String);
-        Sections.update(sectionID, {})
+        check(sectionName, String);
+        check(studentList, [String]);
+        check(teacherList, [String]);
+        check(subject, String);
+        check(semester, String);
+        check(classType, String);
+        check(startTime, String);
+        check(endTime, String);
+        check(daysList, [String]);
+        check(description, String);
+        check(room, String);
+        Sections.update(sectionID, {
+            $set: { 
+                sectionName,
+                studentList,
+                teacherList,
+                subject,
+                semester,
+                classType,
+                startTime,
+                endTime,
+                daysList,
+                description,
+                room
+        }})
     }
 })

@@ -13,15 +13,54 @@ export default class EditClassModal extends Component {
 
     show = () => this.setState({ open: true });
     close = () => this.setState({ open: false });
+    submit = () => {
+        let data = Object.assign(
+            {},
+            this._addClassForm.getData(),
+            {
+                _id: this.props.section._id,
+                classType: this._addClassForm.getClassTypeData().value,
+                semester: this._addClassForm.getSemesterData().value
+            }
+        )
+
+        const dayPicker = (index) => {
+            switch (index) {
+                case 0:
+                    return 'Sunday';
+                case 1:
+                    return 'Monday';
+                case 2:
+                    return 'Tuesday';
+                case 3:
+                    return 'Wednesday';
+                case 4:
+                    return 'Thursday';
+                case 5:
+                    return 'Friday';
+                case 6:
+                    return 'Saturday';
+            }
+        }
+
+        let days = [];
+        data.days.map((day, index) => {
+            day.active ? days.push(dayPicker(index)) : null
+        })
+
+        Meteor.call('sections.update', data._id, data.section, [], [], data.subject, data.semester, data.classType, data.start, data.end, days, data.description, data.room, (error) => {
+            console.log(error);
+        });
+
+        this.close();
+    }
 
     render() {
         const { open } = this.state;
         const section = this.props.section;
 
         return (
-            <div>
-                {/* < Button icon='write' content='Update' size='large' /> */}
-                
+            <div>              
                 <Modal size='tiny' open={open} trigger={<Button icon='write' content='Update' size='large' onClick={this.show} />} onClose={this.close} >
                     <Modal.Header>
                         {`Edit ${section.subject} - ${section.sectionName}`} 
