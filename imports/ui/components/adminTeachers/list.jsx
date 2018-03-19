@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { List , Grid, Button, Input} from 'semantic-ui-react';
+import { List , Grid, Button, Input, Header, Icon, Image} from 'semantic-ui-react';
 import AddTeacherButton from '../adminTeachers/addTeacherButton.jsx';
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 
-export default class TeacherList extends Component {
+class TeacherList extends Component {
     constructor(props) {
         super(props);
     }
@@ -21,22 +24,24 @@ export default class TeacherList extends Component {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column width={16} size='big'>
+                        <Header as='h2'>
+                            <Icon name='idea' />
+                            <Header.Content>
+                                Teachers
+                            </Header.Content>
+                        </Header>        
                         <List animated selection verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>Helen</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>Christian</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>Daniel</List.Header>
-                                </List.Content>
-                            </List.Item>
+                            {this.props.teachers.map((teacher, index) => 
+                                <List.Item key={index}>
+                                    <Image avatar src={teacher.services.google.picture} />
+                                    <List.Content>
+                                        <List.Header>
+                                            {teacher.family_name && teacher.given_name ? `${teacher.family_name}, ${teacher.given_name}` : teacher.email}
+                                        </List.Header>
+                                        <List.Description>{teacher.email}</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                            )}
                         </List>
                     </Grid.Column>
                 </Grid.Row>
@@ -44,3 +49,15 @@ export default class TeacherList extends Component {
         )
     }
 }
+
+TeacherList.protoTypes = {
+    callback: PropTypes.func,
+}
+
+export default withTracker(() => {
+    Meteor.subscribe('teachersAll');
+
+    return {
+        teachers: Meteor.users.find({roles: "teacher"}, { sort: { createdAt: -1 } }).fetch()
+    }
+})(TeacherList);

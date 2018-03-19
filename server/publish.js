@@ -1,18 +1,19 @@
 import { Sections } from '../imports/api/sections/sections';
 
-Meteor.publish('teacherData', function () {
+Meteor.publish('teachersAll', function () {
     var currentUser;
     currentUser = this.userId;
 
     if (currentUser) {
-        return Meteor.users.find({
-            _id: currentUser
-        }, {
+        return Meteor.users.find({}, {
                 fields: {
                     //Default
-                    "emails": 1,
-                    "profile": 1,
-                    "roles": 1
+                    "_id": 1,
+                    "email": 1,
+                    "given_name": 1,
+                    "family_name": 1,
+                    "roles": 1,
+                    "services.google.picture": 1,
                 }
             });
     } else {
