@@ -10,6 +10,10 @@ class TeacherList extends Component {
         super(props);
     }
 
+    sendToParent = (teacher) => {
+        this.props.callback(teacher);
+    }
+
     render() {
         return (
             <Grid columns={3} divided='vertically'>
@@ -29,10 +33,10 @@ class TeacherList extends Component {
                             <Header.Content>
                                 Teachers
                             </Header.Content>
-                        </Header>        
+                        </Header>
                         <List animated selection verticalAlign='middle'>
                             {this.props.teachers.map((teacher, index) => 
-                                <List.Item key={index}>
+                                <List.Item onClick={this.sendToParent.bind(this, teacher)} key={index}>
                                     <Image avatar src={teacher.services.google.picture} />
                                     <List.Content>
                                         <List.Header>

@@ -3,7 +3,7 @@ import { Header, Sticky, Label, Button, Grid, Icon, Table } from 'semantic-ui-re
 import DeleteClassModal from './deleteClassModal';
 import EditClassModal from './editClassModal';
 
-NoneSelected = (props) => {
+NoSectionSelected = (props) => {
     return <Sticky>
         < Header as='h1' textAlign='center' icon>
             <Icon name='pointing left' />
@@ -74,16 +74,16 @@ SectionSelected = (props) => {
     </Sticky>;
 }
 
-PanelBuilder = (props) => {
+SectionPanelBuilder = (props) => {
     const section = props.section;
     if (section) {
         return <SectionSelected section={section}/>
     } else {
-        return <NoneSelected/>
+        return <NoSectionSelected/>
     }
 } 
 
-export default class InfoPanel extends Component {
+export default class SectionInfoPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -92,7 +92,7 @@ export default class InfoPanel extends Component {
     render() {
         const section = this.props.section;
         return (
-            <PanelBuilder section={section}/>
+            <SectionPanelBuilder section={section}/>
         )
     }
 }

@@ -66,7 +66,6 @@ export default class ClassForm extends Component {
 
     handleClick = (index) => { 
         let newDays = this.state;
-        console.log(index);
         newDays.days[index].active = !newDays.days[index].active;
         this.setState(newDays);
      };

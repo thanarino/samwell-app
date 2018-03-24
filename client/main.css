@@ -35,3 +35,8 @@
 #teacherList {
     padding: 15%
 }
+
+.search .results {
+    overflow-y: auto;
+    max-height: 300px;
+}

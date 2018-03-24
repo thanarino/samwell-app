@@ -4,7 +4,7 @@ import Header from '../components/common/header';
 import PropTypes from 'prop-types';
 
 import ClassList from '../components/adminClasses/list';
-import InfoPanel from '../components/adminClasses/infopanel';
+import SectionInfoPanel from '../components/adminClasses/infopanel';
 
 export default class AdminClasses extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class AdminClasses extends Component {
                             <ClassList callback={this.getSection.bind(this)}/>
                         </Grid.Column>
                         <Grid.Column>
-                            <InfoPanel section={this.state.section}/>
+                            <SectionInfoPanel section={this.state.section}/>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>    
