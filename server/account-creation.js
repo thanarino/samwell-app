@@ -20,21 +20,30 @@ Accounts.onCreateUser((options, user) => {
         throw new Error('Expected login with Google only');
     }
 
-    console.log('went here');
-
-    let foundEmail = Meteor.users.find({ email: user.services.google.email });
-
-    if (!foundEmail.length) { 
-        throw new Error('Email not found');
-    }
-
     user.profile = options.profile || {};
 
     const googleInfo = user.services.google;
 
     if (googleInfo) {
+        user.department = "Not Available";
+        user.office = "Not Available";
+        user.position = "Not Available";
+        user.available = false;
+        user.approved = false;
+        user.isDeleted = false;
+        user.classes = [];
+        user.consultationHours = [
+                    { day: 'Sun', time: [], fullName: "Sunday" },
+                    { day: 'Mon', time: [], fullName: "Monday" },
+                    { day: 'Tue', time: [], fullName: "Tuesday" },
+                    { day: 'Wed', time: [], fullName: "Wednesday" },
+                    { day: 'Thu', time: [], fullName: "Thursday" },
+                    { day: 'Fri', time: [], fullName: "Friday" },
+                    { day: 'Sat', time: [], fullName: "Saturday" }
+                ];
         user.email = googleInfo.email;
         user.given_name = googleInfo.given_name;
+        user.middle_name = "Not Available";
         user.family_name = googleInfo.family_name;
         user.photo = googleInfo.photo;
         user.gender = googleInfo.gender;
@@ -54,7 +63,23 @@ Accounts.onCreateUser((options, user) => {
         */
         user.roles = ["teacher"];
         user.profile.organization = ["teachers"];
-    } else {
+    }
+    // else if (options.profile.first) {
+    //     user.family_name = options.profile.lastName;
+    //     user.given_name = options.profile.firstName;
+    //     user.middle_name = options.profile.middleName;
+    //     user.email = options.profile.email;
+    //     user.department = options.profile.department;
+    //     user.position = options.profile.position;
+    //     user.office = options.profile.office;
+    //     user.classes = options.profile.classes;
+    //     user.consultation_hours = options.profile.consultationHours;
+    //     user.available = options.profile.available;
+    //     user.profile = {};
+    //     user.roles = ["teacher"];
+    //     user.profile.organization = ["teachers"];
+    // }
+    else {
         user.roles = ["admin"];
         user.profile.organization = ["admins"];
     }

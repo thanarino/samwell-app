@@ -14,6 +14,15 @@ Meteor.publish('teachersAll', function () {
                     "family_name": 1,
                     "roles": 1,
                     "services.google.picture": 1,
+                    "middle_name" : 1,
+                    "department" : 1,
+                    "position" : 1,
+                    "office" : 1,
+                    "classes" : 1,
+                    "consultationHours" : 1,
+                    "available" : 1,
+                    "approved": 1,
+                    "isDeleted" :1,
                 }
             });
     } else {

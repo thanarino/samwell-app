@@ -13,11 +13,9 @@ resultRenderer.propTypes = {
 
 class TeacherForm extends Component {
     state = {
-        username: '',
-        password: '',
-        lastName: '',
-        firstName: '',
-        middleName: '',
+        family_name: '',
+        given_name: '',
+        middle_name: '',
         email: '',
         department: '',
         position: '',
@@ -34,18 +32,33 @@ class TeacherForm extends Component {
         ],
         available: false,
         activeIndex: 0,
+        approved: false,
     };
 
     componentDidMount() {
-        if (this.props.teacher) {
-            const { username, password, lastName, firstName, middleName, email, department, position, office, available, classes } = this.props.teacher;
-            const consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHoursList);
+        if (this.props.teacher.office) {
+            console.log(this.props.teacher);
+            let { family_name, given_name, middle_name, email, department, position, office, available, classes, approved, consultationHours } = this.props.teacher;
+            
+            // let consultationHours = [];
+            // if (this.props.teacher.consultationHours.length != 0) {
+            //     consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHoursList);
+            // } else {
+            //     consultationHours = [
+            //         { day: 'Sun', time: [], fullName: "Sunday" },
+            //         { day: 'Mon', time: [], fullName: "Monday" },
+            //         { day: 'Tue', time: [], fullName: "Tuesday" },
+            //         { day: 'Wed', time: [], fullName: "Wednesday" },
+            //         { day: 'Thu', time: [], fullName: "Thursday" },
+            //         { day: 'Fri', time: [], fullName: "Friday" },
+            //         { day: 'Sat', time: [], fullName: "Saturday" }
+            //     ];
+            // }
+            
             this.setState({
-                username: username,
-                password: password,
-                lastName: lastName,
-                firstName: firstName,
-                middleName: middleName,
+                family_name: family_name,
+                given_name: given_name,
+                middle_name: middle_name,
                 email: email,
                 department: department,
                 position: position,
@@ -53,6 +66,38 @@ class TeacherForm extends Component {
                 available: available,
                 classes: classes,
                 consultationHours: consultationHours,
+                approved: approved,
+            })
+        } else if (this.props.teacher) {
+            let { family_name, given_name, email } = this.props.teacher;
+
+            let consultationHours = [];
+            if (this.props.teacher.consultationHours) {
+                consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHoursList);
+            } else {
+                consultationHours = [
+                    { day: 'Sun', time: [], fullName: "Sunday" },
+                    { day: 'Mon', time: [], fullName: "Monday" },
+                    { day: 'Tue', time: [], fullName: "Tuesday" },
+                    { day: 'Wed', time: [], fullName: "Wednesday" },
+                    { day: 'Thu', time: [], fullName: "Thursday" },
+                    { day: 'Fri', time: [], fullName: "Friday" },
+                    { day: 'Sat', time: [], fullName: "Saturday" }
+                ];
+            }
+
+            this.setState({
+                family_name: family_name,
+                given_name: given_name,
+                middle_name: "",
+                email: email,
+                department: "",
+                position: "",
+                office: "",
+                available: false,
+                classes: [],
+                consultationHours: consultationHours,
+                approved: false,
             })
         }
     }
@@ -63,11 +108,9 @@ class TeacherForm extends Component {
 
     clearForm = () => {
         this.setState({
-            username: '',
-            password: '',
-            lastName: '',
-            firstName: '',
-            middleName: '',
+            family_name: '',
+            given_name: '',
+            middle_name: '',
             email: '',
             department: '',
             position: '',
@@ -82,7 +125,8 @@ class TeacherForm extends Component {
                 { day: 'Fri', time: [], fullName: "Friday" },
                 { day: 'Sat', time: [], fullName: "Saturday" }
             ],
-            available: false
+            available: false,
+            approved: false,
         })
     }
 
@@ -102,16 +146,15 @@ class TeacherForm extends Component {
         this.setState({ activeIndex: newIndex })
     }
 
+    handleCheckboxClick = (e, data) => this.setState({ approved: !this.state.approved });
+
     handleChange = (e, { name, value }) => this.setState({ [name]: value });
     
     handleTimeChange = (e, { index, index2, type, value }) => {
-        console.log('adsad');
         let newState = this.state;
         if (type == '0') {
-            console.log('zero');
             newState.consultationHours[index].time[index2].start = value;
         } else {
-            console.log('one');
             newState.consultationHours[index].time[index2].end = value;
         }
         //  ?  : ; 
@@ -121,7 +164,7 @@ class TeacherForm extends Component {
     deleteTime = (index, index2) => {
         console.log(`clicked i1: ${index}, i2: ${index2}`);
         let newState = this.state;
-        newState = newState.consultationHours[index].time.splice(index2, 1);
+        newState.consultationHours[index].time.splice(index2, 1);
         this.setState(newState);
     }
 
@@ -137,7 +180,7 @@ class TeacherForm extends Component {
         ];
         consultationHoursList.map((element) => {
             tempArray.map((element2) => {
-                if (element.search(element2.name) === 0) {
+                if (element.day.search(element2.day) === 0) {
                     element2.time = JSON.parse(JSON.stringify(element.time));
                 }
             })
@@ -146,20 +189,17 @@ class TeacherForm extends Component {
     }
 
     render() {
-        const { username, password, lastName, firstName, middleName, email, department, position, office, classes, consultationHours, available, activeIndex } = this.state;
+        const { family_name, given_name, middle_name, email, department, position, office, classes, consultationHours, available, activeIndex, approved } = this.state;
         return (
             <Form>
                 <Grid columns={2} divided>
                     <Grid.Row>
                         <Grid.Column>
+                            <Form.Checkbox toggle label='Approved' checked={this.state.approved} onClick={this.handleCheckboxClick}/>
                             <Form.Group>
-                                <Form.Input name='username' label='Username' placeholder='Username' value={this.state.username} width={8} onChange={this.handleChange} />
-                                <Form.Input name='password' label='Password' placeholder='Password' value={this.state.password} width={8} onChange={this.handleChange} type='password'/>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Input name='firstName' label='First Name' placeholder='First Name' value={this.state.firstName} width={5} onChange={this.handleChange} />
-                                <Form.Input name='middleName' label='Middle Name' placeholder='Middle Name' value={this.state.middleName} width={5} onChange={this.handleChange} />
-                                <Form.Input name='lastName' label='Last Name' placeholder='Last Name' value={this.state.lastName} width={5} onChange={this.handleChange} />
+                                <Form.Input name='given_name' label='First Name' placeholder='First Name' value={this.state.given_name} width={5} onChange={this.handleChange} />
+                                <Form.Input name='middle_name' label='Middle Name' placeholder='Middle Name' value={this.state.middle_name} width={5} onChange={this.handleChange} />
+                                <Form.Input name='family_name' label='Last Name' placeholder='Last Name' value={this.state.family_name} width={5} onChange={this.handleChange} />
                             </Form.Group>
                             <Form.Input name='email' label='Email' placeholder='Email' value={this.state.email} width={16} onChange={this.handleChange} />
                             <Form.Group widths='equal' inline>
@@ -171,7 +211,7 @@ class TeacherForm extends Component {
                         <Grid.Column>
                             <Form.Field>
                                 <label>Classes</label>
-                                <ClassSearch onRef={ref => this._searchForm = ref} />
+                                <ClassSearch onRef={(ref) => this._searchForm = ref} classes={this.props.teacher.classes}/>
                             </Form.Field>
                             <Divider />
                             <Header as='h5'>Consultation Hours</Header>

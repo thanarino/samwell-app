@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { check } from 'meteor/check';
+import { Random } from 'meteor/random';
 
 import '../imports/api/sections/sections.js';
 
@@ -16,4 +18,62 @@ Meteor.startup(() => {
             }
         });
     }  
+});
+
+Meteor.methods({
+    'teacher.add'(userID, teacher) {
+        check(userID, String);
+        check(teacher, {
+            lastName: String,
+            firstName: String,
+            middleName: String,
+            email: String,
+            department: String,
+            position: String,
+            office: String,
+            classes: [String],
+            consultationHours: [{
+                day: String,
+                time: [{
+                    start: String,
+                    end: String
+                }],
+                fullName: String
+            }],
+            available: Boolean,
+        })
+
+        let data = Object.assign({
+            username: teacher.email,
+            password: Random.id(),
+            first: true
+        }, teacher);
+
+        Accounts.createUser({ username: data.username, email: data.email, password: data.password , profile: data});
+    },
+    'teacher.update'(userID, data) {
+        check(userID, String);
+        check(data, {
+            family_name: String,
+            given_name: String,
+            middle_name: String,
+            email: String,
+            department: String,
+            position: String,
+            office: String,
+            classes: [String],
+            consultationHours: [{
+                day: String,
+                time: [{
+                    start: String,
+                    end: String
+                }],
+                fullName: String
+            }],
+            available: Boolean,
+            approved: Boolean
+        });
+
+        Meteor.users.update({ _id: userID }, { $set: { family_name: data.family_name, given_name: data.given_name, middle_name: data.middle_name, email: data.email, department: data.department, position: data.position, office: data.office, classes: data.classes, consultationHours: data.consultationHours, available: data.available, approved: data.approved } });
+    }
 });

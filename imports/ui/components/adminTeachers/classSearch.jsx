@@ -13,6 +13,23 @@ class ClassSearch extends Component {
         this.props.onRef(this);
     }
 
+    componentWillReceiveProps(newProp) {
+        if (this.props.classes && newProp.sections.length != 0) {
+            console.log("went here");
+            this.setState({ classes: this.convertToClasses(this.props.classes, newProp.sections) });
+        }
+    }
+
+    convertToClasses(classIDs, sections) {
+        let classes = [];
+        classIDs.map((classID, index) => {
+            //PROBLEM IS HERE, CANT EDIT CLASSES PROPERLY
+            classes.push(_.filter(sections, { '_id': classID })[0]);
+        });
+        console.log(classes);
+        return classes;
+    }
+
     componentWillUnmount() {
         this.props.onRef(undefined)
     }
@@ -75,10 +92,20 @@ class ClassSearch extends Component {
                 />
                 <div>
                     {this.state.classes.length != 0 && <Label basic>Click on a subject to remove it.</Label>}
-                    {this.state.classes.map((classObject, index) => 
-                        <Label as='a' key={index} onClick={()=>this.removeLabel(classObject)}>
-                            {`${classObject.subject} - ${classObject.sectionName}`}
-                        </Label>
+                    {this.state.classes.map((classObject, index) => {
+                        // if (typeof classObject == "string") {
+                        //     console.log("went here")
+                        //     console.log(classObject);
+                        //     let section = _.filter(this.props.sections, { '_id': classObject });
+                        //     return <Label as='a' key={index} onClick={() => this.removeLabel(section)}>
+                        //         {`${section.subject} - ${section.sectionName}`}
+                        //     </Label>
+                        // } else {
+                            return <Label as='a' key={index} onClick={() => this.removeLabel(classObject)}>
+                                {`${classObject.subject} - ${classObject.sectionName}`}
+                            </Label>
+                        // }
+                    }
                     )}
                 </div>
             </div>

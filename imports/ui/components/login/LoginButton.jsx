@@ -19,8 +19,8 @@ export default class LoginButton extends Component {
 
     render() {
         return (
-            <Button icon size='big' onClick={this.handleClick}>
-                Log in with &nbsp;
+            <Button icon size={this.props.size} onClick={this.handleClick}>
+                {this.props.content} &nbsp;
                 <Icon name='google'/>
             </Button>
         );

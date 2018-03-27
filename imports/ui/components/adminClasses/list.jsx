@@ -20,7 +20,6 @@ class ClassList extends Component {
             <Grid columns={3} divided='vertically'>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        {/* <Button color='teal'>Add New Class</Button> */}
                         <AddClassButton />
                     </Grid.Column>
                     <Grid.Column width={12}>

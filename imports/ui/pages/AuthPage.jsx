@@ -130,7 +130,7 @@ export default class AuthPage extends Component {
                     </Grid.Column>
                     <Divider vertical></Divider>
                     <Grid.Column textAlign='left' verticalAlign='middle'>
-                        <LoginButton />
+                        <LoginButton size="big" content="Log in with"/>
                     </Grid.Column>
                 </Grid>
             </div>

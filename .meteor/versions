@@ -78,6 +78,7 @@ mongo-dev-server@1.1.0
 mongo-id@1.0.6
 msavin:jetsetter@4.0.0
 msavin:mongol@0.5.5
+nathantreid:static-assets@0.0.2
 npm-bcrypt@0.9.3
 npm-mongo@2.2.34
 oauth@1.2.1

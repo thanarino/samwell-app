@@ -11,18 +11,19 @@ export default class AddTeacherButton extends Component {
             {},
             this._addTeacherForm.getData(),
             {
-                classes: this.getClassIDs(this._addTeacherForm.getClassData())
+                classes: this.getClassIDs(this._addTeacherForm.getClassData()),
             }
         )
 
         const { activeIndex, ...newData } = data;
 
         console.log(newData);
-        
-        Meteor.call('teacher.add', Meteor.userId(), newData);
+        console.log(this.props.teacher._id);
 
-        this._addTeacherForm.clearForm();
-        this.close();
+        Meteor.call('teacher.update', this.props.teacher._id, newData);
+
+        // this._addTeacherForm.clearForm();
+        // this.close();
     }
 
     getClassIDs = (sections) => {
@@ -35,21 +36,22 @@ export default class AddTeacherButton extends Component {
 
     render() {
         const { open } = this.state;
+        const teacher = this.props.teacher;
 
         return (
             <div>
-                <Button onClick={this.show} color='teal'>Add A New Teacher</Button>
+                {/* <Button icon='write' content='Update' size='large' onClick={this.show}>Edit</Button> */}
 
-                <Modal size='large' open={open} onClose={this.close}>
+                <Modal size='large' open={open} onClose={this.close} trigger={<Button icon='write' content='Update' size='large' onClick={this.show} />}>
                     <Modal.Header>
-                        Add new Teacher
+                        {`Edit ${teacher.family_name}, ${teacher.given_name}`} 
                     </Modal.Header>
                     <Modal.Content scrolling>
-                        <TeacherForm ref={(ref) => this._addTeacherForm = ref}/>
+                        <TeacherForm ref={(ref) => this._addTeacherForm = ref} teacher={teacher}/>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button negative onClick={this.close}>Close</Button>
-                        <Button positive onClick={this.submit}>Yes</Button>
+                        <Button negative onClick={this.close}>Cancel</Button>
+                        <Button positive onClick={this.submit}>Update</Button>
                     </Modal.Actions>
                 </Modal>
             </div>
