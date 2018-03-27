@@ -75,5 +75,11 @@ Meteor.methods({
         });
 
         Meteor.users.update({ _id: userID }, { $set: { family_name: data.family_name, given_name: data.given_name, middle_name: data.middle_name, email: data.email, department: data.department, position: data.position, office: data.office, classes: data.classes, consultationHours: data.consultationHours, available: data.available, approved: data.approved } });
-    }
+    },
+    'teacher.delete'(teacherID, isDeleted) {
+        check(teacherID, String);
+        check(isDeleted, Boolean);
+
+        Meteor.users.update(teacherID, { $set: { isDeleted: isDeleted } });
+    },
 });

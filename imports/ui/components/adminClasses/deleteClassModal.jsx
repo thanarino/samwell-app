@@ -11,16 +11,17 @@ export default class deleteClassModal extends Component {
     show = () => this.setState({ open: true });
     close = () => this.setState({ open: false });
     submit = () => {
-        Meteor.call('sections.delete', this.props.section._id);
+        Meteor.call('sections.delete', this.props.section._id, !this.props.section.isDeleted);
         this.close();
+        window.location.reload();
     }
         
     render() {
         const section = this.props.section;
         const { open } = this.state;
         return (
-            <Modal trigger={<Button icon='trash outline' content='Delete' size='large' onClick={this.show}/>} size='mini' closeIcon open={open} onClose={this.close}>
-                <Header content={`Delete ${section.subject} - ${section.sectionName}?`}/>
+            <Modal trigger={<Button icon='trash outline' content={section.isDeleted ? 'Recover' : 'Delete'} size='large' onClick={this.show}/>} size='mini' closeIcon open={open} onClose={this.close}>
+                <Header content={`${section.isDeleted ? `Recover` : `Delete`} ${section.subject} - ${section.sectionName}?`}/>
                 <Modal.Actions>
                     <Button negative onClick={this.close}>No</Button>
                     <Button positive onClick={this.submit}>Yes</Button>

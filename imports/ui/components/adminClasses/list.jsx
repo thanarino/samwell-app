@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Grid, Button, Input, Header, Icon } from 'semantic-ui-react';
+import { List, Grid, Button, Input, Header, Icon, Label } from 'semantic-ui-react';
 import AddClassButton from '../adminClasses/addClassButton.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -37,9 +37,18 @@ class ClassList extends Component {
                         <List animated selection verticalAlign='middle'>
                             {this.props.sections.map((section, index) => 
                                 <List.Item onClick={this.sendToParent.bind(this, section)} key={index}>
+                                    {section.isDeleted ?
+                                        <List.Content floated='right'>
+                                            <Label color='teal' size='large'>
+                                                archived
+                                            </Label>
+                                        </List.Content>
+                                    : null}    
                                     <List.Content>
                                         <List.Header>{section.subject} - {section.sectionName}</List.Header>
-                                        <List.Description>{section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester} - {section.classType}</List.Description>
+                                        <List.Description>
+                                            {section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester} - {section.classType}
+                                        </List.Description>
                                     </List.Content>
                                 </List.Item>
                             )}

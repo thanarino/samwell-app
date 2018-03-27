@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List , Grid, Button, Input, Header, Icon, Image} from 'semantic-ui-react';
+import { Label, List, Grid, Button, Input, Header, Icon, Image } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
@@ -39,6 +39,19 @@ class TeacherList extends Component {
                         <List animated selection verticalAlign='middle'>
                             {this.props.teachers.map((teacher, index) => 
                                 <List.Item onClick={this.sendToParent.bind(this, teacher)} key={index}>
+                                    {teacher.approved ? null :
+                                        <List.Content floated='right'>
+                                            <Label color='red' size='large'>
+                                                unapproved
+                                            </Label>
+                                        </List.Content>}
+                                    {teacher.isDeleted ?
+                                        <List.Content floated='right'>
+                                            <Label color='teal' size='large'>
+                                                archived
+                                            </Label>
+                                        </List.Content>
+                                        : null}    
                                     <Image avatar src={teacher.services.google ? teacher.services.google.picture : default_pp} />
                                     <List.Content>
                                         <List.Header>
