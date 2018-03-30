@@ -40,3 +40,18 @@
     overflow-y: auto;
     max-height: 300px;
 }
+
+.calendarColumn {
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+.rbc-calendar {
+    overflow-y: auto;
+    min-height: 85vh;
+}
+
+.react-datepicker__time-list {
+    padding-left: 0px;
+    padding-right: 0px;
+}

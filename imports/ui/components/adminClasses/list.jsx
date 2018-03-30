@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Grid, Button, Input, Header, Icon, Label } from 'semantic-ui-react';
+import { List, Grid, Button, Input, Header, Icon, Label, Loader } from 'semantic-ui-react';
 import AddClassButton from '../adminClasses/addClassButton.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -35,7 +35,13 @@ class ClassList extends Component {
                             </Header.Content>
                         </Header>    
                         <List animated selection verticalAlign='middle'>
-                            {this.props.sections.map((section, index) => 
+                            {!this.props.sections ?
+                                <Segment>
+                                    <Dimmer active inverted>
+                                        <Loader size='large'>Loading</Loader>
+                                    </Dimmer>
+                                </Segment>
+                                : this.props.sections.map((section, index) => 
                                 <List.Item onClick={this.sendToParent.bind(this, section)} key={index}>
                                     {section.isDeleted ?
                                         <List.Content floated='right'>
@@ -47,7 +53,7 @@ class ClassList extends Component {
                                     <List.Content>
                                         <List.Header>{section.subject} - {section.sectionName}</List.Header>
                                         <List.Description>
-                                            {section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester} - {section.classType}
+                                            {section.semester.startYear} -  {section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value} - {section.classType}
                                         </List.Description>
                                     </List.Content>
                                 </List.Item>

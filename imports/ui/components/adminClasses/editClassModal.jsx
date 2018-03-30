@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Input } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import { Sections } from '../../../api/sections/sections';
 import ClassForm from '../adminClasses/classForm';
@@ -20,7 +21,7 @@ export default class EditClassModal extends Component {
             {
                 _id: this.props.section._id,
                 classType: this._addClassForm.getClassTypeData().value,
-                semester: this._addClassForm.getSemesterData().value
+                semester: this._addClassForm.getSemesterData()
             }
         )
 
@@ -47,6 +48,14 @@ export default class EditClassModal extends Component {
         data.days.map((day, index) => {
             day.active ? days.push(dayPicker(index)) : null
         })
+
+        data.semester.startYear = moment(data.semester.start).year();
+        data.semester.endYear = moment(data.semester.end).year();
+        data.semester.start = moment(data.semester.start).dayOfYear();
+        data.semester.end = moment(data.semester.end).dayOfYear();
+
+        data.end = `${moment(data.end).hour()}:${moment(data.end).minute()}`
+        data.start = `${moment(data.start).hour()}:${moment(data.start).minute()}`
 
         Meteor.call('sections.update', data._id, data.section, [], [], data.subject, data.semester, data.classType, data.start, data.end, days, data.description, data.room, (error) => {
             console.log(error);

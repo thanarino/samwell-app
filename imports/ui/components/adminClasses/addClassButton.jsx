@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Sections } from '../../../api/sections/sections';
+import moment from 'moment';
 
 export default class AddClassButton extends Component {
     state = { open: false };
@@ -16,7 +17,7 @@ export default class AddClassButton extends Component {
             this._addClassForm.getData(),
             {
                 classType : this._addClassForm.getClassTypeData().value,
-                semester : this._addClassForm.getSemesterData().value
+                semester : this._addClassForm.getSemesterData()
             }
         )
 
@@ -44,15 +45,24 @@ export default class AddClassButton extends Component {
             day.active ? days.push(dayPicker(index)) : null
         })
 
+        data.semester.startYear = moment(data.semester.start).year();
+        data.semester.endYear = moment(data.semester.end).year();
+        data.semester.start = moment(data.semester.start).dayOfYear();
+        data.semester.end = moment(data.semester.end).dayOfYear();
+
+        data.end = `${moment(data.end).hour()}:${moment(data.end).minute()}`
+        data.start = `${moment(data.start).hour()}:${moment(data.start).minute()}`
+
         // const toSend = {
         //     sectionID: '1',
         //     createdAt: new Date(),
             
         //     isDeleted: false,
         // };
-        console.log(Meteor.userId());
 
-        Meteor.call('sections.insert', Meteor.userId(), data.section, [], [], data.subject, new Date().getFullYear(), data.semester, data.classType, data.start, data.end, days, data.description, data.room,  (error) => {
+        console.log(data);
+
+        Meteor.call('sections.insert', Meteor.userId(), data.section, [], [], data.subject, data.semester, data.classType, data.start, data.end, days, data.description, data.room,  (error) => {
             console.log(error);
         });
 

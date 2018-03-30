@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Header, Sticky, Label, Button, Grid, Icon, Table } from 'semantic-ui-react';
+import moment from 'moment';
 import DeleteClassModal from './deleteClassModal';
 import EditClassModal from './editClassModal';
 
@@ -38,8 +39,16 @@ SectionSelected = (props) => {
                     <Table.Cell>{section.classType}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                    <Table.Cell>Year and Semester</Table.Cell>
-                    <Table.Cell>{section.year} - {section.semester === 'First' || section.semester === 'Second' ? section.semester + ' Semester' : section.semester}</Table.Cell>
+                    <Table.Cell>Semester</Table.Cell>
+                    <Table.Cell>{section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Semester Start</Table.Cell>
+                    <Table.Cell>{`${moment().dayOfYear(section.semester.start).format('MMMM DD')}, ${section.semester.startYear}`}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Cell>Semester End</Table.Cell>
+                    <Table.Cell>{`${moment().dayOfYear(section.semester.end).format('MMMM DD')}, ${section.semester.endYear}`}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Room</Table.Cell>
@@ -51,11 +60,11 @@ SectionSelected = (props) => {
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Start Time</Table.Cell>
-                    <Table.Cell>{section.startTime}</Table.Cell>
+                    <Table.Cell>{moment(section.startTime,'hh:mm').format('hh:mma')}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>End Time</Table.Cell>
-                    <Table.Cell>{section.endTime}</Table.Cell>
+                    <Table.Cell>{moment(section.endTime, 'hh:mm').format('hh:mma')}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Teachers</Table.Cell>

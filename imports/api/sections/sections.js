@@ -11,14 +11,19 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'sections.insert'(userID, sectionName, studentList, teacherList, subject, year, semester, classType, startTime, endTime, daysList, description, room) {
+    'sections.insert'(userID, sectionName, studentList, teacherList, subject, semester, classType, startTime, endTime, daysList, description, room) {
         check(userID, String);
         check(sectionName, String);
         check(studentList, [String]);
         check(teacherList, [String]);
         check(subject, String);
-        check(year, Number);
-        check(semester, String);
+        check(semester, {
+            value: String,
+            endYear: Number,
+            startYear: Number,
+            start: Number,
+            end: Number,
+        });
         check(classType, String);
         check(startTime, String);
         check(endTime, String);
@@ -34,7 +39,6 @@ Meteor.methods({
             studentList,
             teacherList,
             subject,
-            year,
             semester,
             classType,
             startTime,
@@ -57,7 +61,13 @@ Meteor.methods({
         check(studentList, [String]);
         check(teacherList, [String]);
         check(subject, String);
-        check(semester, String);
+        check(semester, {
+            value: String,
+            endYear: Number,
+            startYear: Number,
+            start: Number,
+            end: Number,
+        });
         check(classType, String);
         check(startTime, String);
         check(endTime, String);

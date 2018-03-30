@@ -121,6 +121,6 @@ export default withTracker(() => {
     Meteor.subscribe('sections');
 
     return {
-        sections: Sections.find({}, { sort: { createdAt: -1 } }).fetch()
+        sections: Sections.find({isDeleted: false}, { sort: { createdAt: -1 } }).fetch()
     }
 })(ClassSearch);

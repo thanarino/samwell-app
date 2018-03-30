@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
-import Header from '../components/common/header';
+import SiteHeader from '../components/common/header';
 import PropTypes from 'prop-types';
 
 import ClassList from '../components/adminClasses/list';
@@ -19,7 +19,7 @@ export default class AdminClasses extends Component {
 
         return (
             <div id='adminClasses'>
-                <Header active='classes'/>
+                <SiteHeader active='classes' teacher={null}/>
                 <Grid columns={2} divided padded>
                     <Grid.Row>
                         <Grid.Column>

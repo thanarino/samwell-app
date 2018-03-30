@@ -3,8 +3,6 @@ import { Button, Header, Icon, Input, Modal, Grid } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-//@TODO: EXTEND USERS SCHEMA TO ACCOUNT FOR TEACHERS AND STUDENTS
-
 export default class AdminLoginModal extends Component {
     constructor(props) {
         super(props);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import { Meteor } from "meteor/meteor";
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class LoginButton extends Component {
     constructor(props) {
@@ -12,9 +13,11 @@ export default class LoginButton extends Component {
             requestPermissions: ['email']
         }, (err) => {
             if (err) {
-                throw new Meteor.Error('Google Login Failed');
+                console.log(err);
+            } else {
+                FlowRouter.go(FlowRouter.path('user.consultations'));
             }
-        })
+        });
     }
 
     render() {

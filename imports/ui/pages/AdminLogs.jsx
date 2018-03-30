@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../components/common/header';
+import SiteHeader from '../components/common/header';
 
 export default class AdminLogs extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ export default class AdminLogs extends Component {
     render() {
         return (
             <div id='adminLogs'>
-                <Header active="logs"/>
+                <SiteHeader active="logs" teacher={null}/>
                 <p> this is logs </p>
             </div>
         );
