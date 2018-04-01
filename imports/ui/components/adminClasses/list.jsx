@@ -34,7 +34,7 @@ class ClassList extends Component {
                                 Classes
                             </Header.Content>
                         </Header>    
-                        <List animated selection verticalAlign='middle'>
+                        <List animated selection verticalAlign='middle' className='scrollableList'>
                             {!this.props.sections ?
                                 <Segment>
                                     <Dimmer active inverted>

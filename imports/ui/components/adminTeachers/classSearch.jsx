@@ -15,7 +15,6 @@ class ClassSearch extends Component {
 
     componentWillReceiveProps(newProp) {
         if (this.props.classes && newProp.sections.length != 0) {
-            console.log("went here");
             this.setState({ classes: this.convertToClasses(this.props.classes, newProp.sections) });
         }
     }
@@ -23,10 +22,8 @@ class ClassSearch extends Component {
     convertToClasses(classIDs, sections) {
         let classes = [];
         classIDs.map((classID, index) => {
-            //PROBLEM IS HERE, CANT EDIT CLASSES PROPERLY
             classes.push(_.filter(sections, { '_id': classID })[0]);
         });
-        console.log(classes);
         return classes;
     }
 

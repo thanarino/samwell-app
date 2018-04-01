@@ -4,14 +4,10 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
 
+import AddConsultationButton from '../components/userConsultations/addConsultationButton.jsx';
+import ConsultationTable from '../components/userConsultations/consultationTable.jsx';
 import SiteHeader from '../components/common/header.jsx';
-import '../../../node_modules/react-big-calendar/lib/css/react-big-calendar.css';
-import BigCalendar from 'react-big-calendar';
-import moment from 'moment';
-
-BigCalendar.momentLocalizer(moment);
-
-// https://www.npmjs.com/package/react-big-calendar
+import Schedule from '../components/userConsultations/schedule.jsx';
 
 Unapproved = (props) => {
     return <div>
@@ -33,32 +29,10 @@ Approved = (props) => {
         <SiteHeader active='consultations' teacher={props.teacher} />
         <Grid columns={2} divided padded>
             <Grid.Row>
-                <Grid.Column className='calendarColumn' width={10}>
-                    {/* <TeacherList callback={this.getTeacher.bind(this)} /> */}
-                    <BigCalendar
-                        events={[
-                            {
-                                id: 0,
-                                title: 'All Day Event very long title',
-                                allDay: true,
-                                start: new Date(2018, 3, 0),
-                                end: new Date(2018, 3, 1),
-                            },
-                            {
-                                id: 1,
-                                title: 'Long Event',
-                                start: new Date(2018, 3, 7),
-                                end: new Date(2018, 3, 10),
-                            }
-                        ]}
-                        defaultView='week'
-                        step={60}
-                        showMultiDayTimes
-                        defaultDate={new Date()}
-                    />
+                <Grid.Column className='calendarColumn' width={9}>
+                    <Schedule teacher={props.teacher}/>
                 </Grid.Column>
-                <Grid.Column width={6}>
-                    {/* <TeacherInfoPanel teacher={this.state.teacher} /> */}
+                <Grid.Column width={7}>
                     <Grid.Row>
                         <Header size='large' floated='left'>
                             <Icon name='calendar' />
@@ -66,10 +40,8 @@ Approved = (props) => {
                                 Consultations
                             </Header.Content>
                         </Header>
-                        <Button icon labelPosition='right' floated='right'>
-                            <Icon name='plus' />
-                            Schedule new
-                        </Button>
+                        <AddConsultationButton teacher={props.teacher}/>
+                        <ConsultationTable teacher={props.teacher}/>
                     </Grid.Row>
                     <Grid.Row>
                     </Grid.Row>
@@ -88,7 +60,7 @@ class UserConsultations extends Component {
         const teacher = this.props.teacher;
         return (
             <div>
-                {teacher.approved && _.includes(teacher.roles, "teacher") ? <Approved teacher={teacher} /> : <Unapproved teacher={teacher} />}
+                {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <Approved teacher={teacher} /> : <Unapproved teacher={teacher} />}
             </div>
         )
 

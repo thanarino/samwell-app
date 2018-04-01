@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Accordion, Button, Checkbox, Form, Label, Input, Divider, Header, Grid, Icon } from 'semantic-ui-react';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 import ClassSearch from './classSearch';
 
@@ -38,22 +41,22 @@ class TeacherForm extends Component {
     componentDidMount() {
         if (this.props.teacher.office) {
             console.log(this.props.teacher);
-            let { family_name, given_name, middle_name, email, department, position, office, available, classes, approved, consultationHours } = this.props.teacher;
+            let { family_name, given_name, middle_name, email, department, position, office, available, classes, approved } = this.props.teacher;
             
-            // let consultationHours = [];
-            // if (this.props.teacher.consultationHours.length != 0) {
-            //     consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHoursList);
-            // } else {
-            //     consultationHours = [
-            //         { day: 'Sun', time: [], fullName: "Sunday" },
-            //         { day: 'Mon', time: [], fullName: "Monday" },
-            //         { day: 'Tue', time: [], fullName: "Tuesday" },
-            //         { day: 'Wed', time: [], fullName: "Wednesday" },
-            //         { day: 'Thu', time: [], fullName: "Thursday" },
-            //         { day: 'Fri', time: [], fullName: "Friday" },
-            //         { day: 'Sat', time: [], fullName: "Saturday" }
-            //     ];
-            // }
+            let consultationHours = [];
+            if (this.props.teacher.consultationHours.length != 0) {
+                consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHours);
+            } else {
+                consultationHours = [
+                    { day: 'Sun', time: [], fullName: "Sunday" },
+                    { day: 'Mon', time: [], fullName: "Monday" },
+                    { day: 'Tue', time: [], fullName: "Tuesday" },
+                    { day: 'Wed', time: [], fullName: "Wednesday" },
+                    { day: 'Thu', time: [], fullName: "Thursday" },
+                    { day: 'Fri', time: [], fullName: "Friday" },
+                    { day: 'Sat', time: [], fullName: "Saturday" }
+                ];
+            }
             
             this.setState({
                 family_name: family_name,
@@ -73,7 +76,7 @@ class TeacherForm extends Component {
 
             let consultationHours = [];
             if (this.props.teacher.consultationHours) {
-                consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHoursList);
+                consultationHours = this.consultationHoursBuilder(this.props.teacher.consultationHours);
             } else {
                 consultationHours = [
                     { day: 'Sun', time: [], fullName: "Sunday" },
@@ -102,7 +105,20 @@ class TeacherForm extends Component {
         }
     }
 
-    getData = () => { return this.state; }
+    getData = () => {
+        let currentState = this.state;
+
+        currentState.consultationHours.map(day => {
+            if (day.time.length != 0) {
+                day.time.map(time => {
+                    time.start = `${moment(time.start).hour()}:${moment(time.start).minute()}`
+                    time.end = `${moment(time.end).hour()}:${moment(time.end).minute()}`
+                })
+            }
+        })
+        
+        return currentState;
+    }
     
     getClassData = () => { return this._searchForm.getData(); }
 
@@ -161,6 +177,28 @@ class TeacherForm extends Component {
         this.setState(newState);
     }
 
+    handleStartChange = (date, index, index2 ) => { 
+        let newState = this.state;
+        newState.consultationHours[index].time[index2].start = date;
+        this.setState(newState);
+    } 
+    handleEndChange = (date, index, index2 ) => {
+        let newState = this.state;
+        newState.consultationHours[index].time[index2].end = date;
+        this.setState(newState);
+    } 
+
+    handleStartChangeRaw = (value, index, index2 ) => {
+        let converted = moment(value, 'hh:mma');
+        this.handleStartChange(converted, index, index2);
+    }
+
+    handleEndChangeRaw = (value, index, index2 ) => {
+        let converted = moment(value, 'hh:mma');
+        this.handleEndChange(converted, index, index2 );
+    } 
+
+
     deleteTime = (index, index2) => {
         console.log(`clicked i1: ${index}, i2: ${index2}`);
         let newState = this.state;
@@ -181,7 +219,11 @@ class TeacherForm extends Component {
         consultationHoursList.map((element) => {
             tempArray.map((element2) => {
                 if (element.day.search(element2.day) === 0) {
-                    element2.time = JSON.parse(JSON.stringify(element.time));
+                    element.time.map((time) => {
+                        let start = moment(time.start, 'hh:mm');
+                        let end = moment(time.end, 'hh:mm');
+                        element2.time.push({ start, end });
+                    })
                 }
             })
         })
@@ -232,7 +274,39 @@ class TeacherForm extends Component {
                                                 {day.time.map((time, index2) =>
                                                     <div key={`inner${index2}`}>
                                                         <Form.Group key={`innerdiv${index2}`}>
-                                                            <Form.Input
+                                                            <Form.Field>
+                                                                <label>Start Time</label>
+                                                                <DatePicker
+                                                                    selected={time.start}
+                                                                    onChange={(date)=>this.handleStartChange(date, index, index2)}
+                                                                    showTimeSelect
+                                                                    showTimeSelectOnly
+                                                                    timeIntervals={15}
+                                                                    dateFormat="LT"
+                                                                    name="start"
+                                                                    onChangeRaw={(event) => this.handleStartChangeRaw(event.target.value, index, index2)}
+                                                                    key={`start${index2}`}
+                                                                    index={index}
+                                                                    index2={index2}
+                                                                />
+                                                            </Form.Field>
+                                                            <Form.Field>
+                                                                <label>End Time</label>
+                                                                <DatePicker
+                                                                    selected={time.end}
+                                                                    onChange={(date) => this.handleEndChange(date, index, index2)}
+                                                                    showTimeSelect
+                                                                    showTimeSelectOnly
+                                                                    timeIntervals={15}
+                                                                    dateFormat="LT"
+                                                                    name='end'
+                                                                    onChangeRaw={(event) => this.handleEndChangeRaw(event.target.value, index, index2)}
+                                                                    key={`end${index2}`}
+                                                                    index={index}
+                                                                    index2={index2}
+                                                                />
+                                                            </Form.Field>
+                                                            {/* <Form.Input
                                                                 label='Start Time'
                                                                 fluid placeholder='1'
                                                                 name='start'
@@ -256,7 +330,7 @@ class TeacherForm extends Component {
                                                                 index={index}
                                                                 index2={index2}
                                                                 type='1'
-                                                            />
+                                                            /> */}
                                                             <Form.Button
                                                                 negative
                                                                 icon

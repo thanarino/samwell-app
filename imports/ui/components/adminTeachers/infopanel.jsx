@@ -16,8 +16,7 @@ NoTeacherSelected = (props) => {
 
 TeacherSelected = (props) => {
     const teacher = props.teacher;
-    console.log(teacher);
-    return <div>
+    return <div className='scrollable'>
         <Header as='h1' textAlign='center'>
             <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} />
             <Header.Content>{teacher.family_name && teacher.given_name ? `${teacher.family_name}, ${teacher.given_name}` : teacher.email}

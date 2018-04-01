@@ -15,7 +15,7 @@ NoSectionSelected = (props) => {
 
 SectionSelected = (props) => {
     const section = props.section;
-    return <Sticky>
+    return <div className='scrollable'>
         <Header as='h1' textAlign='center'>
             <Header.Content>{section.subject} - {section.sectionName}</Header.Content>
             <Header.Subheader>{section.description}</Header.Subheader>
@@ -80,7 +80,7 @@ SectionSelected = (props) => {
                 </Table.Row>
             </Table.Body>
         </Table>
-    </Sticky>;
+    </div>;
 }
 
 SectionPanelBuilder = (props) => {

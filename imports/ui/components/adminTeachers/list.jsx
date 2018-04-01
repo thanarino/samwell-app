@@ -36,7 +36,7 @@ class TeacherList extends Component {
                                 Teachers
                             </Header.Content>
                         </Header>
-                        <List animated selection verticalAlign='middle'>
+                        <List animated selection verticalAlign='middle' className="scrollableList">
                             {this.props.teachers.map((teacher, index) => 
                                 <List.Item onClick={this.sendToParent.bind(this, teacher)} key={index}>
                                     {teacher.approved ? null :

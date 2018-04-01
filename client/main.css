@@ -41,6 +41,16 @@
     max-height: 300px;
 }
 
+.scrollable {
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+.scrollableList {
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
 .calendarColumn {
     overflow-y: auto;
     max-height: 85vh;

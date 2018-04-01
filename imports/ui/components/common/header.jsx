@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Menu, Button, Icon, Divider, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import _ from 'lodash';
 
 import default_pp from '../../res/default_pp.jpg';
 
@@ -12,7 +13,7 @@ export default class SiteHeader extends Component {
     }
 
     state = {
-        activeItem: this.props.active ? this.props.active : 'teachers'
+        activeItem: this.props.active ? this.props.active : 'profile'
     }
 
     handleItemClick = (e, { name }) => {
@@ -67,7 +68,7 @@ export default class SiteHeader extends Component {
                                 onClick={this.handleItemClick}
                             > Logs </Menu.Item>
                         </Menu.Menu>
-                        : teacher.approved ?
+                        : teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ?
                             <Menu.Menu position='right'>    
                                 <Menu.Item
                                 name='consultations'
@@ -85,7 +86,15 @@ export default class SiteHeader extends Component {
                                     {teacher.given_name}
                                 </Menu.Item>
                             </Menu.Menu>    
-                            : null}
+                            : <Menu.Menu position='right'>
+                                <Menu.Item
+                                    name='profile'
+                                    active={activeItem === 'profile'}
+                                >
+                                    <Image avatar src={default_pp} />
+                                    {teacher.given_name}
+                                </Menu.Item>
+                            </Menu.Menu>}
                     
                     <Menu.Item>
                         <Button color='teal' icon labelPosition='right' onClick={this.logOut}>

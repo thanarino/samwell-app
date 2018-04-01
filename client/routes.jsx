@@ -88,7 +88,7 @@ let adminRoutes = userRoutes.group({
     triggersEnter: [() => {
         if (!(Roles.userIsInRole(Meteor.user(), ['admin']))) {
             if (Meteor.user()) {
-                FlowRouter.go(FlowRouter.path('consultations'));
+                FlowRouter.go(FlowRouter.path('teachers'));
             } else {
                 FlowRouter.go(FlowRouter.path('login'));
             }

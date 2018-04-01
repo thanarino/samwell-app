@@ -41,6 +41,7 @@ Meteor.methods({
                 fullName: String
             }],
             available: Boolean,
+            approved: Boolean,
         })
 
         let data = Object.assign({
