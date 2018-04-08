@@ -11,30 +11,34 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'consultations.insert'(userID, studentID, teacherID, sectionID, startTime, endTime, date, isApprovedByStudent, isApprovedByTeacher) {
+    'consultations.insert'(userID, data, isApprovedByStudent, isApprovedByTeacher) {
         check(userID, String);
-        check(studentID, String);
-        check(teacherID, String);
-        check(sectionID, String);
-        check(startTime, String);
-        check(endTime, String);
-        check(date, Date);
+        check(data, {
+            studentID: String,
+            teacherID: String,
+            sectionID: String,
+            startTime: String,
+            endTime: String,
+            date: Number,
+            year: Number,
+        });
         check(isApprovedByStudent, Boolean);
         check(isApprovedByTeacher, Boolean);
 
         Consultations.insert({
             userID,
-            studentID,
-            teacherID,
-            sectionID,
-            startTime,
-            endTime,
-            date,
+            studentID: data.studentID,
+            teacherID: data.teacherID,
+            sectionID: data.sectionID,
+            startTime: data.startTime,
+            endTime: data.endTime,
+            date: data.date,
+            year: data.year,
             isDone: false,
             isDeleted: false,
             isApprovedByStudent,
             isApprovedByTeacher,
             createdAt: new Date()
-        });
+        }, (error) => console.log(error));
     }
 })

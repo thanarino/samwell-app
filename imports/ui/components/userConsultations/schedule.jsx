@@ -6,8 +6,10 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import 'moment-recur';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Loader } from 'semantic-ui-react';
 
 import { Sections } from '../../../api/sections/sections';
+import { Consultations } from '../../../api/consultations/consultations';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -29,7 +31,8 @@ class Schedule extends Component {
             current_view: DEFAULT_VIEW,
             events: [],
             teacher: props.teacher,
-            classes: []
+            classes: [],
+            consultations: []
         };
 
         this.bindScopes([
@@ -47,9 +50,12 @@ class Schedule extends Component {
     }
 
     componentWillReceiveProps(newProp) {
-        if (newProp.sections.length != 0) {
-            this.setState({ classes: this.convertToClasses(this.state.teacher.classes, newProp.sections) });
-            this.updateTimes();
+        if (newProp.sections.length != 0 && newProp.consultations.length != 0) {
+            this.setState({
+                classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
+                consultations: newProp.consultations
+            }, () => this.updateTimes());
+            
         }
     }
 
@@ -58,7 +64,6 @@ class Schedule extends Component {
         classIDs.map((classID, index) => {
             classes.push(_.filter(sections, { '_id': classID })[0]);
         });
-        console.log(classes);
         return classes;
     }
 
@@ -69,6 +74,7 @@ class Schedule extends Component {
 
         this.updateTimes(this.state.current_date, view);
     }
+
     onNavigate(date, view) {
         const new_date = moment(date);
         this.setState({
@@ -87,8 +93,8 @@ class Schedule extends Component {
         }
         // if view is week: from moment(date).startOf('isoWeek') to moment(date).endOf('isoWeek');
         else if (view === 'week') {
-            start = moment(date).startOf('isoWeek');
-            end = moment(date).endOf('isoWeek');
+            start = moment(date).startOf('week');
+            end = moment(date).endOf('week');
         }
         //if view is month: from moment(date).startOf('month').subtract(7, 'days') to moment(date).endOf('month').add(7, 'days'); i do additional 7 days math because you can see adjacent weeks on month view (that is the way how i generate my recurrent events for the Big Calendar, but if you need only start-end of month - just remove that math);
         else if (view === 'month') {
@@ -105,20 +111,33 @@ class Schedule extends Component {
     }
 
     timesToEvents(start, end) {
-        console.log(this.state.classes);
-
         let events = [];
         this.state.classes.map(section => {
             let sched = moment().recur(start, end).every(section.daysList).daysOfWeek();
-            let all = sched.all();
+            let semStart = moment().dayOfYear(section.semester.start).clone().set({ 'year': section.semester.startYear });
+            let semEnd = moment().dayOfYear(section.semester.end).clone().set({ 'year': section.semester.startYear });
+            //gets all dates from start to end of semester given by recurrence
+            let allValid = sched.all().map((dateFromArray) => {
+                if (moment(dateFromArray).diff(semStart, 'days') >= 0 && moment(dateFromArray).diff(semEnd, 'days') <= 0) {
+                    return dateFromArray;
+                } else {
+                    return null;
+                }
+            })
+            console.log('start');
+            console.log(moment(start).format());
+            console.log('end');
+            console.log(moment(end).format());
+            console.log(sched.all());
+            console.log(allValid);
             const startHour = moment(section.startTime, 'hh:mm').hour();
             const startMinute = moment(section.startTime, 'hh:mm').minute();
             const endHour = moment(section.endTime, 'hh:mm').hour();
             const endMinute = moment(section.endTime, 'hh:mm').minute();
 
-            let subevents =  all.map(date => {
-                let startTime = date.clone().set({ 'hour': startHour, 'minute': startMinute, 'second': 0 }).subtract(8, 'hours');
-                let endTime = date.clone().set({ 'hour': endHour, 'minute': endMinute, 'second': 0 }).subtract(8, 'hours');
+            let subevents = allValid.map(date => {
+                let startTime = moment(date).clone().set({ 'hour': startHour, 'minute': startMinute, 'second': 0 }).subtract(8, 'hours');
+                let endTime = moment(date).clone().set({ 'hour': endHour, 'minute': endMinute, 'second': 0 }).subtract(8, 'hours');
                 return {
                     title: `${section.subject} - ${section.sectionName}`,
                     start: startTime.toDate(),
@@ -128,8 +147,24 @@ class Schedule extends Component {
 
             events = _.union(events, subevents);
         });
-        
-        console.log(events);
+
+        let events2 = this.state.consultations.map(consultation => {
+            const startHour2 = moment(consultation.startTime, 'hh:mm').hour();
+            const startMinute2 = moment(consultation.startTime, 'hh:mm').minute();
+            const endHour2 = moment(consultation.endTime, 'hh:mm').hour();
+            const endMinute2 = moment(consultation.endTime, 'hh:mm').minute();
+            let startTime2 = moment().dayOfYear(consultation.date).clone().set({ 'year': consultation.year, 'hour': startHour2, 'minute': startMinute2, 'second': 0 });
+            let endTime2 = moment().dayOfYear(consultation.date).clone().set({ 'year': consultation.year, 'hour': endHour2, 'minute': endMinute2, 'second': 0 });
+
+            return {
+                title: `Consultation`,
+                start: startTime2.toDate(),
+                end: endTime2.toDate(),
+            }
+
+        })
+
+        events = _.union(events, events2);
 
         this.setState({
             events: events
@@ -137,21 +172,26 @@ class Schedule extends Component {
     }
 
     render() {
+        const { sections, consultations } = this.props;
         return (
-            <div className={'schedule'}>
-                <BigCalendar
-                    onView={this.onView}
-                    onNavigate={this.onNavigate}
-                    events={this.state.events}
-                    startAccessor={'start'}
-                    endAccessor={'end'}
-                    defaultView='week'
-                    step={30}
-                    showMultiDayTimes
-                    defaultDate={new Date()}
-                    min={moment('6:00', 'hh:mm').toDate()}
-                    max={moment('20:00', 'hh:mm').toDate()}
-                />
+            <div className={'schedule'}>    
+                { sections.length != 0 && consultations.length != 0 ?     
+                    <BigCalendar
+                        onView={this.onView}
+                        onNavigate={this.onNavigate}
+                        events={this.state.events}
+                        startAccessor={'start'}
+                        endAccessor={'end'}
+                        defaultView='week'
+                        step={30}
+                        showMultiDayTimes
+                        defaultDate={new Date()}
+                        min={moment('6:00', 'hh:mm').toDate()}
+                        max={moment('20:00', 'hh:mm').toDate()}
+                        views={['month', 'week', 'day']}
+                    />
+                    : <Loader active inline='centered' /> }
+                
             </div>
         );
     }
@@ -162,10 +202,14 @@ Schedule.protoTypes = {
     callback: PropTypes.func,
 }
 
-export default withTracker(() => {
+export default withTracker((props) => {
     Meteor.subscribe('sections');
+    Meteor.subscribe('consultations');
+    Meteor.subscribe('studentsAll');
 
     return {
-        sections: Sections.find({ isDeleted: false }, { sort: { createdAt: -1 } }).fetch()
+        sections: Sections.find({ isDeleted: false }, { sort: { createdAt: -1 } }).fetch(),
+        consultations: Consultations.find({ teacherID: props.teacher._id }, { sort: { createdAt: -1 } }).fetch(),
+        students: Meteor.users.find({ roles: 'students' }, { sort: { createdAt: -1 } }).fetch(),
     }
 })(Schedule);

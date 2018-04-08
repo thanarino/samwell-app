@@ -200,7 +200,6 @@ class TeacherForm extends Component {
 
 
     deleteTime = (index, index2) => {
-        console.log(`clicked i1: ${index}, i2: ${index2}`);
         let newState = this.state;
         newState.consultationHours[index].time.splice(index2, 1);
         this.setState(newState);

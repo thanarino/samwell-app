@@ -12,9 +12,14 @@ export default class SiteHeader extends Component {
         teacher: PropTypes.object,
     }
 
-    state = {
-        activeItem: this.props.active ? this.props.active : 'profile'
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeItem: props.active ? props.active : 'profile'
+        }
     }
+
+    
 
     handleItemClick = (e, { name }) => {
         this.setState({ activeItem: name });
@@ -22,6 +27,7 @@ export default class SiteHeader extends Component {
     }
 
     handleUserClick = (e, { name }) => {
+        console.log(name);
         this.setState({ activeItem: name });
         FlowRouter.go(`/user/${name}`)
     }

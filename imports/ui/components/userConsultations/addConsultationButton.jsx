@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Modal, Icon } from 'semantic-ui-react';
-import ConsultationForm from './consultationForm.jsx';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
+
+import ConsultationForm from './consultationForm.jsx';
+
+import { Consultations } from '../../../api/consultations/consultations';
 
 export default class AddConsultationButton extends Component {
     static propTypes = {
@@ -22,11 +26,16 @@ export default class AddConsultationButton extends Component {
         let data = Object.assign(
             {},
             this._addConsultationForm.getData(),
+            {
+                teacherID: Meteor.userId()
+            }
         )
 
-        Meteor.call('consultation.add', Meteor.userId(), newData);
+        console.log(data);
+        console.log(Meteor.userId());
 
-        this._addConsultationForm.clearForm();
+        Meteor.call('consultations.insert', Meteor.userId(), data, false, true);
+
         this.close();
     }
 
@@ -39,16 +48,16 @@ export default class AddConsultationButton extends Component {
                     Schedule new
                 </Button>
 
-                <Modal size='small' open={open} onClose={this.close}>
+                <Modal size='mini' open={open} onClose={this.close}>
                     <Modal.Header>
                         Schedule new consultation
                     </Modal.Header>
                     <Modal.Content>
-                        <ConsultationForm ref={(ref) => this._addConsultationForm = ref} teacher={this.props.teacher} />
+                        <ConsultationForm onRef={(ref) => this._addConsultationForm = ref} teacher={this.props.teacher} />
                     </Modal.Content>
                     <Modal.Actions>
                         <Button negative onClick={this.close}>Close</Button>
-                        <Button positive>Yes</Button>
+                        <Button positive onClick={this.submit}>Submit</Button>
                     </Modal.Actions>
                 </Modal>
             </div>

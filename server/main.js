@@ -3,7 +3,9 @@ import { Accounts } from 'meteor/accounts-base';
 import { check } from 'meteor/check';
 import { Random } from 'meteor/random';
 
+//import JS files that contain collection creation code
 import '../imports/api/sections/sections.js';
+import '../imports/api/consultations/consultations.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

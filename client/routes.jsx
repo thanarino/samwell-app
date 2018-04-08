@@ -9,14 +9,17 @@ import AdminTeachers from '../imports/ui/pages/AdminTeachers.jsx';
 import AdminClasses from '../imports/ui/pages/AdminClasses.jsx';
 import AdminLogs from '../imports/ui/pages/AdminLogs.jsx';
 import UserConsultations from '../imports/ui/pages/UserConsultations.jsx';
+import UserProfile from '../imports/ui/pages/UserProfile.jsx';
 
 let publicRoutes = FlowRouter.group({});
 
 publicRoutes.route('/', {
     name: 'login',
     triggersEnter: [function (context, redirect) {
-        if (Meteor.userId()) {
+        if (Meteor.userId() && Meteor.user().username === 'Admin') {
             redirect('/user/admin/teachers');
+        } else {
+            redirect('/user/consultations');
         }
     }],
     action() {
@@ -57,8 +60,9 @@ let userRoutes = FlowRouter.group({
 userRoutes.route('/consultations', {
     name: 'user.consultations',
     action() {
+        console.log("mounting consultations");
         mount(App, {
-            content: <UserConsultations/>
+            content: <UserConsultations />
         })
     }
 });
@@ -68,7 +72,7 @@ userRoutes.route('/profile', {
     name: 'user.profile',
     action() {
         mount(App, {
-            content: <p>this is profile</p>
+            content: <UserProfile/>
         })
     }
 });

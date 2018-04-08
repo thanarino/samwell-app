@@ -3,8 +3,10 @@ import { Grid, Label, Header, Icon, Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
+import moment from 'moment';
 
 import { Consultations } from '../../../api/consultations/consultations';
+import { Sections } from '../../../api/sections/sections';
 
 class ConsultationTable extends Component {
     static propTypes = {
@@ -20,6 +22,7 @@ class ConsultationTable extends Component {
     }
 
     render() {
+        const { consultations, students, sections } = this.props;
         return (
             <div>
                 <Table celled>
@@ -34,27 +37,17 @@ class ConsultationTable extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                            <Table.Cell>Cell</Table.Cell>
-                        </Table.Row>
+                        {consultations.map((consultation, index) => {
+                            const currentSection = _.filter(sections, { '_id': consultation.sectionID })[0];
+                            const currentStudent = _.filter(students, { '_id': consultation.studentID })[0];
+                            return<Table.Row key={consultation._id}>
+                                <Table.Cell>{currentSection.subject}</Table.Cell>
+                                <Table.Cell>{currentSection.sectionName}</Table.Cell>
+                                <Table.Cell>{`${currentStudent._id}`}</Table.Cell> {/*CHANGE THIS*/}
+                                <Table.Cell>{moment(consultation.startTime,'hh:mm').format('hh:mm A')}</Table.Cell>
+                                <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
+                            </Table.Row>}
+                        )}
                     </Table.Body>
                 </Table>
             </div>
@@ -67,9 +60,13 @@ ConsultationTable.protoTypes = {
 }
 
 export default withTracker((props) => {
-    Meteor.subscribe('consultationsAll');
+    Meteor.subscribe('consultations');
+    Meteor.subscribe('studentsAll');
+    Meteor.subscribe('sections');
 
     return {
-        consultations: Consultations.find({ teacherID: props.teacher._id }, { sort: { createdAt: -1 } }).fetch()
+        consultations: Consultations.find({ teacherID: props.teacher._id }, { sort: { createdAt: -1 } }).fetch(),
+        students: Meteor.users.find({ roles: 'students' }, { sort: { createdAt: -1 } }).fetch(),
+        sections: Sections.find({ isDeleted: false }, { sort: { createdAt: -1 } }).fetch()
     }
 })(ConsultationTable);

@@ -77,6 +77,6 @@ export default withTracker(() => {
     Meteor.subscribe('teachersAll');
 
     return {
-        teachers: Meteor.users.find({roles: "teacher"}, { sort: { createdAt: -1 } }).fetch()
+        teachers: Meteor.users.find({ roles: 'teacher'}, { sort: { createdAt: -1 } }).fetch()
     }
 })(TeacherList);

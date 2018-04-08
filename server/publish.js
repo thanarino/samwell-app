@@ -5,7 +5,7 @@ Meteor.publish('teachersAll', function () {
     currentUser = this.userId;
 
     if (currentUser) {
-        return Meteor.users.find({}, {
+        return Meteor.users.find({ }, {
                 fields: {
                     //Default
                     "_id": 1,
@@ -25,6 +25,27 @@ Meteor.publish('teachersAll', function () {
                     "isDeleted" :1,
                 }
             });
+    } else {
+        return this.ready();
+    }
+});
+
+Meteor.publish('studentsAll', function () {
+    var currentUser;
+    currentUser = this.userId;
+
+    if (currentUser) {
+        return Meteor.users.find({ }, {
+            fields: {
+                //Default
+                "_id": 1,
+                "username": 1,
+                "emails": 1,
+                "profile": 1,
+                "classes": 1,
+                "isDeleted": 1,
+            }
+        });
     } else {
         return this.ready();
     }
