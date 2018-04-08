@@ -9,6 +9,26 @@ import { Sections } from '../../../api/sections/sections';
 class ClassList extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            classes: [],
+            search: []
+        }
+    }
+
+    handleChange = (e, {value}) => {
+        if (value === "") {
+            this.setState({ search: this.state.classes });
+        } else {
+            console.log(this.state.classes);
+            this.setState({ search: _.filter(this.state.search, (item) => { return item.subject.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.sectionName.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.classType.toLowerCase().indexOf(value.toLowerCase()) > -1 }) });
+        }
+    }
+
+    componentWillReceiveProps(newProp) {
+        if (newProp.sections.length != 0) {
+            this.setState({ classes: newProp.sections, search: newProp.sections });
+        }
     }
 
     sendToParent = (section) => {
@@ -23,7 +43,7 @@ class ClassList extends Component {
                         <AddClassButton />
                     </Grid.Column>
                     <Grid.Column width={12}>
-                        <Input fluid icon='search' placeholder='Search for Class' size='big' />
+                        <Input fluid icon='search' placeholder='Search for Class' size='big' onChange={this.handleChange} loading={this.props.sections.length == 0}/>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -35,29 +55,25 @@ class ClassList extends Component {
                             </Header.Content>
                         </Header>    
                         <List animated selection verticalAlign='middle' className='scrollableList'>
-                            {!this.props.sections ?
-                                <Segment>
-                                    <Dimmer active inverted>
-                                        <Loader size='large'>Loading</Loader>
-                                    </Dimmer>
-                                </Segment>
-                                : this.props.sections.map((section, index) => 
-                                <List.Item onClick={this.sendToParent.bind(this, section)} key={index}>
-                                    {section.isDeleted ?
-                                        <List.Content floated='right'>
-                                            <Label color='teal' size='large'>
-                                                archived
+                            { this.props.sections.length != 0 ?
+                                this.state.search.map((section, index) =>
+                                    <List.Item onClick={this.sendToParent.bind(this, section)} key={index}>
+                                        {section.isDeleted ?
+                                            <List.Content floated='right'>
+                                                <Label color='teal' size='large'>
+                                                    archived
                                             </Label>
+                                            </List.Content>
+                                            : null}
+                                        <List.Content>
+                                            <List.Header>{section.subject} - {section.sectionName}</List.Header>
+                                            <List.Description>
+                                                {section.semester.startYear} -  {section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value} - {section.classType}
+                                            </List.Description>
                                         </List.Content>
-                                    : null}    
-                                    <List.Content>
-                                        <List.Header>{section.subject} - {section.sectionName}</List.Header>
-                                        <List.Description>
-                                            {section.semester.startYear} -  {section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value} - {section.classType}
-                                        </List.Description>
-                                    </List.Content>
-                                </List.Item>
-                            )}
+                                    </List.Item>
+                                )
+                                : <Loader active inline='centered' /> }
                         </List>
                     </Grid.Column>
                 </Grid.Row>

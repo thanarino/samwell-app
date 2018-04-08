@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Random } from 'meteor/random';
+import _ from 'lodash';
 
 export const Sections = new Mongo.Collection('sections');
 
@@ -46,6 +48,7 @@ Meteor.methods({
             daysList,
             description,
             room,
+            code: Random.id(7),
             createdAt: new Date(),
             isDeleted: false,
         });
@@ -88,5 +91,27 @@ Meteor.methods({
                 description,
                 room
         }})
+    },
+    'sections.updateTeacher'(teacherID, classList) {
+        check(teacherID, String);
+        check(classList, [String]);
+
+        //get all sections that contains teacherID in their teacherList
+        const contained = Sections.find({ teacherList: teacherID });
+
+        contained.map((section) => {
+            // if the classlist does not contain the id of the current section,
+            // remove teacher from section's classlist
+            if (!_.includes(classList, section._id)) {
+                Sections.update(section, { $pull: { teacherList: teacherID } });
+            }
+        });
+
+        classList.map((section) => {
+            const found = Sections.find({ _id: section }).fetch();
+            if (!_.includes(found[0].teacherList, teacherID)) {
+                Sections.update(section, { $push: { teacherList: teacherID } });
+            }
+        });
     }
 })

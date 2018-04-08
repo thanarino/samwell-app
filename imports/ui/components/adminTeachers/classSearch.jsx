@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Search, Grid, Header, Label, Icon, Divider } from 'semantic-ui-react';
+import { Search, Grid, Header, Label, Icon, Divider, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
@@ -87,24 +87,26 @@ class ClassSearch extends Component {
                     fluid
                     resultRenderer={(section) => <Header size='tiny' content={`${section.subject} - ${section.sectionName}`} />}
                 />
-                <div>
-                    {this.state.classes.length != 0 && <Label basic>Click on a subject to remove it.</Label>}
-                    {this.state.classes.map((classObject, index) => {
-                        // if (typeof classObject == "string") {
-                        //     console.log("went here")
-                        //     console.log(classObject);
-                        //     let section = _.filter(this.props.sections, { '_id': classObject });
-                        //     return <Label as='a' key={index} onClick={() => this.removeLabel(section)}>
-                        //         {`${section.subject} - ${section.sectionName}`}
-                        //     </Label>
-                        // } else {
+                { this.state.classes.length != 0 ?
+                    <div>
+                        {this.state.classes.length != 0 && <Label basic>Click on a subject to remove it.</Label>}
+                        {this.state.classes.map((classObject, index) => {
+                            // if (typeof classObject == "string") {
+                            //     console.log("went here")
+                            //     console.log(classObject);
+                            //     let section = _.filter(this.props.sections, { '_id': classObject });
+                            //     return <Label as='a' key={index} onClick={() => this.removeLabel(section)}>
+                            //         {`${section.subject} - ${section.sectionName}`}
+                            //     </Label>
+                            // } else {
                             return <Label as='a' key={index} onClick={() => this.removeLabel(classObject)}>
                                 {`${classObject.subject} - ${classObject.sectionName}`}
                             </Label>
-                        // }
-                    }
-                    )}
-                </div>
+                            // }
+                        }
+                        )}
+                    </div>
+                    : <Loader active inline='centered' />}
             </div>
         )
     }

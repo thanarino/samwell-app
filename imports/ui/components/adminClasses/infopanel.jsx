@@ -20,6 +20,9 @@ SectionSelected = (props) => {
             <Header.Content>{section.subject} - {section.sectionName}</Header.Content>
             <Header.Subheader>{section.description}</Header.Subheader>
         </Header>
+        <Header as='h2' textAlign='center'>
+            <Header.Content>{section.code ? section.code : "n/a"}</Header.Content>
+        </Header>
         <Grid centered columns={2} >
             <Grid.Column>
                 <Button.Group widths={2}>

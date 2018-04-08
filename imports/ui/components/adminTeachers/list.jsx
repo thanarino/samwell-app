@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label, List, Grid, Button, Input, Header, Icon, Image } from 'semantic-ui-react';
+import { Label, List, Grid, Button, Input, Header, Icon, Image, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
@@ -11,10 +11,28 @@ import LoginButton from '../login/LoginButton';
 class TeacherList extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            teachers: [],
+            search: []
+        }
     }
 
     sendToParent = (teacher) => {
         this.props.callback(teacher);
+    }
+
+    handleChange = (e, { value }) => {
+        if (value === "") {
+            this.setState({ search: this.state.teachers });
+        } else {
+            this.setState({ search: _.filter(this.state.search, (item) => { return item.email.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.family_name.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.given_name.toLowerCase().indexOf(value.toLowerCase()) > -1 }) });
+        }
+    }
+
+    componentWillReceiveProps(newProp) {
+        if (newProp.teachers.length != 0) {
+            this.setState({ teachers: newProp.teachers, search: newProp.teachers });
+        }
     }
 
     render() {
@@ -25,7 +43,7 @@ class TeacherList extends Component {
                         <AddTeacherButton/>
                     </Grid.Column> */}
                     <Grid.Column width={16}>
-                        <Input fluid icon='search' placeholder='Search for Teacher' size='large'/>
+                        <Input fluid icon='search' placeholder='Search for Teacher' size='large' onChange={this.handleChange} loading={this.props.teachers.length == 0}/>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -37,7 +55,8 @@ class TeacherList extends Component {
                             </Header.Content>
                         </Header>
                         <List animated selection verticalAlign='middle' className="scrollableList">
-                            {this.props.teachers.map((teacher, index) => 
+                            { this.props.teachers.length != 0 ?
+                                this.state.search.map((teacher, index) => 
                                 <List.Item onClick={this.sendToParent.bind(this, teacher)} key={index}>
                                     {teacher.approved ? null :
                                         <List.Content floated='right'>
@@ -60,7 +79,7 @@ class TeacherList extends Component {
                                         <List.Description>{teacher.email}</List.Description>
                                     </List.Content>
                                 </List.Item>
-                            )}
+                                ) : <Loader active inline='centered' /> }
                         </List>
                     </Grid.Column>
                 </Grid.Row>

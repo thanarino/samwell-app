@@ -52,7 +52,12 @@ Meteor.methods({
             first: true
         }, teacher);
 
-        Accounts.createUser({ username: data.username, email: data.email, password: data.password , profile: data});
+        const teacherID = Accounts.createUser({ username: data.username, email: data.email, password: data.password, profile: data });
+
+        if (teacherID) {
+            console.log('teacherID valid');
+            Meteor.call('sections.updateTeacher', teacherID, data.classes);
+        }
     },
     'teacher.update'(userID, data) {
         check(userID, String);
@@ -77,7 +82,16 @@ Meteor.methods({
             approved: Boolean
         });
 
-        Meteor.users.update({ _id: userID }, { $set: { family_name: data.family_name, given_name: data.given_name, middle_name: data.middle_name, email: data.email, department: data.department, position: data.position, office: data.office, classes: data.classes, consultationHours: data.consultationHours, available: data.available, approved: data.approved } });
+        Meteor.users.update({ _id: userID }, { $set: { family_name: data.family_name, given_name: data.given_name, middle_name: data.middle_name, email: data.email, department: data.department, position: data.position, office: data.office, classes: data.classes, consultationHours: data.consultationHours, available: data.available, approved: data.approved } },
+            (err, n) => {
+                console.log(err);
+                console.log(n);
+                if (n) {
+                    console.log("went hererere");
+                    Meteor.call('sections.updateTeacher', userID, data.classes);
+                }
+            }
+        );
     },
     'teacher.delete'(teacherID, isDeleted) {
         check(teacherID, String);
