@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Label, Header, Icon, Button } from 'semantic-ui-react';
+import { Grid, Label, Header, Icon, Button, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
@@ -26,16 +26,15 @@ ApprovedProfile = (props) => {
     const { teacher } = props;
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
-        <Grid columns={2} divided padded>
-            <Grid.Row>
-                <Grid.Column>
-                    <Header
-                        as='h1'
-                        image={teacher.services.google ? teacher.services.google.picture : default_pp}
-                        content={`${teacher.family_name}, ${teacher.given_name}`}
-                    />
-                </Grid.Column>
-            </Grid.Row>
+        <Grid columns={2} divided padded centered>
+            <Grid.Column>
+                <Header 
+                    as='h1'
+                    size='huge'
+                    textAlign='center' >
+                    <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
+                </Header>    
+            </Grid.Column>
         </Grid>
     </div>
 }

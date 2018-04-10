@@ -35,7 +35,7 @@ Approved = (props) => {
                 <Grid.Column width={7}>
                     <Grid.Row>
                         <Header size='large' floated='left'>
-                            <Icon name='calendar' />
+                            <Icon name='calendar'/>
                             <Header.Content>
                                 Consultations
                             </Header.Content>
@@ -54,16 +54,24 @@ Approved = (props) => {
 class UserConsultations extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            teacher: {},
+        }
+    }
+
+    componentWillReceiveProps(newProp) {
+        if (newProp.teacher) {
+            this.setState({ teacher: newProp.teacher });
+        }
     }
 
     render() {
-        const teacher = this.props.teacher;
+        const { teacher } = this.props;
         return (
             <div>
                 {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <Approved teacher={teacher} /> : <Unapproved teacher={teacher} />}
             </div>
         )
-
     }
 }
 
