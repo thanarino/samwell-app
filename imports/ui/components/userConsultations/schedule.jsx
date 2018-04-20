@@ -175,7 +175,7 @@ class Schedule extends Component {
         const { sections, consultations } = this.props;
         return (
             <div className={'schedule'}>    
-                { sections.length != 0 || consultations.length != 0 ?     
+                { (sections.length != 0 || consultations.length != 0) && this.state.events.length != 0 ?     
                     <BigCalendar
                         onView={this.onView}
                         onNavigate={this.onNavigate}
