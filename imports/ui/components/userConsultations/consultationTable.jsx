@@ -66,7 +66,7 @@ export default withTracker((props) => {
 
     return {
         consultations: Consultations.find({ teacherID: props.teacher._id }, { sort: { createdAt: -1 } }).fetch(),
-        students: Meteor.users.find({ roles: 'students' }, { sort: { createdAt: -1 } }).fetch(),
+        students: Meteor.users.find({ roles: 'student' }, { sort: { createdAt: -1 } }).fetch(),
         sections: Sections.find({ isDeleted: false }, { sort: { createdAt: -1 } }).fetch()
     }
 })(ConsultationTable);
