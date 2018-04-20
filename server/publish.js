@@ -39,10 +39,12 @@ Meteor.publish('studentsAll', function () {
             fields: {
                 //Default
                 "_id": 1,
-                "username": 1,
-                "emails": 1,
-                "profile": 1,
-                "classes": 1,
+                "roles": 1,
+                "profile_pic": 1,
+                "given_name": 1,
+                "family_name": 1,
+                "gender": 1,
+                "createdAt": 1,
                 "isDeleted": 1,
             }
         });
