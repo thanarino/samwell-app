@@ -172,11 +172,16 @@ class Schedule extends Component {
         })
     }
 
+    setEvents = () => {
+        this.updateTimes();
+        return true;
+    }
+
     render() {
         const { sections, consultations } = this.props;
         return (
             <div className={'schedule'}>    
-                { (sections.length != 0 || consultations.length != 0) && this.state.events.length != 0 ?     
+                { (sections.length != 0 || consultations.length != 0) && this.setEvents ?     
                     <BigCalendar
                         onView={this.onView}
                         onNavigate={this.onNavigate}
