@@ -43,7 +43,7 @@ class ConsultationTable extends Component {
                             return<Table.Row key={consultation._id}>
                                 <Table.Cell>{currentSection.subject}</Table.Cell>
                                 <Table.Cell>{currentSection.sectionName}</Table.Cell>
-                                <Table.Cell>{`${currentStudent._id}`}</Table.Cell> {/*CHANGE THIS*/}
+                                <Table.Cell>{`${currentStudent.family_name}, ${currentStudent.given_name}`}</Table.Cell> {/*CHANGE THIS*/}
                                 <Table.Cell>{moment(consultation.startTime,'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                             </Table.Row>}

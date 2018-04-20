@@ -68,8 +68,9 @@ class ConsultationForm extends Component {
             console.log(student);
             return {
                 key: index,
-                text: `${student.profile.last_name}, ${student.profile.first_name}`,
+                text: `${student.family_name}, ${student.given_name}`,
                 value: `${student._id}`,
+                image: {avatar: true, src: `${student.profile_picture}`}
             }
         })
     }
@@ -120,8 +121,8 @@ class ConsultationForm extends Component {
         return (
             <div>
                 <Form>
-                    <Form.Select fluid label='Class' options={this.optionBuilder(this.convertToObjects(this.state.teacher.classes, sections))} placeholder='Class' value={this.state.classSelected} onChange={this.handleChange}/>
-                    {this.state.classSelected != "" ? <Form.Select fluid label='Student' placeholder='Student' options={this.studentOptionBuilder(this.convertToObjects(this.getStudents(this.state.classSelected, sections), students))} onChange={this.handleStudentChange}/> : null }
+                    <Form.Select fluid label='Class' search scrolling options={this.optionBuilder(this.convertToObjects(this.state.teacher.classes, sections))} placeholder='Class' value={this.state.classSelected} onChange={this.handleChange}/>
+                    {this.state.classSelected != "" ? <Form.Select fluid label='Student' placeholder='Student' search scrolling options={this.studentOptionBuilder(this.convertToObjects(this.getStudents(this.state.classSelected, sections), students))} onChange={this.handleStudentChange}/> : null }
                     <Form.Field width={16}>
                         <label>Date</label>
                         <DatePicker
