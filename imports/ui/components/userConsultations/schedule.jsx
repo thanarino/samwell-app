@@ -41,6 +41,8 @@ class Schedule extends Component {
             'updateTimes',
             'timesToEvents'
         ]);
+
+        this.updateTimes();
     }
 
     bindScopes(keys) {
@@ -55,7 +57,6 @@ class Schedule extends Component {
                 classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
                 consultations: newProp.consultations
             }, () => this.updateTimes());
-            
         }
     }
 
