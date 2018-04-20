@@ -70,7 +70,7 @@ class ConsultationForm extends Component {
                 key: index,
                 text: `${student.family_name}, ${student.given_name}`,
                 value: `${student._id}`,
-                image: {avatar: true, src: `${student.profile_picture}`}
+                image: {avatar: true, src: `${student.profile_pic}`}
             }
         })
     }
