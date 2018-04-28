@@ -29,10 +29,10 @@ Approved = (props) => {
         <SiteHeader active='consultations' teacher={props.teacher} />
         <Grid columns={2} divided padded>
             <Grid.Row>
-                <Grid.Column className='calendarColumn' width={9}>
+                <Grid.Column className='calendarColumn' width={8}>
                     <Schedule teacher={props.teacher}/>
                 </Grid.Column>
-                <Grid.Column width={7}>
+                <Grid.Column width={8}>
                     <Grid.Row>
                         <Header size='large' floated='left'>
                             <Icon name='calendar'/>
