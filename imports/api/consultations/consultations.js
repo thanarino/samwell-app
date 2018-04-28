@@ -40,5 +40,13 @@ Meteor.methods({
             isApprovedByTeacher,
             createdAt: new Date()
         }, (error) => console.log(error));
+    },
+    'consultations.teacherApprove'(_id, approved) {
+        check(_id, String);
+        check(approved, Boolean);
+
+        Consultations.update({ _id: _id }, { $set: { isApprovedByTeacher: approved } }, (err) => {
+            console.log(err);
+        })
     }
 })

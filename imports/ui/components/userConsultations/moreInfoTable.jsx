@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Label, Header, Icon, Button, Table, Popup } from 'semantic-ui-react';
+import { Grid, Label, Header, Icon, Button, Table, Popup, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
@@ -19,6 +19,10 @@ class MoreInfoTable extends Component {
         this.state = {
             teacher: props.teacher,
         }
+    }
+
+    toggle = (consultation) => {
+        Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
     }
 
     render() {
@@ -59,7 +63,7 @@ class MoreInfoTable extends Component {
                                 <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment().dayOfYear(consultation.date).set({ 'year': consultation.year }).format("dddd, MMMM Do YYYY")}</Table.Cell>
                                 <Table.Cell>{consultation.isApprovedByStudent ? <Icon name='check' /> : <Icon name='x' />}</Table.Cell>
-                                <Table.Cell>{consultation.isApprovedByTeacher}</Table.Cell>
+                                <Table.Cell><Checkbox checked={consultation.isApprovedByTeacher} onChange={this.toggle(consultation)}/></Table.Cell>
                                 <Table.Cell>{consultation.isDone ? <Icon name='check' /> : <Icon name='x' />}</Table.Cell>
                             </Table.Row>
                         }
