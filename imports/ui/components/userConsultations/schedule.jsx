@@ -58,7 +58,10 @@ class Schedule extends Component {
             this.setState({
                 classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
                 consultations: newProp.consultations
-            }, () => this.updateTimes());
+            }, () => {
+                console.log(this.state());
+                this.updateTimes()
+            });
         }
     }
 
