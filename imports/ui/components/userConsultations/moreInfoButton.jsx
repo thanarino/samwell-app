@@ -33,11 +33,11 @@ export default class MoreInfoButton extends Component {
                     Expand
                 </Button>
 
-                <Modal size='mini' open={open} onClose={this.close} closeIcon>
+                <Modal size='large' open={open} onClose={this.close} closeIcon>
                     <Modal.Header>
                         Consultations
                     </Modal.Header>
-                    <Modal.Content>
+                    <Modal.Content scrolling>
                         <MoreInfoTable teacher={this.props.teacher} />
                     </Modal.Content>
                 </Modal>

@@ -32,6 +32,10 @@ class ConsultationTable extends Component {
                             <Table.HeaderCell>Student</Table.HeaderCell>
                             <Table.HeaderCell>Start Time</Table.HeaderCell>
                             <Table.HeaderCell>End Time</Table.HeaderCell>
+                            <Table.HeaderCell>Date</Table.HeaderCell>
+                            <Table.HeaderCell>Student</Table.HeaderCell>
+                            <Table.HeaderCell>You</Table.HeaderCell>
+                            <Table.HeaderCell>isDone</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
@@ -43,7 +47,10 @@ class ConsultationTable extends Component {
                                 <Table.Cell>{`${currentSection.subject} - ${currentSection.sectionName}`}</Table.Cell>
                                 <Table.Cell>{`${currentStudent.family_name}, ${currentStudent.given_name}`}</Table.Cell>
                                 <Table.Cell>{moment(consultation.startTime,'hh:mm').format('hh:mm A')}</Table.Cell>
-                                <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
+                                <Table.Cell>{moment().dayOfYear(consultation.date).set({ 'year': consultation.year }).format("dddd, MMMM Do YYYY")}</Table.Cell>
+                                <Table.Cell>{consultation.isApprovedByStudent}</Table.Cell>
+                                <Table.Cell>{consultation.isApprovedByTeacher}</Table.Cell>
+                                <Table.Cell>{consultation.isDone}</Table.Cell>
                             </Table.Row>}
                         )}
                     </Table.Body>
