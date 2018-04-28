@@ -32,7 +32,9 @@ class Schedule extends Component {
             events: [],
             teacher: props.teacher,
             classes: [],
-            consultations: []
+            consultations: [],
+            // isShown: false,
+            // event: undefined,
         };
 
         this.bindScopes([
@@ -184,7 +186,14 @@ class Schedule extends Component {
         const { sections, consultations } = this.props;
         return (
             <div className={'schedule'}>    
-                { (sections.length != 0 || consultations.length != 0) && this.setEvents ?     
+                {(sections.length != 0 || consultations.length != 0) && this.setEvents ?     
+                <div>    
+                    {/* <Popup
+                        trigger={this.state.isShown}
+                        content='Hide the popup on any scroll event'
+                        on='click'
+                        hideOnScroll
+                    /> */}
                     <BigCalendar
                         onView={this.onView}
                         onNavigate={this.onNavigate}
@@ -193,7 +202,9 @@ class Schedule extends Component {
                         endAccessor={'end'}
                         defaultView='week'
                         step={30}
+                        popup
                         showMultiDayTimes
+                        // onSelectEvent={event => this.setState({isShown: !this.state.isShown, event: event})}
                         defaultDate={new Date()}
                         min={moment('6:00', 'hh:mm').toDate()}
                         max={moment('20:00', 'hh:mm').toDate()}
@@ -213,7 +224,8 @@ class Schedule extends Component {
                                 };
                             }
                         }
-                    />
+                        />
+                    </div>    
                     : <Loader active inline='centered' /> }
                 
             </div>
