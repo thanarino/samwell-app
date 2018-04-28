@@ -24,6 +24,11 @@ class MoreInfoTable extends Component {
     toggle = (consultation) => {
         console.log(consultation._id);
         console.log(consultation.isApprovedByTeacher);
+        if (typeof consultation._id == String) {
+            Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
+        } else {
+            Meteor.call('consultations.teacherApprove', consultation._id.$oid, !consultation.isApprovedByTeacher);
+        }
         //Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
     }
 
