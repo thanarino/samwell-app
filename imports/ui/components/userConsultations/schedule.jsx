@@ -143,6 +143,7 @@ class Schedule extends Component {
                     title: `${section.subject} - ${section.sectionName}`,
                     start: startTime.toDate(),
                     end: endTime.toDate(),
+                    isConsultation: false,
                 }
             });
 
@@ -161,6 +162,7 @@ class Schedule extends Component {
                 title: `Consultation`,
                 start: startTime2.toDate(),
                 end: endTime2.toDate(),
+                isConsultation: true,
             }
 
         })
@@ -195,6 +197,25 @@ class Schedule extends Component {
                         min={moment('6:00', 'hh:mm').toDate()}
                         max={moment('20:00', 'hh:mm').toDate()}
                         views={['month', 'week', 'day']}
+                        eventPropGetter={
+                            (event, start, end, isSelected) => {
+                                let newStyle = {
+                                    backgroundColor: "#4db6ac",
+                                    color: 'black',
+                                    borderRadius: "0px",
+                                    border: "none"
+                                };
+
+                                if (event.isConsultation) {
+                                    newStyle.backgroundColor = "#ff8a65"
+                                }
+
+                                return {
+                                    className: "",
+                                    style: newStyle
+                                };
+                            }
+                        }
                     />
                     : <Loader active inline='centered' /> }
                 
