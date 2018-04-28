@@ -64,9 +64,9 @@ class MoreInfoTable extends Component {
                                 <Table.Cell>{moment(consultation.startTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment().dayOfYear(consultation.date).set({ 'year': consultation.year }).format("dddd, MMMM Do YYYY")}</Table.Cell>
-                                <Table.Cell>{consultation.isApprovedByStudent ? <Icon name='check' /> : <Icon name='x' />}</Table.Cell>
+                                <Table.Cell>{consultation.isApprovedByStudent ? <Icon name='check' color='green'/> : <Icon name='x' color='red'/>}</Table.Cell>
                                 <Table.Cell><Checkbox checked={consultation.isApprovedByTeacher} onChange={()=>this.toggle(consultation)}/></Table.Cell>
-                                <Table.Cell>{consultation.isDone ? <Icon name='check' /> : <Icon name='x' />}</Table.Cell>
+                                <Table.Cell>{consultation.isDone ? <Icon name='check' color='green'/> : <Icon name='x' color='red'/>}</Table.Cell>
                             </Table.Row>
                         }
                         )}
