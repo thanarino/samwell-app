@@ -149,7 +149,7 @@ class Schedule extends Component {
                     color: colors[index],
                 }
             });
-
+            console.log(events);
             events = _.union(events, subevents);
         });
 
