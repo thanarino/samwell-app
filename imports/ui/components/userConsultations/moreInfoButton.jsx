@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import ConsultationForm from './consultationForm.jsx';
 
 import { Consultations } from '../../../api/consultations/consultations';
-import moreInfoTable from './moreInfoTable';
+import MoreInfoTable from './moreInfoTable.jsx';
 
 export default class MoreInfoButton extends Component {
     static propTypes = {
@@ -38,7 +38,7 @@ export default class MoreInfoButton extends Component {
                         Consultations
                     </Modal.Header>
                     <Modal.Content>
-                        <moreInfoTable teacher={this.props.teacher} />
+                        <MoreInfoTable teacher={this.props.teacher} />
                     </Modal.Content>
                 </Modal>
             </div>
