@@ -24,12 +24,7 @@ class MoreInfoTable extends Component {
     toggle = (consultation) => {
         console.log(JSON.stringify(consultation._id));
         console.log(consultation.isApprovedByTeacher);
-        if (consultation._id._str === undefined) {
-            Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
-        } else {
-            Meteor.call('consultations.teacherApprove', consultation._id.$oid, !consultation.isApprovedByTeacher);
-        }
-        //Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
+        Meteor.call('consultations.teacherApprove', consultation._id, !consultation.isApprovedByTeacher);
     }
 
     render() {
