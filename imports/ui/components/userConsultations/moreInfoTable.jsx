@@ -8,7 +8,7 @@ import moment from 'moment';
 import { Consultations } from '../../../api/consultations/consultations';
 import { Sections } from '../../../api/sections/sections';
 
-class ConsultationTable extends Component {
+class MoreInfoTable extends Component {
     static propTypes = {
         teacher: PropTypes.object,
     }
@@ -39,12 +39,13 @@ class ConsultationTable extends Component {
                         {consultations.map((consultation, index) => {
                             const currentSection = _.filter(sections, { '_id': consultation.sectionID })[0];
                             const currentStudent = _.filter(students, { '_id': consultation.studentID })[0];
-                            return<Table.Row key={consultation._id}>
+                            return <Table.Row key={consultation._id}>
                                 <Table.Cell>{`${currentSection.subject} - ${currentSection.sectionName}`}</Table.Cell>
                                 <Table.Cell>{`${currentStudent.family_name}, ${currentStudent.given_name}`}</Table.Cell>
-                                <Table.Cell>{moment(consultation.startTime,'hh:mm').format('hh:mm A')}</Table.Cell>
+                                <Table.Cell>{moment(consultation.startTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
-                            </Table.Row>}
+                            </Table.Row>
+                        }
                         )}
                     </Table.Body>
                 </Table>
@@ -53,7 +54,7 @@ class ConsultationTable extends Component {
     }
 }
 
-ConsultationTable.protoTypes = {
+MoreInfoTable.protoTypes = {
     callback: PropTypes.func,
 }
 
@@ -67,4 +68,4 @@ export default withTracker((props) => {
         students: Meteor.users.find({ roles: 'student' }, { sort: { createdAt: -1 } }).fetch(),
         sections: Sections.find({ isDeleted: false }, { sort: { createdAt: -1 } }).fetch()
     }
-})(ConsultationTable);
+})(MoreInfoTable);

@@ -8,6 +8,7 @@ import AddConsultationButton from '../components/userConsultations/addConsultati
 import ConsultationTable from '../components/userConsultations/consultationTable.jsx';
 import SiteHeader from '../components/common/header.jsx';
 import Schedule from '../components/userConsultations/schedule.jsx';
+import MoreInfoButton from '../components/userConsultations/moreInfoButton.jsx';
 
 Unapproved = (props) => {
     return <div>
@@ -40,6 +41,7 @@ Approved = (props) => {
                                 Consultations
                             </Header.Content>
                         </Header>
+                        <MoreInfoButton teacher={props.teacher}/>
                         <AddConsultationButton teacher={props.teacher}/>
                         <ConsultationTable teacher={props.teacher}/>
                     </Grid.Row>
