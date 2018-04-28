@@ -33,8 +33,16 @@ class MoreInfoTable extends Component {
                             <Table.HeaderCell>Start Time</Table.HeaderCell>
                             <Table.HeaderCell>End Time</Table.HeaderCell>
                             <Table.HeaderCell>Date</Table.HeaderCell>
-                            <Table.HeaderCell>Student</Table.HeaderCell>
-                            <Table.HeaderCell>You</Table.HeaderCell>
+                            <Popup trigger={<Table.HeaderCell>Student</Table.HeaderCell>}>
+                                <Popup.Content>
+                                    Student agreed to this consultation?
+                                </Popup.Content>
+                            </Popup>
+                            <Popup trigger={<Table.HeaderCell>You</Table.HeaderCell>}>
+                                <Popup.Content>
+                                    You agreed to this consultation?
+                                </Popup.Content>
+                            </Popup>
                             <Table.HeaderCell>isDone</Table.HeaderCell>
 
                         </Table.Row>
