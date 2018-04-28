@@ -202,7 +202,7 @@ class Schedule extends Component {
                                 let newStyle = {
                                     backgroundColor: "#4db6ac",
                                     color: 'black',
-                                    borderRadius: "0px",
+                                    borderRadius: "3px",
                                     border: "none"
                                 };
 
