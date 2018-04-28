@@ -113,7 +113,8 @@ class Schedule extends Component {
 
     timesToEvents(start, end) {
         let events = [];
-        this.state.classes.map(section => {
+        let colors = ['#e57373', '#ba68c8', '#4fc3f7', '#4db6ac', '#aed581', '#fff176', '#90a4ae', '#e0e0e0', '#ffb74d', '#dce775'];
+        this.state.classes.map((section, index) => {
             let sched = moment().recur(start, end).every(section.daysList).daysOfWeek();
             let semStart = moment().dayOfYear(section.semester.start).clone().set({ 'year': section.semester.startYear });
             let semEnd = moment().dayOfYear(section.semester.end).clone().set({ 'year': section.semester.startYear });
@@ -143,7 +144,7 @@ class Schedule extends Component {
                     title: `${section.subject} - ${section.sectionName}`,
                     start: startTime.toDate(),
                     end: endTime.toDate(),
-                    isConsultation: false,
+                    color: colors[index],
                 }
             });
 
@@ -162,7 +163,7 @@ class Schedule extends Component {
                 title: `Consultation`,
                 start: startTime2.toDate(),
                 end: endTime2.toDate(),
-                isConsultation: true,
+                color: '#ff8a65',
             }
 
         })
@@ -200,15 +201,11 @@ class Schedule extends Component {
                         eventPropGetter={
                             (event, start, end, isSelected) => {
                                 let newStyle = {
-                                    backgroundColor: "#4db6ac",
+                                    backgroundColor: event.color,
                                     color: 'black',
-                                    borderRadius: "3px",
+                                    borderRadius: "5px",
                                     border: "none"
                                 };
-
-                                if (event.isConsultation) {
-                                    newStyle.backgroundColor = "#ff8a65"
-                                }
 
                                 return {
                                     className: "",
