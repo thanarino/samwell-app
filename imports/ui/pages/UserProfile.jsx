@@ -29,7 +29,7 @@ ApprovedProfile = (props) => {
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} divided padded centered>
             <Grid.Row>    
-                <Grid.Column>
+                <Grid.Column width={16}>
                     <Header 
                         as='h1'
                         size='huge'
@@ -39,7 +39,7 @@ ApprovedProfile = (props) => {
                 </Grid.Column>
             </Grid.Row>    
             <Grid.Row>
-                <Grid.Column>
+                <Grid.Column width={8}>
                     <ClassPanel teacher = {teacher}/>
                 </Grid.Column>
             </Grid.Row>    
