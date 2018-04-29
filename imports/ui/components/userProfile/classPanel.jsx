@@ -73,7 +73,7 @@ class ClassPanel extends Component {
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Schedule</Table.Cell>
-                                            <Table.Cell>{`${moment(this.state.activeSection.startTime, 'hh:mm').format('hh:mm A')} to ${moment(this.state.activeSection.endTime, 'hh:mm').format('hh:mm A')} on ${this.state.activeSection.daysList.map((day, index) => { if (index == 0) `${day}s`; else if (index == this.state.activeSection.daysList.length) ` and ${day}s`; else ` ,${day}s` })}`}</Table.Cell>
+                                            <Table.Cell>{`${moment(this.state.activeSection.startTime, 'hh:mm').format('hh:mm A')} to ${moment(this.state.activeSection.endTime, 'hh:mm').format('hh:mm A')} on ${this.state.activeSection.daysList.map((day, index) => { if (index == 0) return `${day}s`; else if (index == this.state.activeSection.daysList.length) return ` and ${day}s`; else return ` ,${day}s` })}`}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Semester</Table.Cell>
