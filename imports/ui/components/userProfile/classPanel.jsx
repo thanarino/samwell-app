@@ -52,7 +52,7 @@ ClassPanel.protoTypes = {
     callback: PropTypes.func,
 }
 
-export default withTracker(() => {
+export default withTracker((props) => {
     Meteor.subscribe('sections');
 
     return {
