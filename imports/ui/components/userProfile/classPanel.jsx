@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List, Loader } from 'semantic-ui-react';
+import { Card, List, Loader, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
