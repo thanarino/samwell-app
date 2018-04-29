@@ -54,8 +54,9 @@ class Schedule extends Component {
     }
 
     componentWillReceiveProps(newProp) {
+        console.log('newprop:');
         console.log(newProp);
-        if (newProp.sections.length > 0 || newProp.consultations.length > 0) {
+        if (newProp.sections.length > 0 && newProp.consultations.length > 0) {
             this.setState({
                 classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
                 consultations: newProp.consultations
@@ -158,6 +159,7 @@ class Schedule extends Component {
                 events = _.union(events, subevents);
             });
         }
+
         let events2 = [];
 
         if (this.state.consultations) {
