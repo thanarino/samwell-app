@@ -16,7 +16,7 @@ let publicRoutes = FlowRouter.group({});
 publicRoutes.route('/', {
     name: 'login',
     triggersEnter: [function (context, redirect) {
-        if (Meteor.userId() && Meteor.user().username === 'Admin') {
+        if (Meteor.userId() && Meteor.user().username === 'admin') {
             redirect('/user/admin/teachers');
         } else {
             redirect('/user/consultations');

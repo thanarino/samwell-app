@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
 import SiteHeader from '../../ui/components/common/header';
+import ClassPanel from '../../ui/components/userProfile/classPanel';
 
 import default_pp from '../res/default_pp.jpg';
 
@@ -27,14 +28,21 @@ ApprovedProfile = (props) => {
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} divided padded centered>
-            <Grid.Column>
-                <Header 
-                    as='h1'
-                    size='huge'
-                    textAlign='center' >
-                    <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
-                </Header>    
-            </Grid.Column>
+            <Grid.Row>    
+                <Grid.Column>
+                    <Header 
+                        as='h1'
+                        size='huge'
+                        textAlign='center' >
+                        <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
+                    </Header>    
+                </Grid.Column>
+            </Grid.Row>    
+            <Grid.Row>
+                <Grid.Column>
+                    
+                </Grid.Column>
+            </Grid.Row>    
         </Grid>
     </div>
 }
