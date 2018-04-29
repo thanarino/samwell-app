@@ -57,8 +57,7 @@ class ClassPanel extends Component {
                         <Card.Content>
                             {this.state.activeSection.studentList.length != 0 ?
                             <List divided verticalAlign='middle' selection animated size='large'>
-                                
-                                    this.state.activeSection.studentList.map((student, index) =>
+                                    {this.state.activeSection.studentList.map((student, index) =>
                                         <List.Item key={index}>
                                             <List.Content floated='right'>
                                                 <Button icon labelPosition='left'>
@@ -70,7 +69,7 @@ class ClassPanel extends Component {
                                                 <List.Header verticalAlign='middle'>{student}</List.Header>
                                             </List.Content>
                                         </List.Item>
-                                    )
+                                    )}
                             </List> : "There are no students in the class."}
                         </Card.Content>
                     </Card> : null}
