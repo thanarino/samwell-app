@@ -54,44 +54,44 @@ class ClassPanel extends Component {
                 {this.state.activeSection ? 
                     <div>
                         <Card fluid>
-                            <Card.Content header={`${activeSection.subject} - ${activeSection.sectionName} Information`} />
+                            <Card.Content header={`${this.state.activeSection.subject} - ${this.state.activeSection.sectionName} Information`} />
                             <Card.Content>
                                 <Table definition>
                                     <Table.Body>
                                         <Table.Row>
                                             <Table.Cell>Course Title</Table.Cell>
-                                            <Table.Cell>{section.description}</Table.Cell>
+                                            <Table.Cell>{this.state.activeSection.description}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Class Type</Table.Cell>
-                                            <Table.Cell>{section.classType}</Table.Cell>
+                                            <Table.Cell>{this.state.activeSection.classType}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Room</Table.Cell>
-                                            <Table.Cell>{section.room}</Table.Cell>
+                                            <Table.Cell>{this.state.activeSection.room}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Schedule</Table.Cell>
-                                            <Table.Cell>{`${moment(section.startTime, 'hh:mm').format('hh:mm A')} to ${moment(section.endTime, 'hh:mm').format('hh:mm A')} on ${section.daysList.map((day, index) => { if (index == 0) `${day}s`; else if (index == section.daysList.length) ` and ${day}s`; else ` ,${day}s` })}`}</Table.Cell>
+                                            <Table.Cell>{`${moment(this.state.activeSection.startTime, 'hh:mm').format('hh:mm A')} to ${moment(this.state.activeSection.endTime, 'hh:mm').format('hh:mm A')} on ${this.state.activeSection.daysList.map((day, index) => { if (index == 0) `${day}s`; else if (index == this.state.activeSection.daysList.length) ` and ${day}s`; else ` ,${day}s` })}`}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Semester</Table.Cell>
-                                            <Table.Cell>{section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value}</Table.Cell>
+                                            <Table.Cell>{this.state.activeSection.semester.value === 'First' || this.state.activeSection.semester.value === 'Second' ? this.state.activeSection.semester.value + ' Semester' : this.state.activeSection.semester.value}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Start of Class</Table.Cell>
-                                            <Table.Cell>{moment().dayOfYear(section.semester.start).set({'year': section.semester.startYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                            <Table.Cell>{moment().dayOfYear(this.state.activeSection.semester.start).set({'year': this.state.activeSection.semester.startYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>End of Class</Table.Cell>
-                                            <Table.Cell>{moment().dayOfYear(section.semester.end).set({'year': section.semester.endYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                            <Table.Cell>{moment().dayOfYear(this.state.activeSection.semester.end).set({'year': this.state.activeSection.semester.endYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
                                         </Table.Row>
                                     </Table.Body>
                                 </Table>
                             </Card.Content>
                         </Card>
                         <Card fluid>
-                            <Card.Content header={`Students from ${activeSection.subject} - ${activeSection.sectionName}`} />
+                            <Card.Content header={`Students from ${this.state.activeSection.subject} - ${this.state.activeSection.sectionName}`} />
                             <Card.Content>
                                 {this.state.activeSection.studentList.length != 0 ?
                                 <List divided verticalAlign='middle' selection animated size='large'>
