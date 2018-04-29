@@ -32,7 +32,7 @@ class ClassPanel extends Component {
                         <List divided verticalAlign='middle' selection animated size='large'>
                             {this.props.sections.length != 0 ?
                                 this.state.sections.map((section) => 
-                                    <List.Item key={section._id} onClick={this.setState({activeSection: section})}>
+                                    <List.Item key={section._id} onClick={()=>this.setState({activeSection: section})}>
                                         <List.Content floated='right'>
                                             <Button icon labelPosition='left'>
                                                 <Icon name='send outline' />
