@@ -14,12 +14,13 @@ class ClassPanel extends Component {
             teacher: props.teacher,
             sections: [],
             activeSection: null,
+            students: [],
         }
     }
 
     componentWillReceiveProps(newProp) {
-        if (newProp.sections.length != 0) {
-            this.setState({ sections: newProp.sections });
+        if (newProp.sections.length > 0 || newProp.students.length > 0) {
+            this.setState({ sections: newProp.sections, students: newProp.students });
         }
     }
 
@@ -73,7 +74,7 @@ class ClassPanel extends Component {
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Schedule</Table.Cell>
-                                            <Table.Cell>{`${moment(this.state.activeSection.startTime, 'hh:mm').format('hh:mm A')} to ${moment(this.state.activeSection.endTime, 'hh:mm').format('hh:mm A')} on ${this.state.activeSection.daysList.map((day, index) => { if (index == 0) return `${day}s`; else if (index == this.state.activeSection.daysList.length) return ` and ${day}s`; else return ` ,${day}s` })}`}</Table.Cell>
+                                            <Table.Cell>{`${moment(this.state.activeSection.startTime, 'hh:mm').format('hh:mm A')} to ${moment(this.state.activeSection.endTime, 'hh:mm').format('hh:mm A')} on ${this.state.activeSection.daysList.map((day, index) => { if (index == 0) return `${day}s`; else if (index == this.state.activeSection.daysList.length-1) return ` and ${day}s`; else return ` ,${day}s` })}`}</Table.Cell>
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Semester</Table.Cell>
@@ -91,27 +92,31 @@ class ClassPanel extends Component {
                                 </Table>
                             </Card.Content>
                         </Card>
-                        <Card fluid>
-                            <Card.Content header={`Students from ${this.state.activeSection.subject} - ${this.state.activeSection.sectionName}`} />
-                            <Card.Content>
-                                {this.state.activeSection.studentList.length != 0 ?
-                                <List divided verticalAlign='middle' selection animated size='large'>
-                                        {this.state.activeSection.studentList.map((student, index) =>
-                                            <List.Item key={index}>
-                                                <List.Content floated='right'>
-                                                    <Button icon labelPosition='left'>
-                                                        <Icon name='x' />
-                                                        Remove
+                        {this.state.students.length != 0 ?
+                            <Card fluid>
+                                <Card.Content header={`Students from ${this.state.activeSection.subject} - ${this.state.activeSection.sectionName}`} />
+                                <Card.Content>
+                                    {this.state.activeSection.studentList.length != 0 ?
+                                        <List divided verticalAlign='middle' selection animated size='large'>
+                                            {this.state.activeSection.studentList.map((student, index) =>{
+                                                let studentFound = _.filter(students, { '_id': student })[0];
+                                                return <List.Item key={index}>
+                                                    <List.Content floated='right'>
+                                                        <Button icon labelPosition='left'>
+                                                            <Icon name='x' />
+                                                            Remove
                                                     </Button>
-                                                </List.Content>
-                                                <List.Content verticalAlign='middle'>
-                                                    <List.Header verticalAlign='middle'>{student}</List.Header>
-                                                </List.Content>
-                                            </List.Item>
-                                        )}
-                                </List> : "There are no students in the class."}
-                            </Card.Content>
-                        </Card>
+                                                    </List.Content>
+                                                    <List.Content verticalAlign='middle'>
+                                                        <List.Header verticalAlign='middle'>{`${studentFound.family_name}, ${studentFound.given_name}`}</List.Header>
+                                                    </List.Content>
+                                                </List.Item>
+                                            }
+                                            )}
+                                        </List> : "There are no students in the class."}
+                                </Card.Content>
+                            </Card>    
+                            : <Loader active inline='centered' /> }
                     </div> : null}
             </div>    
         )
@@ -124,8 +129,10 @@ ClassPanel.protoTypes = {
 
 export default withTracker((props) => {
     Meteor.subscribe('sections');
+    Meteor.subscribe('studentsAll');
 
     return {
         sections: Sections.find({ isDeleted: false, teacherList: props.teacher._id }, { sort: { createdAt: -1 } }).fetch(),
+        students: Meteor.users.find({ roles: 'student' }, { sort: { createdAt: -1 } }).fetch(),
     }
 })(ClassPanel);
