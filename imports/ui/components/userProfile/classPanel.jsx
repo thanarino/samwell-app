@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, List, Loader, Button, Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
 
