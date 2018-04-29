@@ -19,8 +19,11 @@ class ClassPanel extends Component {
     }
 
     componentWillReceiveProps(newProp) {
-        if (newProp.sections.length > 0 || newProp.students.length > 0) {
-            this.setState({ sections: newProp.sections, students: newProp.students });
+        if (newProp.sections.length > 0 ) {
+            this.setState({ sections: newProp.sections });
+        }
+        if (newProp.students.length > 0) {
+            this.setState({ students: newProp.students });
         }
     }
 
