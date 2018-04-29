@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Label, Header, Icon, Button, Image, Card, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import moment from 'moment';
 import _ from 'lodash';
 import SiteHeader from '../../ui/components/common/header';
 import ClassPanel from '../../ui/components/userProfile/classPanel';
@@ -63,10 +64,18 @@ ApprovedProfile = (props) => {
                         <Card.Content>
                             <Table definition>
                                 <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>Consultation Hours</Table.Cell>
-                                        <Table.Cell>{teacher.consultationHours ? JSON.stringify(teacher.consultationHours) : "No data"}</Table.Cell>
-                                    </Table.Row>
+                                    {teacher.consultationHours ? 
+                                        teacher.consultationHours.map((day, index) => 
+                                            <Table.Row key={index}>
+                                                <Table.Cell>{day.fullName}</Table.Cell>
+                                                <Table.Cell>{day.time.map((time) => `${moment(time.start, 'hh:mm').format('hh:mm A')} to ${moment(time.end, 'hh:mm').format('hh:mm A')} `)}</Table.Cell>
+                                            </Table.Row>
+                                        ) :
+                                        <Table.Row>
+                                            <Table.Cell>Consultation Hours</Table.Cell>
+                                            <Table.Cell>None yet</Table.Cell>
+                                        </Table.Row>}
+                                    
                                 </Table.Body>
                             </Table>
                         </Card.Content>
