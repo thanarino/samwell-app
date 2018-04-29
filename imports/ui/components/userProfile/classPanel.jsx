@@ -29,7 +29,7 @@ class ClassPanel extends Component {
                 <Card.Content>
                     <List divided verticalAlign='middle' selection animated>
                         {this.props.sections.length != 0 ?
-                            this.props.sections.map((section) => {
+                            this.state.sections.map((section) => 
                                 <List.Item key={section._id}>
                                     <List.Content floated='right'>
                                         <List.Header>{section.code}</List.Header>
@@ -38,7 +38,7 @@ class ClassPanel extends Component {
                                         <List.Header>{section.subject} - {section.sectionName}</List.Header>
                                     </List.Content>
                                 </List.Item>
-                            }) : <Loader active inline='centered' /> }    
+                            ) : <Loader active inline='centered' /> }    
                         
                     </List>
                 </Card.Content>
