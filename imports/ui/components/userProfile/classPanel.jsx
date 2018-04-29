@@ -32,16 +32,16 @@ class ClassPanel extends Component {
                             this.state.sections.map((section) => 
                                 <List.Item key={section._id}>
                                     <List.Content floated='right'>
-                                        <List.Header>{section.code}</List.Header>
-                                    </List.Content>
-                                    <List.Content floated='right'>
                                         <Button icon labelPosition='left'>
                                             <Icon name='send outline' />
                                             Message
                                         </Button>
+                                    </List.Content>    
+                                    <List.Content floated='right' verticalAlign='middle'> 
+                                        <List.Header verticalAlign='middle'>{section.code}</List.Header>
                                     </List.Content>
-                                    <List.Content>
-                                        <List.Header>{section.subject} - {section.sectionName}</List.Header>
+                                    <List.Content verticalAlign='middle'>
+                                        <List.Header verticalAlign='middle'>{section.subject} - {section.sectionName}</List.Header>
                                     </List.Content>
                                 </List.Item>
                             ) : <Loader active inline='centered' /> }    
