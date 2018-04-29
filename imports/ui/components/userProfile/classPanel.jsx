@@ -24,7 +24,7 @@ class ClassPanel extends Component {
     render() {
         const { teacher } = this.state;
         return (
-            <Card>
+            <Card fluid>
                 <Card.Content header='Classes' />
                 <Card.Content>
                     <List divided verticalAlign='middle' selection animated>
