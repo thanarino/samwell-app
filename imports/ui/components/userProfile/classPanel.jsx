@@ -52,27 +52,66 @@ class ClassPanel extends Component {
                     </Card.Content>
                 </Card>
                 {this.state.activeSection ? 
-                    <Card fluid>
-                        <Card.Content header='Classes' />
-                        <Card.Content>
-                            {this.state.activeSection.studentList.length != 0 ?
-                            <List divided verticalAlign='middle' selection animated size='large'>
-                                    {this.state.activeSection.studentList.map((student, index) =>
-                                        <List.Item key={index}>
-                                            <List.Content floated='right'>
-                                                <Button icon labelPosition='left'>
-                                                    <Icon name='x' />
-                                                    Remove
-                                                </Button>
-                                            </List.Content>
-                                            <List.Content verticalAlign='middle'>
-                                                <List.Header verticalAlign='middle'>{student}</List.Header>
-                                            </List.Content>
-                                        </List.Item>
-                                    )}
-                            </List> : "There are no students in the class."}
-                        </Card.Content>
-                    </Card> : null}
+                    <div>
+                        <Card fluid>
+                            <Card.Content header={`${activeSection.subject} - ${activeSection.sectionName} Information`} />
+                            <Card.Content>
+                                <Table definition>
+                                    <Table.Body>
+                                        <Table.Row>
+                                            <Table.Cell>Course Title</Table.Cell>
+                                            <Table.Cell>{section.description}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>Class Type</Table.Cell>
+                                            <Table.Cell>{section.classType}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>Room</Table.Cell>
+                                            <Table.Cell>{section.room}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>Schedule</Table.Cell>
+                                            <Table.Cell>{`${moment(section.startTime, 'hh:mm').format('hh:mm A')} to ${moment(section.endTime, 'hh:mm').format('hh:mm A')} on ${section.daysList.map((day, index) => { if (index == 0) `${day}s`; else if (index == section.daysList.length) ` and ${day}s`; else ` ,${day}s` })}`}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>Semester</Table.Cell>
+                                            <Table.Cell>{section.semester.value === 'First' || section.semester.value === 'Second' ? section.semester.value + ' Semester' : section.semester.value}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>Start of Class</Table.Cell>
+                                            <Table.Cell>{moment().dayOfYear(section.semester.start).set({'year': section.semester.startYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell>End of Class</Table.Cell>
+                                            <Table.Cell>{moment().dayOfYear(section.semester.end).set({'year': section.semester.endYear}).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                        </Table.Row>
+                                    </Table.Body>
+                                </Table>
+                            </Card.Content>
+                        </Card>
+                        <Card fluid>
+                            <Card.Content header={`Students from ${activeSection.subject} - ${activeSection.sectionName}`} />
+                            <Card.Content>
+                                {this.state.activeSection.studentList.length != 0 ?
+                                <List divided verticalAlign='middle' selection animated size='large'>
+                                        {this.state.activeSection.studentList.map((student, index) =>
+                                            <List.Item key={index}>
+                                                <List.Content floated='right'>
+                                                    <Button icon labelPosition='left'>
+                                                        <Icon name='x' />
+                                                        Remove
+                                                    </Button>
+                                                </List.Content>
+                                                <List.Content verticalAlign='middle'>
+                                                    <List.Header verticalAlign='middle'>{student}</List.Header>
+                                                </List.Content>
+                                            </List.Item>
+                                        )}
+                                </List> : "There are no students in the class."}
+                            </Card.Content>
+                        </Card>
+                    </div> : null}
             </div>    
         )
     }

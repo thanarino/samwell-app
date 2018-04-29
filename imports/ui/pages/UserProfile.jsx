@@ -66,14 +66,13 @@ ApprovedProfile = (props) => {
                                         teacher.consultationHours.map((day, index) =>
                                             <Table.Row key={index}>
                                                 <Table.Cell>{day.fullName}</Table.Cell>
-                                                <Table.Cell>{day.time.map((time) => `${moment(time.start, 'hh:mm').format('hh:mm A')} to ${moment(time.end, 'hh:mm').format('hh:mm A')} `)}</Table.Cell>
+                                                <Table.Cell>{day.time.length == 0 ? "No consultation hours for this day." : day.time.map((time) => `${moment(time.start, 'hh:mm').format('hh:mm A')} to ${moment(time.end, 'hh:mm').format('hh:mm A')} `)}</Table.Cell>
                                             </Table.Row>
                                         ) :
                                         <Table.Row>
                                             <Table.Cell>Consultation Hours</Table.Cell>
                                             <Table.Cell>None yet</Table.Cell>
                                         </Table.Row>}
-
                                 </Table.Body>
                             </Table>
                         </Card.Content>
