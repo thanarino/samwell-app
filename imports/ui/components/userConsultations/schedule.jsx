@@ -56,7 +56,7 @@ class Schedule extends Component {
     componentWillReceiveProps(newProp) {
         console.log('newprop:');
         console.log(newProp);
-        if (newProp.sections.length > 0 && newProp.consultations.length > 0) {
+        if (newProp.sections.length > 0 || newProp.consultations.length > 0) {
             this.setState({
                 classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
                 consultations: newProp.consultations
@@ -163,7 +163,7 @@ class Schedule extends Component {
         let events2 = [];
 
         if (this.state.consultations) {
-            this.state.consultations.map(consultation => {
+            events2 = this.state.consultations.map(consultation => {
                 const startHour2 = moment(consultation.startTime, 'hh:mm').hour();
                 const startMinute2 = moment(consultation.startTime, 'hh:mm').minute();
                 const endHour2 = moment(consultation.endTime, 'hh:mm').hour();
