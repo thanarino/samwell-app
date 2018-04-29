@@ -27,7 +27,7 @@ ApprovedProfile = (props) => {
     const { teacher } = props;
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
-        <Grid columns={2} divided padded>
+        <Grid columns={2} padded>
             <Grid.Row centered>
                 <Grid.Column width={7}>
                     <Header
@@ -36,7 +36,7 @@ ApprovedProfile = (props) => {
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
                     </Header>
-                    <Table definition basic='very'>
+                    <Table definition>
                         <Table.Body>
                             <Table.Row>
                                 <Table.Cell>Email</Table.Cell>
@@ -74,9 +74,6 @@ ApprovedProfile = (props) => {
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row centered>
-                <Grid.Column width={5}>
-                    <ClassPanel teacher={teacher} />
-                </Grid.Column>
                 <Grid.Column width={9}>
                     <ClassPanel teacher={teacher} />
                 </Grid.Column>
