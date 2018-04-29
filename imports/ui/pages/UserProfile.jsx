@@ -40,7 +40,7 @@ ApprovedProfile = (props) => {
             </Grid.Row>    
             <Grid.Row>
                 <Grid.Column>
-                    
+                    <ClassPanel teacher = {teacher}/>
                 </Grid.Column>
             </Grid.Row>    
         </Grid>
