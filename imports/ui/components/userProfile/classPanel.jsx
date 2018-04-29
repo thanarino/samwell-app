@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
 
+import Sections from '../../../api/sections/sections.js';
+
 class ClassPanel extends Component {
     constructor(props) {
         super(props);
