@@ -70,7 +70,7 @@ class ConsultationForm extends Component {
                 key: index,
                 text: `${student.family_name}, ${student.given_name}`,
                 value: `${student._id}`,
-                image: {avatar: true, src: `${student.profile_pic}`}
+                // image: { avatar: true, src: `https://graph.facebook.com/v2.12/${student._id}/picture?redirect=false&access_token=${process.env.FB_ACCESS_TOKEN}` }
             }
         })
     }
