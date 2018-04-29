@@ -54,8 +54,7 @@ class Schedule extends Component {
     }
 
     componentWillReceiveProps(newProp) {
-        console.log('newprop:');
-        console.log(newProp);
+        console.log('newprop:', newProp);
         if (newProp.sections.length > 0 || newProp.consultations.length > 0) {
             this.setState({
                 classes: this.convertToClasses(this.state.teacher.classes, newProp.sections),
@@ -123,40 +122,43 @@ class Schedule extends Component {
         let colors = ['#e57373', '#ba68c8', '#4fc3f7', '#4db6ac', '#aed581', '#fff176', '#90a4ae', '#e0e0e0', '#ffb74d', '#dce775'];
         if (this.state.classes) {
             this.state.classes.map((section, index) => {
-                let sched = moment().recur(start, end).every(section.daysList).daysOfWeek();
-                let semStart = moment().dayOfYear(section.semester.start).clone().set({ 'year': section.semester.startYear });
-                let semEnd = moment().dayOfYear(section.semester.end).clone().set({ 'year': section.semester.startYear });
-                //gets all dates from start to end of semester given by recurrence
-                let allValid = sched.all().map((dateFromArray) => {
-                    if (moment(dateFromArray).diff(semStart, 'days') >= 0 && moment(dateFromArray).diff(semEnd, 'days') <= 0) {
-                        return dateFromArray;
-                    } else {
-                        return null;
-                    }
-                })
-                console.log('start');
-                console.log(moment(start).format());
-                console.log('end');
-                console.log(moment(end).format());
-                console.log(sched.all());
-                console.log(allValid);
-                const startHour = moment(section.startTime, 'hh:mm').hour();
-                const startMinute = moment(section.startTime, 'hh:mm').minute();
-                const endHour = moment(section.endTime, 'hh:mm').hour();
-                const endMinute = moment(section.endTime, 'hh:mm').minute();
+                console.log(section);
+                if (section != undefined) {
+                    let sched = moment().recur(start, end).every(section.daysList).daysOfWeek();
+                    let semStart = moment().dayOfYear(section.semester.start).clone().set({ 'year': section.semester.startYear });
+                    let semEnd = moment().dayOfYear(section.semester.end).clone().set({ 'year': section.semester.startYear });
+                    //gets all dates from start to end of semester given by recurrence
+                    let allValid = sched.all().map((dateFromArray) => {
+                        if (moment(dateFromArray).diff(semStart, 'days') >= 0 && moment(dateFromArray).diff(semEnd, 'days') <= 0) {
+                            return dateFromArray;
+                        } else {
+                            return null;
+                        }
+                    })
+                    console.log('start');
+                    console.log(moment(start).format());
+                    console.log('end');
+                    console.log(moment(end).format());
+                    console.log(sched.all());
+                    console.log(allValid);
+                    const startHour = moment(section.startTime, 'hh:mm').hour();
+                    const startMinute = moment(section.startTime, 'hh:mm').minute();
+                    const endHour = moment(section.endTime, 'hh:mm').hour();
+                    const endMinute = moment(section.endTime, 'hh:mm').minute();
 
-                let subevents = allValid.map(date => {
-                    let startTime = moment(date).clone().set({ 'hour': startHour, 'minute': startMinute, 'second': 0 }).subtract(8, 'hours');
-                    let endTime = moment(date).clone().set({ 'hour': endHour, 'minute': endMinute, 'second': 0 }).subtract(8, 'hours');
-                    return {
-                        title: `${section.subject} - ${section.sectionName}`,
-                        start: startTime.toDate(),
-                        end: endTime.toDate(),
-                        color: colors[index],
-                    }
-                });
-                console.log(events);
-                events = _.union(events, subevents);
+                    let subevents = allValid.map(date => {
+                        let startTime = moment(date).clone().set({ 'hour': startHour, 'minute': startMinute, 'second': 0 }).subtract(8, 'hours');
+                        let endTime = moment(date).clone().set({ 'hour': endHour, 'minute': endMinute, 'second': 0 }).subtract(8, 'hours');
+                        return {
+                            title: `${section.subject} - ${section.sectionName}`,
+                            start: startTime.toDate(),
+                            end: endTime.toDate(),
+                            color: colors[index],
+                        }
+                    });
+                    console.log(events);
+                    events = _.union(events, subevents);
+                }
             });
         }
 
