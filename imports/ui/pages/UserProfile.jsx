@@ -28,41 +28,41 @@ ApprovedProfile = (props) => {
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} divided padded>
-            <Grid.Row centered>    
-                <Grid.Column width={5}>
-                    <Header 
+            <Grid.Row centered>
+                <Grid.Column width={7}>
+                    <Header
                         as='h1'
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
-                    </Header>    
+                    </Header>
+                    <Table definition basic='very'>
+                        <Table.Body>
+                            <Table.Row>
+                                <Table.Cell>Email</Table.Cell>
+                                <Table.Cell>{teacher.email}</Table.Cell>
+                            </Table.Row>
+                            <Table.Row>
+                                <Table.Cell>Department</Table.Cell>
+                                <Table.Cell>{teacher.department ? teacher.department : "No data"}</Table.Cell>
+                            </Table.Row>
+                            <Table.Row>
+                                <Table.Cell>Position</Table.Cell>
+                                <Table.Cell>{teacher.position ? teacher.position : "No data"}</Table.Cell>
+                            </Table.Row>
+                            <Table.Row>
+                                <Table.Cell>Office</Table.Cell>
+                                <Table.Cell>{teacher.office ? teacher.office : "No data"}</Table.Cell>
+                            </Table.Row>
+                        </Table.Body>
+                    </Table>
                 </Grid.Column>
-                <Grid.Column width={11}>
+                <Grid.Column width={7}>
                     <Card fluid>
-                        <Card.Content header='Profile' />
+                        <Card.Content header='Consultation Hours' />
                         <Card.Content>
                             <Table definition>
                                 <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>Email</Table.Cell>
-                                        <Table.Cell>{teacher.email}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Department</Table.Cell>
-                                        <Table.Cell>{teacher.department ? teacher.department : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Position</Table.Cell>
-                                        <Table.Cell>{teacher.position ? teacher.position : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Office</Table.Cell>
-                                        <Table.Cell>{teacher.office ? teacher.office : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Classes</Table.Cell>
-                                        <Table.Cell>{teacher.classes ? JSON.stringify(teacher.classes) : "No data"}</Table.Cell>
-                                    </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Consultation Hours</Table.Cell>
                                         <Table.Cell>{teacher.consultationHours ? JSON.stringify(teacher.consultationHours) : "No data"}</Table.Cell>
@@ -75,12 +75,12 @@ ApprovedProfile = (props) => {
             </Grid.Row>
             <Grid.Row centered>
                 <Grid.Column width={5}>
-                    <ClassPanel teacher = {teacher}/>
+                    <ClassPanel teacher={teacher} />
                 </Grid.Column>
                 <Grid.Column width={9}>
                     <ClassPanel teacher={teacher} />
                 </Grid.Column>
-            </Grid.Row>    
+            </Grid.Row>
         </Grid>
     </div>
 }
