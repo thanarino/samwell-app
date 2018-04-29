@@ -29,7 +29,7 @@ ApprovedProfile = (props) => {
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} divided padded>
             <Grid.Row centered>    
-                <Grid.Column width={16}>
+                <Grid.Column width={5}>
                     <Header 
                         as='h1'
                         size='huge'
@@ -37,26 +37,12 @@ ApprovedProfile = (props) => {
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
                     </Header>    
                 </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column width={16}>
+                <Grid.Column width={11}>
                     <Card fluid>
                         <Card.Content header='Profile' />
                         <Card.Content>
                             <Table definition>
                                 <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>First Name</Table.Cell>
-                                        <Table.Cell>{teacher.given_name ? teacher.given_name : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Middle Name</Table.Cell>
-                                        <Table.Cell>{teacher.middle_name ? teacher.middle_name : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Last Name</Table.Cell>
-                                        <Table.Cell>{teacher.family_name ? teacher.family_name : "No data"}</Table.Cell>
-                                    </Table.Row>
                                     <Table.Row>
                                         <Table.Cell>Email</Table.Cell>
                                         <Table.Cell>{teacher.email}</Table.Cell>
@@ -74,14 +60,6 @@ ApprovedProfile = (props) => {
                                         <Table.Cell>{teacher.office ? teacher.office : "No data"}</Table.Cell>
                                     </Table.Row>
                                     <Table.Row>
-                                        <Table.Cell>Available</Table.Cell>
-                                        <Table.Cell>{teacher.available ? teacher.available.toString() : "No data"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>Approved</Table.Cell>
-                                        <Table.Cell>{teacher.approved ? teacher.approved.toString() : "Not approved"}</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
                                         <Table.Cell>Classes</Table.Cell>
                                         <Table.Cell>{teacher.classes ? JSON.stringify(teacher.classes) : "No data"}</Table.Cell>
                                     </Table.Row>
@@ -94,12 +72,12 @@ ApprovedProfile = (props) => {
                         </Card.Content>
                     </Card>
                 </Grid.Column>
-            </Grid.Row>    
+            </Grid.Row>
             <Grid.Row centered>
                 <Grid.Column width={5}>
                     <ClassPanel teacher = {teacher}/>
                 </Grid.Column>
-                <Grid.Column width={5}>
+                <Grid.Column width={9}>
                     <ClassPanel teacher={teacher} />
                 </Grid.Column>
             </Grid.Row>    
