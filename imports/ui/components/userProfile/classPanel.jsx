@@ -99,7 +99,7 @@ class ClassPanel extends Component {
                                     {this.state.activeSection.studentList.length != 0 ?
                                         <List divided verticalAlign='middle' selection animated size='large'>
                                             {this.state.activeSection.studentList.map((student, index) =>{
-                                                let studentFound = _.filter(students, { '_id': student })[0];
+                                                let studentFound = _.filter(this.state.students, { '_id': student })[0];
                                                 return <List.Item key={index}>
                                                     <List.Content floated='right'>
                                                         <Button icon labelPosition='left'>
