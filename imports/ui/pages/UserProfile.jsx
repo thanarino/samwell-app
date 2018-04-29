@@ -30,7 +30,7 @@ ApprovedProfile = (props) => {
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} padded>
             <Grid.Row centered>
-                <Grid.Column width={7}>
+                <Grid.Column width={5}>
                     <Header
                         as='h1'
                         size='huge'
@@ -57,15 +57,13 @@ ApprovedProfile = (props) => {
                             </Table.Row>
                         </Table.Body>
                     </Table>
-                </Grid.Column>
-                <Grid.Column width={7}>
                     <Card fluid>
                         <Card.Content header='Consultation Hours' />
                         <Card.Content>
                             <Table definition>
                                 <Table.Body>
-                                    {teacher.consultationHours ? 
-                                        teacher.consultationHours.map((day, index) => 
+                                    {teacher.consultationHours ?
+                                        teacher.consultationHours.map((day, index) =>
                                             <Table.Row key={index}>
                                                 <Table.Cell>{day.fullName}</Table.Cell>
                                                 <Table.Cell>{day.time.map((time) => `${moment(time.start, 'hh:mm').format('hh:mm A')} to ${moment(time.end, 'hh:mm').format('hh:mm A')} `)}</Table.Cell>
@@ -75,14 +73,12 @@ ApprovedProfile = (props) => {
                                             <Table.Cell>Consultation Hours</Table.Cell>
                                             <Table.Cell>None yet</Table.Cell>
                                         </Table.Row>}
-                                    
+
                                 </Table.Body>
                             </Table>
                         </Card.Content>
                     </Card>
                 </Grid.Column>
-            </Grid.Row>
-            <Grid.Row centered>
                 <Grid.Column width={9}>
                     <ClassPanel teacher={teacher} />
                 </Grid.Column>
