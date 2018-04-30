@@ -113,5 +113,11 @@ Meteor.methods({
                 Sections.update(section, { $push: { teacherList: teacherID } });
             }
         });
+    },
+    'sections.removeStudent'(sectionId, studentId) {
+        check(sectionId, String);
+        check(studentId, String);
+
+        Sections.update({ _id: sectionId }, { $pull: { studentList: studentId } });
     }
 })
