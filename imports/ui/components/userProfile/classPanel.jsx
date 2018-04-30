@@ -26,7 +26,9 @@ class ClassPanel extends Component {
 
     handleClick = (section, student) => {
         console.log(section, student);
-        Meteor.call('sections.removeStudent', section, student);
+        Meteor.call('sections.removeStudent', section, student, (err, res) => {
+            this.setState(this.state);
+        });
     }   
 
     render() {
