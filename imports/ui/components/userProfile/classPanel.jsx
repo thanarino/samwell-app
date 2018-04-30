@@ -25,6 +25,7 @@ class ClassPanel extends Component {
     }
 
     handleClick = (section, student) => {
+        console.log(section, student);
         Meteor.call('sections.removeStudent', section, student);
     }   
 
@@ -106,7 +107,7 @@ class ClassPanel extends Component {
                                                 let studentFound = _.filter(this.state.students, { '_id': student })[0];
                                                 return <List.Item key={index}>
                                                     <List.Content floated='right'>
-                                                        <Button icon labelPosition='left' onClick={()=>this.handleClick(this.state.activeSection._id, student._id)}>
+                                                        <Button icon labelPosition='left' onClick={() => this.handleClick(this.state.activeSection._id, student._id)} sectionId={this.state.activeSection._id} studentId={student._id}>
                                                             <Icon name='x' />
                                                             Remove
                                                     </Button>
