@@ -19,11 +19,8 @@ class ClassPanel extends Component {
     }
 
     componentWillReceiveProps(newProp) {
-        if (newProp.sections.length > 0 ) {
-            this.setState({ sections: newProp.sections });
-        }
-        if (newProp.students.length > 0) {
-            this.setState({ students: newProp.students });
+        if (newProp.sections.length > 0 || newProp.students.length > 0) {
+            this.setState({ sections: newProp.sections, students: newProp.students });
         }
     }
 
@@ -95,7 +92,7 @@ class ClassPanel extends Component {
                                 </Table>
                             </Card.Content>
                         </Card>
-                        {this.state.students.length != 0 ?
+                        {this.state.students ?
                             <Card fluid>
                                 <Card.Content header={`Students from ${this.state.activeSection.subject} - ${this.state.activeSection.sectionName}`} />
                                 <Card.Content>
