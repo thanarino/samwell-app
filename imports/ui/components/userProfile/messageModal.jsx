@@ -18,7 +18,7 @@ export default class MessageModal extends Component {
         const section = this.props.section;
         const { open } = this.state;
         return (
-            <Modal trigger={<Button icon labelPosition='left'>
+            <Modal trigger={<Button icon labelPosition='left' onClick={this.show}>
                 <Icon name='send outline' />Message</Button>} size='tiny' closeIcon open={open} onClose={this.close}>
                 <Header content={`Send a message to all students from ${section.subject}-${section.sectionName}`} />
                 <Modal.Actions>
