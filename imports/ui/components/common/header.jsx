@@ -91,7 +91,7 @@ export default class SiteHeader extends Component {
                                     <Image avatar src={teacher.services.google ? teacher.services.google.picture : default_pp} />
                                     
                                     {` ${teacher.given_name}  `}
-                                    {teacher.available ? <Label circular color={'white'} empty /> : <Label circular color={'black'} empty />}
+                                    {teacher.available ? <Label circular color={'olive'} empty /> : <Label circular color={'orange'} empty />}
                                 </Menu.Item>
                             </Menu.Menu>    
                             : <Menu.Menu position='right'>
