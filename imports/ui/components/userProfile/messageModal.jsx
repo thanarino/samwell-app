@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Header, Icon } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, TextArea } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 
 export default class MessageModal extends Component {
