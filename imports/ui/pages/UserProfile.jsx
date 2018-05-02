@@ -37,7 +37,7 @@ ApprovedProfile = (props) => {
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}  `}
                         <Popup
-                            trigger={<Checkbox toggle checked={props.teacher.isAvailable} onChange={() => this.toggle(props.teacher)} />}
+                            trigger={<Checkbox toggle checked={props.teacher.available} onChange={() => this.toggle(props.teacher)} />}
                             content='Are you available for consultation right now?'
                             position='right center'
                             inverted
