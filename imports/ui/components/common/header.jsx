@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Button, Icon, Divider, Image } from 'semantic-ui-react';
+import { Menu, Button, Icon, Divider, Image, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import _ from 'lodash';
