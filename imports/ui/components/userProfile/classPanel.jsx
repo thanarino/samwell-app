@@ -8,6 +8,10 @@ import _ from 'lodash';
 import { Sections } from '../../../api/sections/sections.js';
 
 class ClassPanel extends Component {
+    static propTypes = {
+        teacher: PropTypes.object,
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,8 +30,8 @@ class ClassPanel extends Component {
 
     handleClick = (section, student) => {
         console.log(section, student);
-        Meteor.call('sections.removeStudent', section, student, (err, res) => {
-            this.setState(this.state);
+        Meteor.call('sections.removeStudent', section, student, (error, result) => {
+            window.location.reload();
         });
     }   
 
@@ -105,7 +109,7 @@ class ClassPanel extends Component {
                                 <Card.Content>
                                     {this.state.activeSection.studentList.length != 0 ?
                                         <List divided verticalAlign='middle' selection animated size='large'>
-                                            {this.state.students.length != 0 ? this.state.activeSection.studentList.map((student, index) =>{
+                                            {this.state.students.length != 0 ? this.state.activeSection.studentList.map((student, index) => {
                                                 let studentFound = _.filter(this.state.students, { '_id': student })[0];
                                                 console.log(studentFound, this.state);
                                                 return <List.Item key={index}>
@@ -120,7 +124,10 @@ class ClassPanel extends Component {
                                                     </List.Content>
                                                 </List.Item>
                                             }
-                                            ) : <Loader active inline='centered' />}
+                                            ) : () => {
+                                                console.log("state: ", this.state);
+                                                return < Loader active inline='centered' />
+                                            }}
                                         </List> : "There are no students in the class."}
                                 </Card.Content>
                             </Card>    
