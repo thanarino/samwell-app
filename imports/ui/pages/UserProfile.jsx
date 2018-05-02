@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Label, Header, Icon, Button, Image, Card, Table, Checkbox } from 'semantic-ui-react';
+import { Grid, Label, Header, Icon, Button, Image, Card, Table, Checkbox, Popup } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
@@ -36,9 +36,13 @@ ApprovedProfile = (props) => {
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
-                        <Header.Subheader>
-                            <Checkbox toggle label='Available' checked={props.teacher.isAvailable} onChange={()=>this.toggle(props.teacher)}/>
-                        </Header.Subheader>
+                        <Popup
+                            trigger={<Checkbox toggle checked={props.teacher.isAvailable} onChange={() => this.toggle(props.teacher)} />}
+                            content='Are you available for consultation right now?'
+                            position='right center'
+                            inverted
+                            basic
+                        />
                     </Header>
                     <Table definition>
                         <Table.Body>
