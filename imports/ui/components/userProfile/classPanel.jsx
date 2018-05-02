@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import _ from 'lodash';
 
 import { Sections } from '../../../api/sections/sections.js';
+import MessageModal from './messageModal.jsx';
 
 class ClassPanel extends Component {
     static propTypes = {
@@ -47,10 +48,7 @@ class ClassPanel extends Component {
                                 this.props.sections.map((section) => 
                                     <List.Item key={section._id} onClick={()=>this.setState({activeSection: section})}>
                                         <List.Content floated='right'>
-                                            <Button icon labelPosition='left'>
-                                                <Icon name='send outline' />
-                                                Message
-                                            </Button>
+                                            <MessageModal section={section} />
                                         </List.Content>    
                                         <List.Content floated='right' verticalAlign='middle'> 
                                             <List.Header verticalAlign='middle'>{section.code}</List.Header>
