@@ -109,8 +109,8 @@ class ClassPanel extends Component {
                                 <Card.Content>
                                     {this.state.activeSection.studentList.length != 0 ?
                                         <List divided verticalAlign='middle' selection animated size='large'>
-                                            {this.state.students.length != 0 ? this.state.activeSection.studentList.map((student, index) => {
-                                                let studentFound = _.filter(this.state.students, { '_id': student })[0];
+                                            {this.props.students.length != 0 ? this.state.activeSection.studentList.map((student, index) => {
+                                                let studentFound = _.filter(this.props.students, { '_id': student })[0];
                                                 console.log(studentFound, this.state);
                                                 return <List.Item key={index}>
                                                     <List.Content floated='right'>
@@ -124,10 +124,7 @@ class ClassPanel extends Component {
                                                     </List.Content>
                                                 </List.Item>
                                             }
-                                            ) : () => {
-                                                console.log("state: ", this.state);
-                                                return < Loader active inline='centered' />
-                                            }}
+                                            ) : < Loader active inline='centered' />}
                                         </List> : "There are no students in the class."}
                                 </Card.Content>
                             </Card>    
