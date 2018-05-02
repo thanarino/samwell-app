@@ -99,4 +99,10 @@ Meteor.methods({
 
         Meteor.users.update(teacherID, { $set: { isDeleted: isDeleted } });
     },
+    'teacher.setAvailable'(teacherID, isAvailable) {
+        check(teacherID, String);
+        check(isAvailable, Boolean);
+
+        Meteor.users.update(teacherID, { $set: { available: isAvailable } });
+    }
 });

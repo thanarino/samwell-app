@@ -36,6 +36,9 @@ ApprovedProfile = (props) => {
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}`}
+                        <Header.Subheader>
+                            <Checkbox toggle label='Available' checked={props.teacher.isAvailable} onChange={()=>this.toggle(props.teacher)}/>
+                        </Header.Subheader>
                     </Header>
                     <Table definition>
                         <Table.Body>
@@ -84,6 +87,14 @@ ApprovedProfile = (props) => {
             </Grid.Row>
         </Grid>
     </div>
+}
+
+toggle = (teacher) => {
+    Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
+        if (res) {
+            this.setState({ teacher });
+        }
+    });
 }
 
 class UserProfile extends Component {
