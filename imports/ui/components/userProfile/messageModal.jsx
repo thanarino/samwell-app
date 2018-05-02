@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Header, Icon, TextArea } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, TextArea, Form } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 
 export default class MessageModal extends Component {
@@ -27,7 +27,9 @@ export default class MessageModal extends Component {
                 <Icon name='send outline' />Message</Button>} size='tiny' closeIcon open={open} onClose={this.close}>
                 <Header content={`Send a message to all students from ${section.subject}-${section.sectionName}`} />
                 <Modal.Content>
-                    <TextArea placeholder='Send reminders, and/or announcements...' style={{ minHeight: 100 }} onChange={this.handleChange}/>
+                    <Form>
+                        <TextArea placeholder='Send reminders, and/or announcements...' style={{ minHeight: 100 }} autoheight onChange={this.handleChange} />
+                    </Form>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive onClick={this.submit}>Yes</Button>
