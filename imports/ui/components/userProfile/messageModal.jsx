@@ -28,11 +28,12 @@ export default class MessageModal extends Component {
                 <Header content={`Send a message to all students from ${section.subject}-${section.sectionName}`} />
                 <Modal.Content>
                     <Form>
-                        <TextArea placeholder='Send reminders, and/or announcements...' style={{ minHeight: 100 }} autoheight onChange={this.handleChange} />
+                        <TextArea placeholder='Send reminders, and/or announcements' style={{ minHeight: 100 }} autoheight onChange={this.handleChange} />
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={this.submit}>Yes</Button>
+                    <Button icon labelPosition='left' positive onClick={this.submit}>
+                        <Icon name='send outline' />Send</Button>
                 </Modal.Actions>
             </Modal>
         );
