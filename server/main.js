@@ -6,6 +6,7 @@ import { Random } from 'meteor/random';
 //import JS files that contain collection creation code
 import '../imports/api/sections/sections.js';
 import '../imports/api/consultations/consultations.js';
+import '../imports/api/logs/logs.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

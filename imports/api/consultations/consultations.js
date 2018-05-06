@@ -63,7 +63,7 @@ Meteor.methods({
             if (err) {
                 console.log(err);
             } else { 
-                Consultations.findOne({ _id: _id }, (err, doc) => {
+                Consultations.findOne({ _id: _id }, (err2, doc) => {
                     if (doc) {
                         Logs.insert({
                             userID: doc.teacherID,
@@ -72,6 +72,8 @@ Meteor.methods({
                                 description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
                             }
                         });
+                    } else {
+                        console.log(err2);
                     }
                 })
             }
