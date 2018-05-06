@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 import SiteHeader from '../components/common/header';
 
 export default class AdminLogs extends Component {
