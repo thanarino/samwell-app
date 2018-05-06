@@ -63,8 +63,10 @@ Meteor.methods({
             if (err) {
                 console.log(err);
             } else { 
+                console.log("updated");
                 Consultations.findOne({ _id: _id }, (err2, doc) => {
                     if (doc) {
+                        console.log('went here', doc);
                         Logs.insert({
                             userID: doc.teacherID,
                             data: {
