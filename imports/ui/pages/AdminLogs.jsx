@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Grid, Loader, Header } from 'semantic-ui-react';
 import SiteHeader from '../components/common/header';
+import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 import _ from 'lodash';
