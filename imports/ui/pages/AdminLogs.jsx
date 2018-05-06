@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Grid, Loader } from 'semantic-ui-react';
+import { Table, Grid, Loader, Header } from 'semantic-ui-react';
 import SiteHeader from '../components/common/header';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
