@@ -18,10 +18,12 @@ Meteor.methods({
             description: String,
         });
 
-        Logs.insert({
-            userID,
-            date,
-            description,
-        }, (error) => console.log(error));
+        Meteor.users.findOne({ _id: userID }, (err, user) => {
+            Logs.insert({
+                user: `${user.profile.name ? user.profile.name : user.profile.last_name}`,
+                date,
+                description,
+            }, (error) => console.log(error));
+        });
     }
 });
