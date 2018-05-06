@@ -19,11 +19,13 @@ Meteor.methods({
         });
 
         Meteor.users.findOne({ _id: userID }, (err, user) => {
-            Logs.insert({
-                user: `${user.profile.name ? user.profile.name : user.profile.last_name}`,
-                date,
-                description,
-            }, (error) => console.log(error));
+            if (user) {
+                Logs.insert({
+                    user: `${user.profile.name ? user.profile.name : user.profile.last_name}`,
+                    date: data.date,
+                    description: data.description,
+                }, (error) => console.log(error));
+            }
         });
     }
 });
