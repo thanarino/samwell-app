@@ -23,7 +23,7 @@ class AdminLogs extends Component {
         console.log('newprop:', newProp);
         if (newProp.logs.length > 0) {
             this.setState({
-                logs: newProp.logs 
+                logs: newProp.logs
             }, () => {
                 console.log(this.state);
             });
@@ -56,32 +56,36 @@ class AdminLogs extends Component {
             <div id='adminLogs'>
                 <SiteHeader active="logs" teacher={null} />
                 <Grid centered>
-                    <Grid.Column>
-                        <Header as='h1'>Activity Logs</Header>
-                    </Grid.Column>    
-                    <Grid.Column width={12}>
-                        {this.props.logs.length ? <Table celled selectable>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell width={2} sorted={column === 'date' ? direction : null} onClick={this.handleSort('date')}>Date</Table.HeaderCell>
-                                    <Table.HeaderCell width={2} sorted={column === 'time' ? direction : null} onClick={this.handleSort('time')}>Time</Table.HeaderCell>
-                                    <Table.HeaderCell width={3} sorted={column === 'name' ? direction : null} onClick={this.handleSort('name')}>User</Table.HeaderCell>
-                                    <Table.HeaderCell width={9} sorted={column === 'description' ? direction : null} onClick={this.handleSort('description')}>Description</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-
-                            <Table.Body>
-                                {this.state.logs.map((log) => 
+                    <Grid.Row>
+                        <Grid.Column>
+                            <Header as='h1'>Activity Logs</Header>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Grid.Column width={12}>
+                            {this.props.logs.length ? <Table celled selectable>
+                                <Table.Header>
                                     <Table.Row>
-                                        <Table.Cell>{moment(log.date).format('dddd, MMMM Do YYYY')}</Table.Cell>
-                                        <Table.Cell>{moment(log.date).format('hh:mm A')}</Table.Cell>
-                                        <Table.Cell>{log.user}</Table.Cell>
-                                        <Table.Cell>{log.description}</Table.Cell>
+                                        <Table.HeaderCell width={2} sorted={column === 'date' ? direction : null} onClick={this.handleSort('date')}>Date</Table.HeaderCell>
+                                        <Table.HeaderCell width={2} sorted={column === 'time' ? direction : null} onClick={this.handleSort('time')}>Time</Table.HeaderCell>
+                                        <Table.HeaderCell width={3} sorted={column === 'name' ? direction : null} onClick={this.handleSort('name')}>User</Table.HeaderCell>
+                                        <Table.HeaderCell width={9} sorted={column === 'description' ? direction : null} onClick={this.handleSort('description')}>Description</Table.HeaderCell>
                                     </Table.Row>
-                                )}
-                            </Table.Body>
-                        </Table> : <Loader active inline='centered' />}
-                    </Grid.Column>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    {this.state.logs.map((log) =>
+                                        <Table.Row>
+                                            <Table.Cell>{moment(log.date).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                            <Table.Cell>{moment(log.date).format('hh:mm A')}</Table.Cell>
+                                            <Table.Cell>{log.user}</Table.Cell>
+                                            <Table.Cell>{log.description}</Table.Cell>
+                                        </Table.Row>
+                                    )}
+                                </Table.Body>
+                            </Table> : <Loader active inline='centered' />}
+                        </Grid.Column>
+                    </Grid.Row>
                 </Grid>
             </div>
         );
