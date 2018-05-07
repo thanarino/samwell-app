@@ -65,6 +65,7 @@ Meteor.methods({
             } else {
                 console.log("updated");
                 Consultations.find({ _id: _id }, (err2, doc) => {
+                    console.log(doc);
                     if (doc) {
                         console.log('went here', doc);
                         Logs.insert({
