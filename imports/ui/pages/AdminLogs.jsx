@@ -73,10 +73,10 @@ class AdminLogs extends Component {
                             <Table.Body>
                                 {this.state.logs.map((log) => 
                                     <Table.Row>
-                                        <Table.Cell>{moment(log.data.date).format('dddd, MMMM Do YYYY')}</Table.Cell>
-                                        <Table.Cell>{moment(log.data.date).format('hh:mm A')}</Table.Cell>
-                                        <Table.Cell>{log.data.user}</Table.Cell>
-                                        <Table.Cell>{log.data.description}</Table.Cell>
+                                        <Table.Cell>{moment(log.date).format('dddd, MMMM Do YYYY')}</Table.Cell>
+                                        <Table.Cell>{moment(log.date).format('hh:mm A')}</Table.Cell>
+                                        <Table.Cell>{log.user}</Table.Cell>
+                                        <Table.Cell>{log.description}</Table.Cell>
                                     </Table.Row>
                                 )}
                             </Table.Body>
