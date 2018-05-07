@@ -59,22 +59,23 @@ Meteor.methods({
         check(_id, String);
         check(approved, Boolean);
 
-        Consultations.rawCollection().findAndModify({
-            query: { _id: _id },
-            sort: { _id: 1 },
-            update: { $set: { isApprovedByTeacher: approved } },
-            remove: false,
-            new: true,
-        }).then((doc) => {
-            Logs.insert({
-                userID: doc.teacherID,
-                data: {
-                    date: new Date(),
-                    description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
+        Consultations.rawCollection().findAndModify({ _id: _id },
+            { _id: 1 },
+            { $set: { isApprovedByTeacher: approved } },
+            { remove: false, new: true },
+            (err, doc) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    Logs.insert({
+                        userID: doc.teacherID,
+                        data: {
+                            date: new Date(),
+                            description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
+                        }
+                    });
                 }
-            });
-        }).catch((err) => {
-            console.log(err)
-        });
+            }
+        );
     }
 })
