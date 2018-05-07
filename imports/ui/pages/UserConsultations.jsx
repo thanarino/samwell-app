@@ -69,7 +69,6 @@ class UserConsultations extends Component {
 
     render() {
         const { teacher } = this.state;
-        console.log(teacher);
         return (
             <div>
                 {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <Approved teacher={teacher} /> : <Unapproved teacher={teacher} />}
