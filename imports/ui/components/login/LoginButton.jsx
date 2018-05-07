@@ -15,7 +15,7 @@ export default class LoginButton extends Component {
             if (err) {
                 console.log(err);
             } else {
-                FlowRouter.go(FlowRouter.path('user.consultations'));
+                FlowRouter.go('/user/consultations');
             }
         });
     }
