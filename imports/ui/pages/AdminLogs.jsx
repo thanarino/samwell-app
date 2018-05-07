@@ -57,8 +57,8 @@ class AdminLogs extends Component {
                 <SiteHeader active="logs" teacher={null} />
                 <Grid centered>
                     <Grid.Row>
-                        <Grid.Column>
-                            <Header as='h1'>Activity Logs</Header>
+                        <Grid.Column width={12}>
+                            <Header as='h1' textAlign='center'>Activity Logs</Header>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
