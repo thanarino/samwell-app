@@ -62,23 +62,23 @@ Meteor.methods({
         Consultations.update({ _id: _id }, { $set: { isApprovedByTeacher: approved } }, (err, num) => {
             if (err) {
                 console.log(err);
-            } else { 
+            } else {
                 console.log("updated");
-                Consultations.findOne({ _id: _id }, (err2, doc) => {
+                Consultations.find({ _id: _id }, (err2, doc) => {
                     if (doc) {
                         console.log('went here', doc);
                         Logs.insert({
-                            userID: doc.teacherID,
+                            userID: doc[0].teacherID,
                             data: {
                                 date: new Date(),
-                                description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
+                                description: `${doc[0].isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc[0].studentID}.`,
                             }
                         });
                     } else {
                         console.log(err2);
                     }
-                })
+                });
             }
-        })
+        });
     }
 })
