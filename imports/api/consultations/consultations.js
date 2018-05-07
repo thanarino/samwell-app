@@ -63,7 +63,7 @@ Meteor.methods({
             { _id: 1 },
             { $set: { isApprovedByTeacher: approved } },
             { remove: false, new: true },
-            (err, doc) => {
+            Meteor.bindEnvironment((err, doc) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -75,7 +75,7 @@ Meteor.methods({
                         }
                     });
                 }
-            }
+            })
         );
     }
 })
