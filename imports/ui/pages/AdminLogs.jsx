@@ -73,7 +73,7 @@ class AdminLogs extends Component {
                                     <Table.Row>
                                         <Table.Cell>{moment(log.data.date).format('dddd, MMMM Do YYYY')}</Table.Cell>
                                         <Table.Cell>{moment(log.data.date).format('hh:mm A')}</Table.Cell>
-                                        <Table.Cell>{log.userID}</Table.Cell>
+                                        <Table.Cell>{log.data.user}</Table.Cell>
                                         <Table.Cell>{log.data.description}</Table.Cell>
                                     </Table.Row>
                                 )}
