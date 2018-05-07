@@ -23,7 +23,7 @@ Meteor.methods({
 
         Meteor.users.rawCollection().find({ _id: userID }, Meteor.bindEnvironment((err, cursor) => {
             if (cursor) {
-                cursor.toArray((err, user) => {
+                cursor.toArray(Meteor.bindEnvironment((err, user) => {
                     if (user) {
                         console.log('user: ', user);
                         let name = '';
@@ -38,9 +38,9 @@ Meteor.methods({
                             user: name,
                             date: data.date,
                             description: data.description,
-                        }, Meteor.bindEnvironment((error) => console.log(error)));
+                        }, (error) => console.log(error));
                     }
-                })
+                }))
             }
         }));
     }
