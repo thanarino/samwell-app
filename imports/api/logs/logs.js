@@ -38,7 +38,7 @@ Meteor.methods({
                             user: name,
                             date: data.date,
                             description: data.description,
-                        }, (error) => console.log(error));
+                        }, Meteor.bindEnvironment((error) => console.log(error)));
                     }
                 })
             }
