@@ -63,11 +63,11 @@ Meteor.methods({
             { _id: 1 },
             { $set: { isApprovedByTeacher: approved } },
             { remove: false, new: true },
-            Meteor.bindEnvironment((err, doc) => {
+            Meteor.bindEnvironment((err, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(doc);
+                    let doc = res.value;
                     Logs.insert({
                         userID: doc.teacherID,
                         data: {
