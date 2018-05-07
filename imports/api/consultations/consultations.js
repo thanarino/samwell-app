@@ -67,7 +67,9 @@ Meteor.methods({
                 if (err) {
                     console.log(err);
                 } else {
+                    console.log(res);
                     let doc = res.value;
+                    console.log(doc);
                     Logs.insert({
                         userID: doc.teacherID,
                         data: {
