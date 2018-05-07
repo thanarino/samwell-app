@@ -61,6 +61,7 @@ Meteor.methods({
 
         Consultations.rawCollection().findAndModify({
             query: { _id: _id },
+            sort: { _id: 1 },
             update: { $set: { isApprovedByTeacher: approved } },
             remove: false,
             new: true,
