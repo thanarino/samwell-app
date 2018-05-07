@@ -70,10 +70,10 @@ Meteor.methods({
                     console.log(res);
                     let doc = res.value;
                     console.log(doc);
-                    Meteor.bindEnvironment(Meteor.call('logs.insert', doc.teacherID, {
+                    Meteor.call('logs.insert', doc.teacherID, {
                         date: new Date(),
                         description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
-                    }));
+                    });
                     // Logs.insert({
                     //     userID: doc.teacherID,
                     //     data: {

@@ -18,7 +18,7 @@ Meteor.methods({
             description: String,
         });
 
-        Meteor.users.findOne({ _id: userID }, (err, user) => {
+        Meteor.users.findOne({ _id: userID }, Meteor.bindEnvironment((err, user) => {
             if (user) {
                 console.log('user: ', user);
                 let name = '';
@@ -35,6 +35,6 @@ Meteor.methods({
                     description: data.description,
                 }, (error) => console.log(error));
             }
-        });
+        }));
     }
 });
