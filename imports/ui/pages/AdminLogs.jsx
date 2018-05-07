@@ -66,10 +66,10 @@ class AdminLogs extends Component {
                             {this.props.logs.length ? <Table celled selectable>
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.HeaderCell width={2} sorted={column === 'date' ? direction : null} onClick={this.handleSort('date')}>Date</Table.HeaderCell>
+                                        <Table.HeaderCell width={4} sorted={column === 'date' ? direction : null} onClick={this.handleSort('date')}>Date</Table.HeaderCell>
                                         <Table.HeaderCell width={2} sorted={column === 'time' ? direction : null} onClick={this.handleSort('time')}>Time</Table.HeaderCell>
                                         <Table.HeaderCell width={3} sorted={column === 'name' ? direction : null} onClick={this.handleSort('name')}>User</Table.HeaderCell>
-                                        <Table.HeaderCell width={9} sorted={column === 'description' ? direction : null} onClick={this.handleSort('description')}>Description</Table.HeaderCell>
+                                        <Table.HeaderCell width={7} sorted={column === 'description' ? direction : null} onClick={this.handleSort('description')}>Description</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
 

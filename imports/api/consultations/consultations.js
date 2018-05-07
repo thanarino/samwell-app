@@ -45,12 +45,9 @@ Meteor.methods({
             if (error) {
                 console.log(error);
             } else {
-                Logs.insert({
-                    userID,
-                    data: {
-                        date: new Date(),
-                        description: `Scheduled consultation with student ${data.studentID}`,
-                    }
+                Meteor.call('logs.insert', userID, {
+                    date: new Date(),
+                    description: `Scheduled consultation with student ${data.studentID}`,
                 });
             }
         });
@@ -74,13 +71,6 @@ Meteor.methods({
                         date: new Date(),
                         description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
                     });
-                    // Logs.insert({
-                    //     userID: doc.teacherID,
-                    //     data: {
-                    //         date: new Date(),
-                    //         description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
-                    //     }
-                    // });
                 }
             })
         );
