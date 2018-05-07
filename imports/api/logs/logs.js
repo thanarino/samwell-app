@@ -20,13 +20,15 @@ Meteor.methods({
 
         Meteor.users.findOne({ _id: userID }, (err, user) => {
             if (user) {
-                console.log(user);
+                console.log('user: ', user);
                 let name = '';
                 if (user.profile.name) {
                     name = user.profile.name;
                 } else {
                     name = user.profile.last_name;
                 }
+                console.log('name: ', name);
+                console.log('data: ', data);
                 Logs.insert({
                     user: name,
                     date: data.date,
