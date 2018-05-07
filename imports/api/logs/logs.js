@@ -21,22 +21,26 @@ Meteor.methods({
         console.log(userID);
         console.log(data);
 
-        Meteor.users.rawCollection().find({ _id: userID }, Meteor.bindEnvironment((err, user) => {
-            if (user) {
-                console.log('user: ', user);
-                let name = '';
-                if (user.profile.name) {
-                    name = user.profile.name;
-                } else {
-                    name = user.profile.last_name;
-                }
-                console.log('name: ', name);
-                console.log('data: ', data);
-                Logs.insert({
-                    user: name,
-                    date: data.date,
-                    description: data.description,
-                }, (error) => console.log(error));
+        Meteor.users.rawCollection().find({ _id: userID }, Meteor.bindEnvironment((err, cursor) => {
+            if (cursor) {
+                cursor.toArray((err, user) => {
+                    if (user) {
+                        console.log('user: ', user);
+                        let name = '';
+                        if (user.profile.name) {
+                            name = user.profile.name;
+                        } else {
+                            name = user.profile.last_name;
+                        }
+                        console.log('name: ', name);
+                        console.log('data: ', data);
+                        Logs.insert({
+                            user: name,
+                            date: data.date,
+                            description: data.description,
+                        }, (error) => console.log(error));
+                    }
+                })
             }
         }));
     }
