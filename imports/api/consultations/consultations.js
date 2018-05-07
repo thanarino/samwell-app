@@ -59,13 +59,11 @@ Meteor.methods({
         check(_id, String);
         check(approved, Boolean);
 
-        let doc = Consultations.rawCollection().findAndModify({
+        Consultations.rawCollection().findAndModify({
             query: { _id: _id },
             update: { $set: { isApprovedByTeacher: approved } },
             new: true,
-        });
-
-        if (doc) {
+        }).then((doc) => {
             Logs.insert({
                 userID: doc.teacherID,
                 data: {
@@ -73,6 +71,8 @@ Meteor.methods({
                     description: `${doc.isApprovedByTeacher ? `Approved` : `Disapproved`} consultation with student ${doc.studentID}.`,
                 }
             });
-        }
+        }).catch((err) => {
+            console.log(err)
+        });
     }
 })
