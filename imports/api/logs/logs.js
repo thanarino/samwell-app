@@ -18,6 +18,9 @@ Meteor.methods({
             description: String,
         });
 
+        console.log(userID);
+        console.log(data);
+
         Meteor.users.findOne({ _id: userID }, Meteor.bindEnvironment((err, user) => {
             if (user) {
                 console.log('user: ', user);
