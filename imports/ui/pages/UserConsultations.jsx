@@ -68,7 +68,7 @@ class UserConsultations extends Component {
     }
 
     render() {
-        const { teacher } = this.props;
+        const { teacher } = this.state;
         console.log(teacher);
         return (
             <div>

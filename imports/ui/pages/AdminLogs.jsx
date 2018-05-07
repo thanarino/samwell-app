@@ -55,8 +55,10 @@ class AdminLogs extends Component {
         return (
             <div id='adminLogs'>
                 <SiteHeader active="logs" teacher={null} />
-                <Header as='h1'>Activity Logs</Header>
                 <Grid centered>
+                    <Grid.Column>
+                        <Header as='h1'>Activity Logs</Header>
+                    </Grid.Column>    
                     <Grid.Column width={12}>
                         {this.props.logs.length ? <Table celled selectable>
                             <Table.Header>
