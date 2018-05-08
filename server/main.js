@@ -140,7 +140,7 @@ Meteor.methods({
         let doc = undefined;
 
         // Meteor.users.update(teacherID, { $set: { available: isAvailable } });
-        Meteor.users.rawCollection().findAndModify({ _id: teacherID },
+        const res = Meteor.users.rawCollection().findAndModify({ _id: teacherID },
             { _id: 1 },
             { $set: { available: isAvailable } },
             { remove: false, new: true },
@@ -160,5 +160,7 @@ Meteor.methods({
                 }
             })
         );
+
+        return res;
     }
 });
