@@ -137,7 +137,6 @@ Meteor.methods({
         check(teacherID, String);
         check(isAvailable, Boolean);
 
-        let err = false;
         let doc = undefined;
 
         // Meteor.users.update(teacherID, { $set: { available: isAvailable } });
@@ -147,26 +146,19 @@ Meteor.methods({
             { remove: false, new: true },
             Meteor.bindEnvironment((err, res) => {
                 if (err) {
-                    console.log('err backend: ',err);
-                    err = true;
+                    console.log('err backend: ', err);
+                    throw new Meteor.Error('set-available-error', "There is an error in the database.");
                 } else {
-                    console.log('res: ',res);
+                    console.log('res: ', res);
                     doc = res.value;
                     console.log('doc: ', doc);
                     Meteor.call('logs.insert', teacherID, {
                         date: new Date(),
-                        description: `Changed status from ${!doc.available ? `available` : `unavailable`} to ${doc.available ? `available` : `unavailable` } `,
+                        description: `Changed status from ${!doc.available ? `available` : `unavailable`} to ${doc.available ? `available` : `unavailable`} `,
                     });
+                    return doc;
                 }
             })
         );
-
-        if (err) {
-            console.log('errr: ', err);
-            throw new Meteor.Error('set-available-error', "There is an error in the database.");
-        } else { 
-            console.log('backend doc: ', doc);
-            return doc;
-        }
     }
 });
