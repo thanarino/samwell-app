@@ -18,6 +18,9 @@ Meteor.methods({
             description: String,
         });
 
+        let err = false;
+        let res = undefined;
+
         Meteor.users.rawCollection().find({ _id: userID }, Meteor.bindEnvironment((err, cursor) => {
             if (cursor) {
                 cursor.toArray(Meteor.bindEnvironment((err, user) => {
@@ -28,14 +31,28 @@ Meteor.methods({
                         } else {
                             name = user[0].profile.last_name;
                         }
+                        res = user[0];
                         Logs.insert({
                             user: name,
                             date: data.date,
                             description: data.description,
-                        }, (error) => console.log(error));
+                        }, (error) => {
+                            err = true;
+                            console.log(error)
+                        });
+                    } else {
+                        err = true;
                     }
                 }))
+            } else {
+                err = true;
             }
         }));
+
+        if (err) {
+            throw new Meteor.Error('logs-error', "Logs Error");
+        } else {
+            return user;
+        }
     }
 });

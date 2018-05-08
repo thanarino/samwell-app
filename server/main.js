@@ -162,7 +162,7 @@ Meteor.methods({
         );
 
         if (err) {
-            throw new Meteor.Error('set-available-error', "There ia an error in the database.");
+            throw new Meteor.Error('set-available-error', "There is an error in the database.");
         } else { 
             return doc;
         }
