@@ -8,6 +8,8 @@ import '../imports/api/sections/sections.js';
 import '../imports/api/consultations/consultations.js';
 import '../imports/api/logs/logs.js';
 
+import { Logs } from '../imports/api/logs/logs.js';
+
 Meteor.startup(() => {
   // code to run on server at startup
     if (Meteor.users.find().count() === 0) {
@@ -90,6 +92,10 @@ Meteor.methods({
                 if (n) {
                     console.log("went hererere");
                     Meteor.call('sections.updateTeacher', userID, data.classes);
+                    Meteor.call('logs.insert', userID, {
+                        date: new Date(),
+                        description: `Updated teacher ${data.given_name} ${data.middle_name} ${data.family_name}`,
+                    });
                 }
             }
         );
@@ -98,12 +104,56 @@ Meteor.methods({
         check(teacherID, String);
         check(isDeleted, Boolean);
 
-        Meteor.users.update(teacherID, { $set: { isDeleted: isDeleted } });
+        Meteor.users.rawCollection().findAndModify({ _id: teacherID },
+            { _id: 1 },
+            { $set: { isDeleted: isDeleted } },
+            { remove: false, new: true },
+            Meteor.bindEnvironment((err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(res);
+                    let doc = res.value;
+                    console.log(doc);
+                    Meteor.call('logs.insert', doc.userID, {
+                        date: new Date(),
+                        description: `Archived teacher ${doc.given_name} ${doc.middle_name} ${doc.family_name}`,
+                    });
+                }
+            })
+        );
+
+        // Meteor.users.update(teacherID, { $set: { isDeleted: isDeleted } }, (err, n) => {
+        //     if (n) {
+        //         Meteor.call('logs.insert', userID, {
+        //             date: new Date(),
+        //             description: `Updated teacher ${data.given_name} ${data.middle_name} ${data.family_name}`,
+        //         });
+        //     }
+        // });
     },
     'teacher.setAvailable'(teacherID, isAvailable) {
         check(teacherID, String);
         check(isAvailable, Boolean);
 
-        Meteor.users.update(teacherID, { $set: { available: isAvailable } });
+        // Meteor.users.update(teacherID, { $set: { available: isAvailable } });
+        Meteor.users.rawCollection().findAndModify({ _id: teacherID },
+            { _id: 1 },
+            { $set: { available: isAvailable } },
+            { remove: false, new: true },
+            Meteor.bindEnvironment((err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(res);
+                    let doc = res.value;
+                    console.log(doc);
+                    Meteor.call('logs.insert', teacherID, {
+                        date: new Date(),
+                        description: `Changed status from ${!doc.available ? `available` : `unavailable`} to ${doc.available ? `available` : `unavailable` } `,
+                    });
+                }
+            })
+        );
     }
 });
