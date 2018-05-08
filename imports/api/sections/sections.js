@@ -167,10 +167,10 @@ Meteor.methods({
         check(classList, [String]);
 
         console.log('classList:', classList);
-        console.log('teacherID', teacherID);
+        console.log('teacherID:', teacherID);
 
         //get all sections that contains teacherID in their teacherList
-        const contained = Sections.find({ teacherList: teacherID }).toArray();
+        const contained = Sections.find({ teacherList: teacherID }).fetch();
 
         console.log('contained: ', contained);
 
