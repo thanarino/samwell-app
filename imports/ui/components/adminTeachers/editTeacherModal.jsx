@@ -20,7 +20,7 @@ export default class AddTeacherButton extends Component {
         console.log(newData);
         console.log(this.props.teacher._id);
 
-        Meteor.call('teacher.update', this.props.teacher._id, newData);
+        Meteor.call('teacher.update', Meteor.userId(), this.props.teacher._id, newData);
 
         this._addTeacherForm.clearForm();
         this.close();

@@ -62,7 +62,8 @@ Meteor.methods({
             Meteor.call('sections.updateTeacher', teacherID, data.classes);
         }
     },
-    'teacher.update'(userID, data) {
+    'teacher.update'(_id, userID, data) {
+        check(_id, String);
         check(userID, String);
         check(data, {
             family_name: String,
@@ -92,7 +93,7 @@ Meteor.methods({
                 if (n) {
                     console.log("went hererere");
                     Meteor.call('sections.updateTeacher', userID, data.classes);
-                    Meteor.call('logs.insert', userID, {
+                    Meteor.call('logs.insert', _id, {
                         date: new Date(),
                         description: `Updated teacher ${data.given_name} ${data.middle_name} ${data.family_name}`,
                     });
