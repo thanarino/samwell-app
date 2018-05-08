@@ -38,8 +38,8 @@ ApprovedProfile = (props) => {
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}  `}
-                        {loading ?
-                            <Loader active inline='centered' /> :
+                        {component.state.loading ?
+                            <Loader active/> :
                             <Popup
                                 trigger={<Checkbox toggle checked={teacher.available} onChange={() => this.toggle(teacher, component)} />}
                                 content='Are you available for consultation right now?'
