@@ -177,7 +177,8 @@ Meteor.methods({
         contained.map((section) => {
             // if the classlist does not contain the id of the current section,
             // remove teacher from section's classlist
-            if (!_.includes(classList, section._id)) {
+            if (!(_.includes(classList, section._id))) {
+                console.log('went inside sketchy loop 1');
                 // Sections.update(section, { $pull: { teacherList: teacherID } });
                 Sections.rawCollection().findAndModify(section,
                     { _id: 1 },
@@ -187,9 +188,9 @@ Meteor.methods({
                         if (err) {
                             console.log(err);
                         } else {
-                            console.log(res);
+                            console.log('res:', res);
                             let doc = res.value;
-                            console.log(doc);
+                            console.log('doc',doc);
                             Meteor.call('logs.insert', doc.userID, {
                                 date: new Date(),
                                 description: `Removed teacher ${teacherID} from section ${doc.subject} - ${doc.sectionName}`,
@@ -203,9 +204,10 @@ Meteor.methods({
         classList.map((section) => {
             const found = Sections.find({ _id: section }).fetch();
             console.log('found: ', found);
-            if (!_.includes(found[0].teacherList, teacherID)) {
+            if (!(_.includes(found[0].teacherList, teacherID))) {
+                console.log('went inside sketchy loop 2');
                 // Sections.update(section, { $push: { teacherList: teacherID } });
-                Sections.rawCollection().findAndModify(section,
+                Sections.rawCollection().findAndModify({ _id: section._id },
                     { _id: 1 },
                     { $push: { teacherList: teacherID } },
                     { remove: false, new: true },
