@@ -101,6 +101,7 @@ toggle = (teacher, component) => {
     component.setState({ loading: true }, () => {
         Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
             if (res) {
+                console.log('res: ', res);
                 component.setState({ teacher }, () => {
                     component.setState({ loading: false });
                 });
