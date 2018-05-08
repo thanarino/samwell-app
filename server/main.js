@@ -137,6 +137,9 @@ Meteor.methods({
         check(teacherID, String);
         check(isAvailable, Boolean);
 
+        let err = false;
+        let doc = undefined;
+
         // Meteor.users.update(teacherID, { $set: { available: isAvailable } });
         Meteor.users.rawCollection().findAndModify({ _id: teacherID },
             { _id: 1 },
@@ -145,9 +148,10 @@ Meteor.methods({
             Meteor.bindEnvironment((err, res) => {
                 if (err) {
                     console.log(err);
+                    err = true;
                 } else {
                     console.log('res: ',res);
-                    let doc = res.value;
+                    doc = res.value;
                     console.log('doc: ', doc);
                     Meteor.call('logs.insert', teacherID, {
                         date: new Date(),
@@ -156,5 +160,11 @@ Meteor.methods({
                 }
             })
         );
+
+        if (err) {
+            throw new Meteor.Error('set-available-error', "There ia an error in the database.");
+        } else { 
+            return doc;
+        }
     }
 });
