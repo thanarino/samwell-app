@@ -27,6 +27,7 @@ UnapprovedProfile = (props) => {
 ApprovedProfile = (props) => {
     const { teacher } = props;
     const { loading } = props;
+    const { component } = props;
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} padded>
@@ -40,7 +41,7 @@ ApprovedProfile = (props) => {
                         {loading ?
                             <Loader active inline='centered' /> :
                             <Popup
-                                trigger={<Checkbox toggle checked={props.teacher.available} onChange={() => this.toggle(props.teacher)} />}
+                                trigger={<Checkbox toggle checked={teacher.available} onChange={() => this.toggle(teacher, component)} />}
                                 content='Are you available for consultation right now?'
                                 position='right center'
                                 inverted
@@ -96,11 +97,11 @@ ApprovedProfile = (props) => {
     </div>
 }
 
-toggle = (teacher) => {
-    UserProfile.setState({ loading: true }, () => {
+toggle = (teacher, component) => {
+    component.setState({ loading: true }, () => {
         Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
             if (res) {
-                UserProfile.setState({ teacher, loading: false });
+                component.setState({ teacher, loading: false });
             }
         });
     })
@@ -120,7 +121,7 @@ class UserProfile extends Component {
         const teacher = this.props.teacher;
         return (
             <div>
-                {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <ApprovedProfile teacher={teacher} loading={this.state.loading}/> : <UnapprovedProfile teacher={teacher} />}
+                {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <ApprovedProfile teacher={teacher} loading={this.state.loading} component={this}/> : <UnapprovedProfile teacher={teacher} />}
             </div>
         )
 
