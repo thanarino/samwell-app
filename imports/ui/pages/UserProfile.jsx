@@ -97,10 +97,10 @@ ApprovedProfile = (props) => {
 }
 
 toggle = (teacher) => {
-    this.setState({ loading: true }, () => {
+    UserProfile.setState({ loading: true }, () => {
         Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
             if (res) {
-                this.setState({ teacher, loading: false });
+                UserProfile.setState({ teacher, loading: false });
             }
         });
     })
