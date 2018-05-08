@@ -67,7 +67,7 @@ Meteor.methods({
     'sections.delete'(sectionID) {
         check(sectionID, String);
 
-        Sections.rawCollection().findAndModify({ sectionID },
+        Sections.rawCollection().findAndModify({ _id: sectionID },
             { _id: 1 },
             { $set: { isDeleted: true } },
             { remove: false, new: true },
