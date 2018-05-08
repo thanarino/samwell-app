@@ -100,6 +100,6 @@ export default withTracker(() => {
     Meteor.subscribe('logs');
 
     return {
-        logs: Logs.find({}, { sort: { date: 1 } }).fetch()
+        logs: Logs.find({}, { sort: { date: -1 } }).fetch()
     }
 })(AdminLogs);

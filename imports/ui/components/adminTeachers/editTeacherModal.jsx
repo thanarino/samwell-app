@@ -20,10 +20,13 @@ export default class AddTeacherButton extends Component {
         console.log(newData);
         console.log(this.props.teacher._id);
 
-        Meteor.call('teacher.update', this.props.teacher._id, newData);
-
-        this._addTeacherForm.clearForm();
-        this.close();
+        Meteor.call('teacher.update', this.props.teacher._id, newData, (err, res) => {
+            if (res) {
+                this._addTeacherForm.clearForm();
+                this.close();
+                window.location.reload();
+            }
+        });
     }
 
     getClassIDs = (sections) => {
