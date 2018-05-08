@@ -100,12 +100,9 @@ ApprovedProfile = (props) => {
 toggle = (teacher, component) => {
     component.setState({ loading: true }, () => {
         Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
-            if (res) {
-                console.log('res: ', res);
-                component.setState({ teacher }, () => {
-                    component.setState({ loading: false });
-                });
-            }
+            console.log('err: ', err);
+            console.log('res: ', res);
+            component.setState({ teacher, loading: false });
         });
     })
     
