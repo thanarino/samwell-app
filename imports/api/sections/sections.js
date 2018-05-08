@@ -166,8 +166,13 @@ Meteor.methods({
         check(teacherID, String);
         check(classList, [String]);
 
+        console.log('classList:', classList);
+        console.log('teacherID', teacherID);
+
         //get all sections that contains teacherID in their teacherList
         const contained = Sections.find({ teacherList: teacherID });
+
+        console.log('contained: ', contained);
 
         contained.map((section) => {
             // if the classlist does not contain the id of the current section,
@@ -197,6 +202,7 @@ Meteor.methods({
 
         classList.map((section) => {
             const found = Sections.find({ _id: section }).fetch();
+            console.log('found: ', found);
             if (!_.includes(found[0].teacherList, teacherID)) {
                 // Sections.update(section, { $push: { teacherList: teacherID } });
                 Sections.rawCollection().findAndModify(section,
