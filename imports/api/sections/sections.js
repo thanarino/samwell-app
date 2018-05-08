@@ -170,7 +170,7 @@ Meteor.methods({
         console.log('teacherID', teacherID);
 
         //get all sections that contains teacherID in their teacherList
-        const contained = Sections.find({ teacherList: teacherID });
+        const contained = Sections.find({ teacherList: teacherID }).toArray();
 
         console.log('contained: ', contained);
 
