@@ -26,6 +26,7 @@ UnapprovedProfile = (props) => {
 
 ApprovedProfile = (props) => {
     const { teacher } = props;
+    const { loading } = props;
     return <div>
         <SiteHeader active='profile' teacher={teacher} />
         <Grid columns={2} padded>
@@ -36,7 +37,7 @@ ApprovedProfile = (props) => {
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}  `}
-                        {this.state.loading ?
+                        {loading ?
                             <Loader active inline='centered' /> :
                             <Popup
                                 trigger={<Checkbox toggle checked={props.teacher.available} onChange={() => this.toggle(props.teacher)} />}
@@ -119,7 +120,7 @@ class UserProfile extends Component {
         const teacher = this.props.teacher;
         return (
             <div>
-                {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <ApprovedProfile teacher={teacher} /> : <UnapprovedProfile teacher={teacher} />}
+                {teacher.approved && !teacher.isDeleted && _.includes(teacher.roles, "teacher") ? <ApprovedProfile teacher={teacher} loading={this.state.loading}/> : <UnapprovedProfile teacher={teacher} />}
             </div>
         )
 
