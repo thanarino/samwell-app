@@ -100,7 +100,7 @@ Meteor.methods({
             }
         );
     },
-    'teacher.delete'(teacherID, isDeleted) {
+    'teacher.delete'(userID, teacherID, isDeleted) {
         check(teacherID, String);
         check(isDeleted, Boolean);
 
@@ -115,7 +115,7 @@ Meteor.methods({
                     console.log(res);
                     let doc = res.value;
                     console.log(doc);
-                    Meteor.call('logs.insert', doc.userID, {
+                    Meteor.call('logs.insert', userID, {
                         date: new Date(),
                         description: `Archived teacher ${doc.given_name} ${doc.middle_name} ${doc.family_name}`,
                     });

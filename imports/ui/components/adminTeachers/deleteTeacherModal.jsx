@@ -11,7 +11,7 @@ export default class deleteClassModal extends Component {
     show = () => this.setState({ open: true });
     close = () => this.setState({ open: false });
     submit = () => {
-        Meteor.call('teacher.delete', this.props.teacher._id, !this.props.teacher.isDeleted);
+        Meteor.call('teacher.delete', Meteor.userId(), this.props.teacher._id, !this.props.teacher.isDeleted);
         this.close();
         window.location.reload();
     }
