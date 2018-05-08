@@ -180,7 +180,7 @@ Meteor.methods({
             if (!(_.includes(classList, section._id))) {
                 console.log('went inside sketchy loop 1');
                 // Sections.update(section, { $pull: { teacherList: teacherID } });
-                Sections.rawCollection().findAndModify(section,
+                Sections.rawCollection().findAndModify({ _id: section._id },
                     { _id: 1 },
                     { $pull: { teacherList: teacherID } },
                     { remove: false, new: true },
@@ -207,7 +207,7 @@ Meteor.methods({
             if (!(_.includes(found[0].teacherList, teacherID))) {
                 console.log('went inside sketchy loop 2');
                 // Sections.update(section, { $push: { teacherList: teacherID } });
-                Sections.rawCollection().findAndModify({ _id: section._id },
+                Sections.rawCollection().findAndModify({ _id: section },
                     { _id: 1 },
                     { $push: { teacherList: teacherID } },
                     { remove: false, new: true },
