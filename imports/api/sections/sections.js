@@ -177,6 +177,8 @@ Meteor.methods({
         contained.map((section) => {
             // if the classlist does not contain the id of the current section,
             // remove teacher from section's classlist
+            console.log('classlist inside: ', classList);
+            console.log('section._id inside: ', section._id);
             if (!(_.includes(classList, section._id))) {
                 console.log('went inside sketchy loop 1');
                 // Sections.update(section, { $pull: { teacherList: teacherID } });
