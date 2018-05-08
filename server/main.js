@@ -117,7 +117,7 @@ Meteor.methods({
                     console.log(doc);
                     Meteor.call('logs.insert', userID, {
                         date: new Date(),
-                        description: `Archived teacher ${doc.given_name} ${doc.middle_name} ${doc.family_name}`,
+                        description: `${doc.isDeleted ? `Archived` : `Recovered`} teacher ${doc.given_name} ${doc.middle_name} ${doc.family_name}`,
                     });
                 }
             })

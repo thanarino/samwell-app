@@ -64,12 +64,13 @@ Meteor.methods({
             }
         });
     }, 
-    'sections.delete'(sectionID) {
+    'sections.delete'(sectionID, isDeleted) {
         check(sectionID, String);
+        check(isDeleted, Boolean);
 
         Sections.rawCollection().findAndModify({ _id: sectionID },
             { _id: 1 },
-            { $set: { isDeleted: true } },
+            { $set: { isDeleted: isDeleted } },
             { remove: false, new: true },
             Meteor.bindEnvironment((err, res) => {
                 if (err) {
@@ -80,7 +81,7 @@ Meteor.methods({
                     console.log(doc);
                     Meteor.call('logs.insert', doc.userID, {
                         date: new Date(),
-                        description: `Archived section ${doc.subject} - ${doc.sectionName}`,
+                        description: `${doc.isDeleted ? `Archived` : `Recovered`} section ${doc.subject} - ${doc.sectionName}`,
                     });
                 }
             })
