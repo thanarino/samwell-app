@@ -146,9 +146,9 @@ Meteor.methods({
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(res);
+                    console.log('res: ',res);
                     let doc = res.value;
-                    console.log(doc);
+                    console.log('doc: ', doc);
                     Meteor.call('logs.insert', teacherID, {
                         date: new Date(),
                         description: `Changed status from ${!doc.available ? `available` : `unavailable`} to ${doc.available ? `available` : `unavailable` } `,
