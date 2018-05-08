@@ -52,7 +52,7 @@ Meteor.methods({
         if (err) {
             throw new Meteor.Error('logs-error', "Logs Error");
         } else {
-            return user;
+            return res;
         }
     }
 });
