@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Label, Header, Icon, Button, Image, Card, Table, Checkbox, Popup } from 'semantic-ui-react';
+import { Grid, Label, Header, Icon, Button, Image, Card, Table, Checkbox, Popup, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
@@ -36,13 +36,15 @@ ApprovedProfile = (props) => {
                         size='huge'
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}  `}
-                        <Popup
-                            trigger={<Checkbox toggle checked={props.teacher.available} onChange={() => this.toggle(props.teacher)} />}
-                            content='Are you available for consultation right now?'
-                            position='right center'
-                            inverted
-                            basic
-                        />
+                        {this.state.loading ?
+                            <Loader active inline='centered' /> :
+                            <Popup
+                                trigger={<Checkbox toggle checked={props.teacher.available} onChange={() => this.toggle(props.teacher)} />}
+                                content='Are you available for consultation right now?'
+                                position='right center'
+                                inverted
+                                basic
+                            />}
                     </Header>
                     <Table definition>
                         <Table.Body>
@@ -94,16 +96,23 @@ ApprovedProfile = (props) => {
 }
 
 toggle = (teacher) => {
-    Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
-        if (res) {
-            this.setState({ teacher });
-        }
-    });
+    this.setState({ loading: true }, () => {
+        Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
+            if (res) {
+                this.setState({ teacher, loading: false });
+            }
+        });
+    })
+    
 }
 
 class UserProfile extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            loading: false,
+            teacher: undefined,
+        }
     }
 
     render() {
