@@ -147,7 +147,7 @@ Meteor.methods({
             { remove: false, new: true },
             Meteor.bindEnvironment((err, res) => {
                 if (err) {
-                    console.log(err);
+                    console.log('err backend: ',err);
                     err = true;
                 } else {
                     console.log('res: ',res);
@@ -162,8 +162,10 @@ Meteor.methods({
         );
 
         if (err) {
+            console.log('errr: ', err);
             throw new Meteor.Error('set-available-error', "There is an error in the database.");
         } else { 
+            console.log('backend doc: ', doc);
             return doc;
         }
     }

@@ -104,7 +104,7 @@ toggle = (teacher, component) => {
                 console.log('teacher: ', teacher);
                 component.setState({ teacher, loading: false, pastValue: teacher.available });
             } else {
-                console.log(err);
+                console.log('err: ',err);
             }
         });
     });
