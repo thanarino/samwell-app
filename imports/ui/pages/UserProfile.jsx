@@ -39,7 +39,7 @@ ApprovedProfile = (props) => {
                         textAlign='center' >
                         <Image circular src={teacher.services.google ? teacher.services.google.picture : default_pp} /> {` ${teacher.family_name}, ${teacher.given_name}  `}
                         {component.state.loading ?
-                            <Loader active/> :
+                            <Loader active inline/> :
                             <Popup
                                 trigger={<Checkbox toggle checked={teacher.available} onChange={() => this.toggle(teacher, component)} />}
                                 content='Are you available for consultation right now?'
@@ -100,8 +100,6 @@ ApprovedProfile = (props) => {
 toggle = (teacher, component) => {
     component.setState({ loading: true }, () => {
         Meteor.call('teacher.setAvailable', teacher._id, !teacher.available, (err, res) => {
-            console.log('err: ', err);
-            console.log('res: ', res);
             component.setState({ teacher, loading: false });
         });
     })

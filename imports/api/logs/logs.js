@@ -18,22 +18,16 @@ Meteor.methods({
             description: String,
         });
 
-        console.log(userID);
-        console.log(data);
-
         Meteor.users.rawCollection().find({ _id: userID }, Meteor.bindEnvironment((err, cursor) => {
             if (cursor) {
                 cursor.toArray(Meteor.bindEnvironment((err, user) => {
                     if (user) {
-                        console.log('user: ', user);
                         let name = '';
                         if (user[0].profile.name) {
                             name = user[0].profile.name;
                         } else {
                             name = user[0].profile.last_name;
                         }
-                        console.log('name: ', name);
-                        console.log('data: ', data);
                         Logs.insert({
                             user: name,
                             date: data.date,
