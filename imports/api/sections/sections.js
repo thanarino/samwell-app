@@ -132,7 +132,7 @@ Meteor.methods({
         //     }
         // });
         
-        Sections.rawCollection().findAndModify({ sectionID: sectionID },
+        Sections.rawCollection().findAndModify({ _id: sectionID },
             { _id: 1 },
             { $set: { sectionName,
                 studentList,
