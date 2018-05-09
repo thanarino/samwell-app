@@ -32,7 +32,7 @@ class MoreInfoButton extends Component {
             <div>
                 <Button onClick={this.show} icon floated='right'>
                     Expand&nbsp;&nbsp;
-                    {consultations.length > 0 ? <Label circular color='red' >{consultations.length}</Label> : null}    
+                    {consultations.length > 0 ? <Label circular color='red' size='tiny'>{consultations.length}</Label> : null}    
                 </Button>
 
                 <Modal size='large' open={open} onClose={this.close} closeIcon>
