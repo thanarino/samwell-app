@@ -8,7 +8,7 @@ import ConsultationForm from './consultationForm.jsx';
 import { Consultations } from '../../../api/consultations/consultations';
 import MoreInfoTable from './moreInfoTable.jsx';
 
-export default class MoreInfoButton extends Component {
+class MoreInfoButton extends Component {
     static propTypes = {
         teacher: PropTypes.object,
     }
@@ -26,11 +26,12 @@ export default class MoreInfoButton extends Component {
 
     render() {
         const { open } = this.state;
+        const { consultations } = this.props;
         return (
             <div>
-                <Button onClick={this.show} icon labelPosition='right' floated='right'>
-                    <Icon name='expand' />
-                    Expand
+                <Button onClick={this.show} icon floated='right'>
+                    Expand&nbsp;&nbsp;
+                    {consultations.length > 0 ? <Label circular color='red' >{consultations.length}</Label> : null}    
                 </Button>
 
                 <Modal size='large' open={open} onClose={this.close} closeIcon>
@@ -45,3 +46,15 @@ export default class MoreInfoButton extends Component {
         )
     }
 }
+
+MoreInfoButton.protoTypes = {
+    callback: PropTypes.func,
+}
+
+export default withTracker((props) => {
+    Meteor.subscribe('consultations');
+
+    return {
+        consultations: Consultations.find({ teacherID: props.teacher._id, isApprovedByTeacher: false }, { sort: { createdAt: -1 } }).fetch(),
+    }
+})(MoreInfoButton);

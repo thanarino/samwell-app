@@ -39,13 +39,15 @@ class ConsultationTable extends Component {
                         {consultations.map((consultation, index) => {
                             const currentSection = _.filter(sections, { '_id': consultation.sectionID })[0];
                             const currentStudent = _.filter(students, { '_id': consultation.studentID })[0];
-                            return<Table.Row key={consultation._id}>
-                                <Table.Cell>{`${currentSection.subject} - ${currentSection.sectionName}`}</Table.Cell>
-                                <Table.Cell>{`${currentStudent.family_name}, ${currentStudent.given_name}`}</Table.Cell>
-                                <Table.Cell>{moment(consultation.startTime,'hh:mm').format('hh:mm A')}</Table.Cell>
-                                <Table.Cell>{moment(consultation.endTime,'hh:mm').format('hh:mm A')}</Table.Cell>
-                            </Table.Row>}
-                        )}
+                            if (consultation.isApprovedByTeacher) {
+                                return <Table.Row key={consultation._id}>
+                                    <Table.Cell>{`${currentSection.subject} - ${currentSection.sectionName}`}</Table.Cell>
+                                    <Table.Cell>{`${currentStudent.family_name}, ${currentStudent.given_name}`}</Table.Cell>
+                                    <Table.Cell>{moment(consultation.startTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
+                                    <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
+                                </Table.Row>
+                            }
+                        })}
                     </Table.Body>
                 </Table>
             </div>
