@@ -47,9 +47,9 @@ class ClassPanel extends Component {
                             {this.props.sections.length != 0 ?
                                 this.props.sections.map((section) => 
                                     <List.Item key={section._id} onClick={()=>this.setState({activeSection: section})}>
-                                        <List.Content floated='right'>
+                                        {/* <List.Content floated='right'>
                                             <MessageModal section={section} teacher={teacher}/>
-                                        </List.Content>    
+                                        </List.Content>     */}
                                         <List.Content floated='right' verticalAlign='middle'> 
                                             <List.Header verticalAlign='middle'>{section.code}</List.Header>
                                         </List.Content>
