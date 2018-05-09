@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Icon, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import ConsultationForm from './consultationForm.jsx';
 
