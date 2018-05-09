@@ -34,7 +34,7 @@ export default class AddConsultationButton extends Component {
         console.log(data);
         console.log(Meteor.userId());
 
-        Meteor.call('consultations.insert', Meteor.userId(), data, false, true);
+        Meteor.call('consultations.insert', Meteor.userId(), data, true, true);
 
         this.close();
     }

@@ -39,17 +39,11 @@ class MoreInfoTable extends Component {
                             <Table.HeaderCell>Start Time</Table.HeaderCell>
                             <Table.HeaderCell>End Time</Table.HeaderCell>
                             <Table.HeaderCell>Date</Table.HeaderCell>
-                            <Popup trigger={<Table.HeaderCell>Student</Table.HeaderCell>}>
-                                <Popup.Content>
-                                    Student agreed to this consultation?
-                                </Popup.Content>
-                            </Popup>
                             <Popup trigger={<Table.HeaderCell>You</Table.HeaderCell>}>
                                 <Popup.Content>
-                                    You agreed to this consultation?
+                                    You agree to this consultation?
                                 </Popup.Content>
                             </Popup>
-                            <Table.HeaderCell>isDone</Table.HeaderCell>
 
                         </Table.Row>
                     </Table.Header>
@@ -64,9 +58,7 @@ class MoreInfoTable extends Component {
                                 <Table.Cell>{moment(consultation.startTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment(consultation.endTime, 'hh:mm').format('hh:mm A')}</Table.Cell>
                                 <Table.Cell>{moment().dayOfYear(consultation.date).set({ 'year': consultation.year }).format("dddd, MMMM Do YYYY")}</Table.Cell>
-                                <Table.Cell>{consultation.isApprovedByStudent ? <Icon name='check' color='green'/> : <Icon name='x' color='red'/>}</Table.Cell>
                                 <Table.Cell><Checkbox checked={consultation.isApprovedByTeacher} onChange={()=>this.toggle(consultation)}/></Table.Cell>
-                                <Table.Cell>{consultation.isDone ? <Icon name='check' color='green'/> : <Icon name='x' color='red'/>}</Table.Cell>
                             </Table.Row>
                         }
                         )}
