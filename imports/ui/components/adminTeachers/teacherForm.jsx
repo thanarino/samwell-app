@@ -242,7 +242,7 @@ class TeacherForm extends Component {
                                 <Form.Input name='middle_name' label='Middle Name' placeholder='Middle Name' value={this.state.middle_name} width={5} onChange={this.handleChange} />
                                 <Form.Input name='family_name' label='Last Name' placeholder='Last Name' value={this.state.family_name} width={5} onChange={this.handleChange} />
                             </Form.Group>
-                            <Form.Input name='email' label='Email' placeholder='Email' value={this.state.email} width={16} onChange={this.handleChange} />
+                            <Form.Input disabled name='email' label='Email' placeholder='Email' value={this.state.email} width={16} onChange={this.handleChange} />
                             <Form.Group widths='equal' inline>
                                 <Form.Input label='Department' fluid placeholder='Department' name='department' value={this.state.department} onChange={this.handleChange} />
                                 <Form.Input label='Office' fluid placeholder='Office' name='office' value={this.state.office} onChange={this.handleChange} />
