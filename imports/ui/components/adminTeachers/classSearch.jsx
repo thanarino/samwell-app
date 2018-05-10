@@ -21,7 +21,10 @@ class ClassSearch extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        console.log('state.classes 2: ', this.state.classes);
+        console.log('nextprops.classes: ', nextProps.classes);
         if (_.isEqual(this.state.classes, nextProps.classes)) {
+            console.log('went herer');
             return false
         }
         return true
