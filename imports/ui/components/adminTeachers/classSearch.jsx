@@ -14,8 +14,8 @@ class ClassSearch extends Component {
     }
 
     componentWillReceiveProps(newProp) {
-        if (this.props.classes && newProp.sections.length != 0) {
-            this.setState({ classes: this.convertToClasses(this.props.classes, newProp.sections) });
+        if (this.props.sections && newProp.sections.length != 0) {
+            this.setState({ classes: this.convertToClasses(this.props.sections, newProp.sections) });
         }
     }
 
@@ -91,6 +91,7 @@ class ClassSearch extends Component {
                     <div>
                         {this.state.classes.length != 0 && <Label basic>Click on a subject to remove it.</Label>}
                         {this.state.classes.map((classObject, index) => {
+                            console.log(this.state.classes);
                             console.log(classObject);
                             // if (typeof classObject == "string") {
                             //     console.log("went here")
