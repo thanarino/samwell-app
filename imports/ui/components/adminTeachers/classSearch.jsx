@@ -91,8 +91,8 @@ class ClassSearch extends Component {
                     <div>
                         {this.state.classes.length != 0 && <Label basic>Click on a subject to remove it.</Label>}
                         {this.state.classes.map((classObject, index) => {
-                            console.log(this.state.classes);
-                            console.log(classObject);
+                            console.log('class State: ', this.state.classes);
+                            console.log('classObject: ',classObject);
                             // if (typeof classObject == "string") {
                             //     console.log("went here")
                             //     console.log(classObject);
