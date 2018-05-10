@@ -20,6 +20,13 @@ class ClassSearch extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (_.isEqual(this.state.classes, nextProps.classes)) {
+            return false
+        }
+        return true
+    }
+
     convertToClasses(classIDs, sections) {
         let classes = [];
         classIDs.map((classID, index) => {
