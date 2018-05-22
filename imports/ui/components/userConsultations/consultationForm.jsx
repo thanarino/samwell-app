@@ -46,7 +46,7 @@ class ConsultationForm extends Component {
             sectionID: this.state.classSelected,
             studentID: this.state.studentSelected,
             date: moment(this.state.startDate).dayOfYear(),
-            startDate: moment(this.state.startDate).toDate()
+            startDate: moment(this.state.startDate).set({ 'hour': moment(this.state.start).hour(), 'minute': moment(this.state.start).minute()}).toDate()
         }
 
         console.log(tosend);
