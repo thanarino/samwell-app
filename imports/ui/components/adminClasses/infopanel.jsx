@@ -59,7 +59,7 @@ SectionSelected = (props) => {
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Days</Table.Cell>
-                    <Table.Cell>{section.daysList}</Table.Cell>
+                    <Table.Cell>{section.daysList.toString()}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Start Time</Table.Cell>
@@ -71,11 +71,11 @@ SectionSelected = (props) => {
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Teachers</Table.Cell>
-                    <Table.Cell>{section.teacherList}</Table.Cell>
+                    <Table.Cell>{section.teacherList.toString()}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Students</Table.Cell>
-                    <Table.Cell>{section.studentList}</Table.Cell>
+                    <Table.Cell>{section.studentList.toString()}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Archived</Table.Cell>
